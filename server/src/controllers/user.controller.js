@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
 import { uploadToImageKit, deleteFromImageKit } from "../utils/imageKit.js"
+import { options } from "../constants.js";
 
 const accessAndRefreshTokenGenrator = async (userId) => {
     try {
@@ -88,11 +89,6 @@ const loginUser = asyncHandler(async (req, res) => {
     const { accessToken, refreshToken } = await accessAndRefreshTokenGenrator(user._id);
 
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
-
-    const options = {
-        httpOnly: true,
-        secure: true
-    };
 
     return res
         .status(200)

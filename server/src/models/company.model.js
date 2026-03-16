@@ -10,7 +10,8 @@ const companySchema = new Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true
+        unique: true,
+        lowercase: true
     },
     password: {
         type: String,
@@ -33,11 +34,13 @@ const companySchema = new Schema({
         trim: true
     },
     industry: {
-        type: ["Technology", "Finance", "Healthcare", "Education", "Retail", "Other"],
+        type: String,
+        enum: ["Technology", "Finance", "Healthcare", "Education", "Retail", "Other"],
         trim: true
     },
     size: {
-        type: ["1-10", "11-50", "51-200", "201-500", "501-1000", "1001+"],
+        type: String,
+        enum: ["1-10", "11-50", "51-200", "201-500", "501-1000", "1001+"],
         trim: true
     },
     logo: {
