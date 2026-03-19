@@ -19,11 +19,13 @@ app.use(cookieParser())
 import userRouter from "./routes/user.route.js"
 import companyRouter from "./routes/company.route.js"
 import applyedJobRouter from "./routes/ApplyedJob.route.js";
+import jobRouter from "./routes/job.route.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/companies", companyRouter)
 app.use("/api/v1/applyed-jobs", applyedJobRouter)
+app.use("/api/v1/jobs", jobRouter)
 
 app.use(errorHandler)
 

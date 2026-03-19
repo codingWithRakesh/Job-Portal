@@ -3,6 +3,7 @@ import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import AppliedJob from "../models/ApplyedJob.model.js";
 import Job from "../models/job.model.js";
+import mongoose from "mongoose";
 
 const applyForJob = asyncHandler(async (req, res) => {
     const { jobId } = req.params;
@@ -10,6 +11,9 @@ const applyForJob = asyncHandler(async (req, res) => {
 
     if (!applicantId) {
         throw new ApiError(400, "Unauthorized: User not authenticated");
+    }
+    if(!mongoose.Types.ObjectId.isValid(jobId)) {
+        throw new ApiError(400, "Invalid Job ID");
     }
     if (!jobId) {
         throw new ApiError(400, "Job ID is required");
@@ -35,7 +39,21 @@ const findAppliedJobsForUser = asyncHandler(async (req, res) => {
     if (!applicantId) {
         throw new ApiError(400, "Unauthorized: User not authenticated");
     }
-    const applications = await AppliedJob.find({ applicant: applicantId })
+    const applications = await AppliedJob.aggregate([
+        {
+            $match: {
+                applicant: new mongoose.Types.ObjectId(applicantId)
+            }
+        },
+        {
+            $lookup: {
+                from: "jobs",
+                localField: "job",
+                foreignField: "_id",
+                as: "job"
+            }
+        }
+    ])
 
     return res.status(200).json(new ApiResponse(200, applications, "Applied jobs fetched successfully"));
 
@@ -47,6 +65,9 @@ const findUsersByAlgorithm = asyncHandler(async (req, res) => {
 
     if (!companyId) {
         throw new ApiError(400, "Unauthorized: Company not authenticated");
+    }
+    if(!mongoose.Types.ObjectId.isValid(jobId)) {
+        throw new ApiError(400, "Invalid Job ID");
     }
     if (!jobId) {
         throw new ApiError(400, "Job ID is required");
@@ -76,11 +97,6 @@ const findUsersByAlgorithm = asyncHandler(async (req, res) => {
         },
         {
             $project: {
-                _id: 1,
-                job: 1,
-                status: 1,
-                createdAt: 1,
-                updatedAt: 1,
                 "applicant.password": 0,
                 "applicant.refreshToken": 0
             }
@@ -217,8 +233,8 @@ const findUsersByAlgorithm = asyncHandler(async (req, res) => {
             applicationId: application._id,
             status: application.status,
             appliedAt: application.createdAt,
-            matchScore: score,          // out of 100
-            matchBreakdown: breakdown,  // detailed per-category scores
+            matchScore: score,
+            // matchBreakdown: breakdown,
             applicant: user
         };
     });
@@ -248,11 +264,14 @@ const updateApplicationStatus = asyncHandler(async (req, res) => {
     if (!applicationId) {
         throw new ApiError(400, "Application ID is required");
     }
-    if (!["pending", "accepted", "rejected"].includes(status)) {
+    if(!mongoose.Types.ObjectId.isValid(applicationId)) {
+        throw new ApiError(400, "Invalid Application ID");
+    }
+    if (!["Shortlisted", "Rejected"].includes(status)) {
         throw new ApiError(400, "Invalid status value");
     }
 
-    const application = await AppliedJob.aggregate([
+    const [application] = await AppliedJob.aggregate([
         {
             $match: {
                 _id: new mongoose.Types.ObjectId(applicationId)
@@ -265,9 +284,11 @@ const updateApplicationStatus = asyncHandler(async (req, res) => {
                 foreignField: "_id",
                 as: "job"
             }
+        },
+        {
+            $unwind: "$job"
         }
-
-    ])
+    ]);
     if (!application) {
         throw new ApiError(404, "Application not found");
     }
@@ -276,10 +297,17 @@ const updateApplicationStatus = asyncHandler(async (req, res) => {
         throw new ApiError(403, "Forbidden: You can only update applications for your own jobs");
     }
 
-    application.status = status;
-    await application.save();
+    const updated = await AppliedJob.findByIdAndUpdate(
+        applicationId,
+        { status },
+        { returnDocument: 'after', runValidators: true }
+    );
 
-    return res.status(200).json(new ApiResponse(200, application, "Application status updated successfully"));
+    if (!updated) {
+        throw new ApiError(500, "Failed to update application status");
+    }
+
+    return res.status(200).json(new ApiResponse(200, updated, "Application status updated successfully"));
 });
 
 export {
