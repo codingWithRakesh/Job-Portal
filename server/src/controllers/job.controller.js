@@ -14,7 +14,7 @@ const createJob = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Unauthorized: Company not authenticated");
     }
 
-    if (!title || !description || !location.length || !jobType || !applicationDeadline || !workMode || !vacancies || !requiredSkills.length || !qualifications.length || !experiences.years || !salaryRange) {
+    if (!title || !description || !location.length || !jobType || !applicationDeadline || !workMode || !vacancies || !requiredSkills.length || !qualifications.length || experiences?.min === undefined || experiences?.max === undefined || !salaryRange) {
         throw new ApiError(400, "Title, description, location, job type, application deadline, work mode, vacancies, required skills, qualifications, experiences and salary range are required");
     }
 
@@ -55,7 +55,7 @@ const deleteJob = asyncHandler(async (req, res) => {
     if (!companyId) {
         throw new ApiError(400, "Unauthorized: Company not authenticated");
     }
-    if(!mongoose.Types.ObjectId.isValid(jobId)) {
+    if (!mongoose.Types.ObjectId.isValid(jobId)) {
         throw new ApiError(400, "Invalid Job ID");
     }
     if (!jobId) {
@@ -196,17 +196,20 @@ const getAllJobsByAlgorithm = asyncHandler(async (req, res) => {
         }
 
         // experience 20 points max
-        if (job.experiences?.years !== undefined) {
-            const requiredYears = job.experiences.years;
+        if (job.experiences?.min !== undefined && job.experiences?.max !== undefined) {
+            const { min, max } = job.experiences;
             let expScore = 0;
-            if (userTotalExpYears >= requiredYears) {
+            if (userTotalExpYears >= min && userTotalExpYears <= max) {
                 expScore = 20;
+            } else if (userTotalExpYears > max) {
+                expScore = 15;
             } else if (userTotalExpYears > 0) {
-                expScore = Math.round((userTotalExpYears / requiredYears) * 20);
+                expScore = Math.round((userTotalExpYears / min) * 20);
             }
             score += expScore;
             breakdown.experience = {
-                required: requiredYears,
+                requiredMin: min,
+                requiredMax: max,
                 userHas: userTotalExpYears,
                 score: expScore
             };
@@ -229,11 +232,11 @@ const getAllJobsByAlgorithm = asyncHandler(async (req, res) => {
             const jobLocationsLower = job.location.map(l => l.toLowerCase());
             let locationScore = 0;
             if (jobLocationsLower.includes(userCity)) {
-                locationScore = 15;                         
+                locationScore = 15;
             } else if (job.workMode === "Remote") {
-                locationScore = 10;                       
+                locationScore = 10;
             } else if (jobLocationsLower.includes(user.address?.state?.toLowerCase())) {
-                locationScore = 7;                      
+                locationScore = 7;
             }
             score += locationScore;
             breakdown.location = {

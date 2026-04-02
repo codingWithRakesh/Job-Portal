@@ -9,7 +9,11 @@ const qualificationSchema = new Schema({
 });
 
 const experienceSchema = new Schema({
-    years: {
+    min: {
+        type: Number,
+        required: true
+    },
+    max: {
         type: Number,
         required: true
     }

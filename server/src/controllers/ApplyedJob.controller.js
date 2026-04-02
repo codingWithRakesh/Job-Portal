@@ -12,7 +12,7 @@ const applyForJob = asyncHandler(async (req, res) => {
     if (!applicantId) {
         throw new ApiError(400, "Unauthorized: User not authenticated");
     }
-    if(!mongoose.Types.ObjectId.isValid(jobId)) {
+    if (!mongoose.Types.ObjectId.isValid(jobId)) {
         throw new ApiError(400, "Invalid Job ID");
     }
     if (!jobId) {
@@ -66,7 +66,7 @@ const findUsersByAlgorithm = asyncHandler(async (req, res) => {
     if (!companyId) {
         throw new ApiError(400, "Unauthorized: Company not authenticated");
     }
-    if(!mongoose.Types.ObjectId.isValid(jobId)) {
+    if (!mongoose.Types.ObjectId.isValid(jobId)) {
         throw new ApiError(400, "Invalid Job ID");
     }
     if (!jobId) {
@@ -130,30 +130,32 @@ const findUsersByAlgorithm = asyncHandler(async (req, res) => {
         }
 
         // experience match (20 points max)
-        if (job.experiences?.years !== undefined) {
-            const requiredYears = job.experiences.years;
+        if (job.experiences?.min !== undefined && job.experiences?.max !== undefined) {
+            const { min, max } = job.experiences;
 
             let totalExperienceYears = 0;
             if (user.experiences?.length > 0) {
                 user.experiences.forEach(exp => {
                     const start = new Date(exp.startDate);
                     const end = new Date(exp.endDate);
-                    const years = (end - start) / (1000 * 60 * 60 * 24 * 365);
-                    totalExperienceYears += years;
+                    totalExperienceYears += (end - start) / (1000 * 60 * 60 * 24 * 365);
                 });
             }
             totalExperienceYears = Math.round(totalExperienceYears * 10) / 10;
 
             let expScore = 0;
-            if (totalExperienceYears >= requiredYears) {
+            if (totalExperienceYears >= min && totalExperienceYears <= max) {
                 expScore = 20;
+            } else if (totalExperienceYears > max) {
+                expScore = 15;
             } else if (totalExperienceYears > 0) {
-                expScore = Math.round((totalExperienceYears / requiredYears) * 20);
+                expScore = Math.round((totalExperienceYears / min) * 20);
             }
 
             score += expScore;
             breakdown.experience = {
-                required: requiredYears,
+                requiredMin: min,
+                requiredMax: max,
                 userHas: totalExperienceYears,
                 score: expScore
             };
@@ -264,7 +266,7 @@ const updateApplicationStatus = asyncHandler(async (req, res) => {
     if (!applicationId) {
         throw new ApiError(400, "Application ID is required");
     }
-    if(!mongoose.Types.ObjectId.isValid(applicationId)) {
+    if (!mongoose.Types.ObjectId.isValid(applicationId)) {
         throw new ApiError(400, "Invalid Application ID");
     }
     if (!["Shortlisted", "Rejected"].includes(status)) {
