@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Job Dashboard - Pro</title>
+    <link rel="stylesheet" href="controlJob.css">
+    
+</head>
+<body>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <svg class="icon" style="width:24px; height:24px" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            TechCorp
+        </div>
+        <div class="navbar-user">
+            <img src="https://i.pravatar.cc/150?img=33" alt="Company Logo">
+        </div>
+
+    </nav>
+    
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Second Row: Statistics & Action -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="stat-total-jobs">0</div>
+                <div class="stat-label">Active Jobs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-total-apps">0</div>
+                <div class="stat-label">Total Applications</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-shortlisted">0</div>
+                <div class="stat-label">Shortlisted</div>
+            </div>
+            <div>
+                <button class="post-job-btn" onclick="alert('Redirecting to Post Job Page...')">
+                    <svg class="icon" style="width:20px; height:20px" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Post New Job
+                </button>
+            </div>
+        </div>
+    
+
+        <!-- Third Row: Active Jobs List -->
+        <div class="section-header">
+            <h2 class="section-title">Manage Posted Jobs</h2>
+        </div>
+        
+        <div class="job-list" id="job-list-container">
+            <!-- Jobs will be injected here via JavaScript -->
+        </div>
+    </main>
+    <script src="controlJob.js"></script>
+</body>
+</html>
