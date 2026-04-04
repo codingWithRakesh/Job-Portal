@@ -5,448 +5,272 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My profile - Naukri Campus</title>
-    <link rel="stylesheet" href="./profile.css">
-    <style>
-        :root {
-            --sticky-tabs-top: 78px;
-            --sticky-quick-top: 136px;
-        }
-
-        .tabs-block,
-        .tab-panel,
-        .lower-grid,
-        .content-stack {
-            overflow: visible;
-        }
-
-        .tabs-nav {
-            position: sticky;
-            top: var(--sticky-tabs-top);
-            z-index: 30;
-            background: var(--bg);
-            height: 2.5rem;
-        }
-
-        .quick-card {
-            position: sticky;
-            top: var(--sticky-quick-top);
-            align-self: start;
-            z-index: 10;
-        }
-
-        @media (max-width: 1240px) and (min-width: 981px) {
-            :root {
-                --sticky-tabs-top: 110px;
-                --sticky-quick-top: 168px;
-            }
-        }
-
-        @media (max-width: 980px) {
-
-            .tabs-nav,
-            .quick-card {
-                position: static;
-                top: auto;
-            }
-        }
-    </style>
-    <script src="profile.js" defer></script>
+    <link rel="stylesheet" href="profile.css">
+    <script src="profile.js" type="module" defer></script>
 </head>
 
 <body>
     <header class="topbar">
         <div class="topbar-inner">
-            <a class="brand" href="#" aria-label="Naukri Campus home">
-                <svg viewBox="0 0 36 36" aria-hidden="true">
+            <a class="brand" href="#">
+                <svg viewBox="0 0 36 36">
                     <circle cx="18" cy="18" r="17" fill="currentColor"></circle>
                     <path
                         d="M16.2 7.8c-4.4.7-8 4.3-8.7 8.7 2.5-1.6 5.9-1.4 8.2.8 2.3 2.3 2.5 5.7.8 8.2 4.4-.7 8-4.3 8.7-8.7-2.5 1.6-5.9 1.4-8.2-.8-2.3-2.3-2.5-5.7-.8-8.2Z"
                         fill="#fff"></path>
                     <circle cx="18" cy="18" r="4.1" fill="#fff"></circle>
                 </svg>
-                <span class="brand-wordmark"><span class="brand-blue">naukri</span><span class="brand-orange">
-                        campus</span></span>
+                <span class="brand-wordmark"><span class="brand-blue">naukri</span><span
+                        class="brand-orange">campus</span></span>
             </a>
-
-            <nav class="topbar-nav" aria-label="Primary navigation">
+            <nav class="topbar-nav">
                 <a href="#">Prepare</a>
                 <a href="#">Participate</a>
                 <a href="#">Opportunities</a>
             </nav>
-
             <div class="topbar-actions">
-                <button class="icon-button" type="button" aria-label="Notifications" aria-haspopup="dialog"
-                    aria-controls="notificationsOverlay">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                <button class="icon-button">
+                    <svg viewBox="0 0 24 24">
                         <path d="M7 9a5 5 0 0 1 10 0c0 5.5 2 6.5 2 6.5H5S7 14.5 7 9"></path>
                         <path d="M10 18a2 2 0 0 0 4 0"></path>
                     </svg>
                 </button>
-                <button class="profile-menu" type="button" aria-label="Profile menu" aria-haspopup="dialog"
-                    aria-controls="profileDrawerOverlay">
-                    <span class="menu-lines" aria-hidden="true"><span></span></span>
-                    <span class="menu-avatar" id="headerProfileAvatar" aria-hidden="true"></span>
+                <button class="profile-menu">
+                    <span class="menu-lines"><span></span></span>
+                    <span class="menu-avatar" id="headerProfileAvatar"></span>
                 </button>
             </div>
         </div>
     </header>
 
     <main class="page-shell">
-        <section class="profile-summary" aria-labelledby="profileName">
+        <section class="profile-summary">
             <div class="progress-panel">
-                <div class="progress-ring" role="img" aria-label="Profile completion 40 percent">
-                    <svg class="progress-ring-svg" viewBox="0 0 120 120" aria-hidden="true">
-                        <circle class="progress-ring-track" cx="60" cy="60" r="54" pathLength="100"
-                            transform="rotate(90 60 60)"></circle>
-                        <circle class="progress-ring-fill" cx="60" cy="60" r="54" pathLength="100"
-                            transform="rotate(90 60 60)"></circle>
+                <div class="progress-ring">
+                    <svg class="progress-ring-svg" viewBox="0 0 120 120">
+                        <circle class="progress-ring-track" cx="60" cy="60" r="54"></circle>
+                        <circle class="progress-ring-fill" cx="60" cy="60" r="54" id="progressFill"
+                            style="stroke-dashoffset: 100;" transform="rotate(-90 60 60)"></circle>
                     </svg>
-                    <button class="avatar-trigger" id="profilePhotoTrigger" type="button"
-                        aria-label="Change profile photo" aria-haspopup="dialog" aria-controls="photoModalOverlay"
-                        title="Change photo">
-                        <div class="avatar-shell" id="profileAvatar" aria-hidden="true"></div>
-                        <span class="avatar-edit-badge" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
+                    <button class="avatar-trigger">
+                        <div class="avatar-shell" id="profileAvatar"></div>
+                        <span class="avatar-edit-badge"><svg viewBox="0 0 24 24">
                                 <path d="M4 20h4l9.5-9.5-4-4L4 16v4Z"></path>
                                 <path d="m13 7 4 4"></path>
-                            </svg>
-                        </span>
+                            </svg></span>
                     </button>
-                    <div class="progress-badge">65%</div>
+                    <input type="file" id="profilePicInput" style="display:none" accept="image/*">
+                    <div class="progress-badge" id="progressText">0%</div>
                 </div>
-                <p class="progress-note">Complete a few more details to unlock better-matched opportunities.</p>
+                <p class="progress-note">Complete details to unlock better opportunities.</p>
             </div>
 
-            <section class="profile-main" aria-labelledby="profileName">
+            <section class="profile-main">
                 <div class="profile-title-row">
-                    <h1 id="profileName">Cyrus</h1>
-                    <a class="edit-link" href="#" aria-label="Edit profile" aria-haspopup="dialog"
-                        aria-controls="profileModalOverlay">
-                        <img src="//static.naukimg.com/s/8/801/i/src/resources/svg/mnj-pencil.37ddbce9.svg" alt=""
-                            width="17" height="17" style="margin-top: 0.6rem;">
+                    <h1 id="displayName">Name</h1>
+                    <a class="edit-link">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
                     </a>
                 </div>
-                <p class="profile-degree">BCA - Bachelor of Computer Applications</p>
-                <p class="profile-school">Brainware University, Kolkata</p>
+                <p class="profile-degree" id="displayTopDegree">Degree</p>
+                <p class="profile-school" id="displayTopSchool">Institution</p>
 
-                <div class="section-divider" aria-hidden="true"></div>
+                <div class="section-divider"></div>
 
                 <div class="details-columns">
                     <div class="details-column">
-                        <div class="detail-row">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <div class="detail-row"><svg viewBox="0 0 24 24">
                                 <path d="M12 21s6-5.1 6-10a6 6 0 1 0-12 0c0 4.9 6 10 6 10Z"></path>
                                 <circle cx="12" cy="11" r="2.3"></circle>
-                            </svg>
-                            <span id="profileCurrentLocationSummary">Kolkata</span>
-                        </div>
-                        <div class="detail-row">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                            </svg> <span id="displayLocation">Location</span></div>
+                        <div class="detail-row"><svg viewBox="0 0 24 24">
                                 <circle cx="9" cy="8" r="3"></circle>
                                 <path d="M4.5 18a4.5 4.5 0 0 1 9 0"></path>
                                 <circle cx="17" cy="9" r="2"></circle>
                                 <path d="M14.5 18a3.5 3.5 0 0 1 5.5-2.8"></path>
-                            </svg>
-                            <span id="profileGenderSummary">Male</span>
-                        </div>
-                        <div class="detail-row">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                            </svg> <span id="displayGender">Gender</span></div>
+                        <div class="detail-row"><svg viewBox="0 0 24 24">
                                 <rect x="4" y="6" width="16" height="14" rx="2"></rect>
                                 <path d="M8 4v4"></path>
                                 <path d="M16 4v4"></path>
                                 <path d="M4 10h16"></path>
-                            </svg>
-                            <span id="profileDobSummary" class="text-link detail-empty">Add birthday</span>
-                        </div>
+                            </svg> <span id="displayDOB">DOB</span></div>
                     </div>
-
                     <div class="details-column details-column--right">
-                        <div class="detail-row">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <div class="detail-row"><svg viewBox="0 0 24 24">
                                 <path
                                     d="M5 4h3l2 5-2 1.5a14 14 0 0 0 5.5 5.5L15 14l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z">
                                 </path>
-                            </svg>
-                            <span id="profilePhoneSummary">1234567890</span>
-                            <span class="verified-dot" aria-label="Phone verified">
-                                <svg viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="m5 13 4 4L19 7"></path>
-                                </svg>
-                            </span>
-                        </div>
-                        <div class="detail-row">
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                            </svg> <span id="displayPhone">Phone</span></div>
+                        <div class="detail-row"><svg viewBox="0 0 24 24">
                                 <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                                 <path d="m4 7 8 6 8-6"></path>
-                            </svg>
-                            <span class="truncate">abc@gmail.com</span>
-                            <a class="text-link" href="#">Verify</a>
-                        </div>
+                            </svg> <span id="displayEmail" class="truncate">Email</span></div>
                     </div>
                 </div>
             </section>
-
         </section>
 
-        <section class="tabs-block" aria-labelledby="profileTabs">
-            <h2 id="profileTabs" class="sr-only">Profile dashboard tabs</h2>
-            <div class="tabs-nav" role="tablist" aria-label="Profile dashboard tabs">
-                <button class="tab-button active" id="tab-view-edit" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-view-edit">View &amp; Edit</button>
-                <button class="tab-button" id="tab-insights" type="button" role="tab" aria-selected="false"
-                    aria-controls="panel-insights">Activity insights</button>
+        <section class="tabs-block">
+            <div class="tabs-nav">
+                <button class="tab-button active" data-tab="panel-view-edit">View &amp; Edit</button>
+                <button class="tab-button" data-tab="panel-insights">Activity insights</button>
             </div>
 
-            <div class="tab-panel active" id="panel-view-edit" data-tab-panel role="tabpanel"
-                aria-labelledby="tab-view-edit">
+            <div class="tab-panel active" id="panel-view-edit" data-tab-panel>
                 <div class="lower-grid">
                     <aside class="info-card quick-card">
                         <div class="card-head">
                             <h3>Quick links</h3>
                         </div>
-                        <ul class="quick-list quick-list--single">
-                            <li><a class="quick-nav-link active" href="#profile-summary-section"
-                                    aria-current="true">Profile summary</a></li>
-                            <li><a class="quick-nav-link" href="#personal-details">Personal
-                                    details</a></li>
-                            <li><a class="quick-nav-link" href="#address">Address</a></li>
-                            <li><a class="quick-nav-link" href="#languages">Languages</a></li>
-                            <li><a class="quick-nav-link" href="#education">Educations</a></li>
-                            <li><a class="quick-nav-link" href="#academic-achievements">Academic achievements</a></li>
-                            <li><a class="quick-nav-link" href="#skills-section">Skills</a></li>
-                            <li><a class="quick-nav-link" href="#experience-section">Experience</a></li>
-                            <li><a class="quick-nav-link" href="#projects-section">Projects</a></li>
-                            <li><a class="quick-nav-link" href="#resume">Resume</a></li>
+                        <ul class="quick-list">
+                            <li><a class="quick-nav-link active" href="#update-summary">Profile summary</a></li>
+                            <li><a class="quick-nav-link" href="#update-details">Personal details</a></li>
+                            <li><a class="quick-nav-link" href="#update-address">Address</a></li>
+                            <li><a class="quick-nav-link" href="#update-languages">Languages</a></li>
+                            <li><a class="quick-nav-link" href="#update-qualifications">Educations</a></li>
+                            <li><a class="quick-nav-link" href="#update-achievements">Academic achievements</a></li>
+                            <li><a class="quick-nav-link" href="#update-skills">Skills</a></li>
+                            <li><a class="quick-nav-link" href="#update-experience">Experience</a></li>
+                            <li><a class="quick-nav-link" href="#update-projects">Projects</a></li>
+                            <li><a class="quick-nav-link" href="#update-resume">Resume</a></li>
                         </ul>
                     </aside>
 
                     <div class="content-stack">
-                        <section class="info-card content-card" id="profile-summary-section"
-                            aria-labelledby="profileSummaryHeading">
+                        <section class="info-card content-card" id="update-summary">
                             <div class="card-head">
-                                <h3 id="profileSummaryHeading">Profile Summary</h3>
-                                <a class="text-link" id="summaryModalTrigger" href="#" aria-haspopup="dialog"
-                                    aria-controls="summaryModalOverlay">Edit</a>
+                                <h3>Profile Summary</h3>
+                                <a class="text-link">Edit</a>
                             </div>
-                            <p class="summary-copy" id="profileSummaryText">i am Java developer</p>
+                            <p class="helper-copy" id="summaryText" style="font-size:0.95rem; color:#212a45;">-</p>
                         </section>
 
-                        <section class="info-card content-card" id="personal-details"
-                            aria-labelledby="personalDetailsHeading">
+                        <section class="info-card content-card" id="update-details">
                             <div class="card-head">
-                                <h3 id="personalDetailsHeading">Personal details</h3>
-                                <a class="text-link" id="personalDetailsModalTrigger" href="#" aria-haspopup="dialog"
-                                    aria-controls="profileModalOverlay">Add</a>
+                                <h3>Personal details</h3>
+                                <a class="text-link">Edit</a>
                             </div>
                             <dl class="profile-data-grid">
                                 <div class="data-pair">
                                     <dt>Full name</dt>
-                                    <dd id="profileFullNameValue">Cyrus</dd>
-                                </div>
-                                <div class="data-pair">
-                                    <dt>Email</dt>
-                                    <dd>abc@gmail.com</dd>
-                                </div>
-                                <div class="data-pair">
-                                    <dt>Phone</dt>
-                                    <dd id="profilePhoneValue">+91 1234567890</dd>
-                                </div>
-                                <div class="data-pair">
-                                    <dt>Gender</dt>
-                                    <dd id="profileGenderValue">Male</dd>
-                                </div>
-                                <div class="data-pair">
-                                    <dt>Date of birth</dt>
-                                    <dd id="profileDobValue" class="empty-value">Not added</dd>
+                                    <dd id="cdName">-</dd>
                                 </div>
                                 <div class="data-pair">
                                     <dt>Category</dt>
-                                    <dd id="profileCategoryValue">Fresher</dd>
+                                    <dd id="cdCategory">-</dd>
+                                </div>
+                                <div class="data-pair">
+                                    <dt>Phone</dt>
+                                    <dd id="cdPhone">-</dd>
+                                </div>
+                                <div class="data-pair">
+                                    <dt>Gender</dt>
+                                    <dd id="cdGender">-</dd>
+                                </div>
+                                <div class="data-pair">
+                                    <dt>Date of birth</dt>
+                                    <dd id="cdDOB">-</dd>
                                 </div>
                             </dl>
                         </section>
 
-                        <section class="info-card content-card" id="address" aria-labelledby="addressHeading">
+                        <section class="info-card content-card" id="update-address">
                             <div class="card-head">
-                                <h3 id="addressHeading">Address</h3>
-                                <a class="text-link" id="addressModalTrigger" href="#" aria-haspopup="dialog"
-                                    aria-controls="profileModalOverlay">Add</a>
+                                <h3>Address</h3>
+                                <a class="text-link">Edit</a>
                             </div>
                             <dl class="profile-data-grid">
                                 <div class="data-pair">
                                     <dt>Street</dt>
-                                    <dd id="profileStreetValue" class="empty-value">Not added</dd>
+                                    <dd id="cdStreet">-</dd>
                                 </div>
                                 <div class="data-pair">
                                     <dt>City</dt>
-                                    <dd id="profileCityValue">Kolkata</dd>
+                                    <dd id="cdCity">-</dd>
                                 </div>
                                 <div class="data-pair">
                                     <dt>State</dt>
-                                    <dd id="profileStateValue">West Bengal</dd>
+                                    <dd id="cdState">-</dd>
                                 </div>
                                 <div class="data-pair">
                                     <dt>Country</dt>
-                                    <dd id="profileCountryValue">India</dd>
+                                    <dd id="cdCountry">-</dd>
                                 </div>
                                 <div class="data-pair">
                                     <dt>Pin code</dt>
-                                    <dd id="profilePinCodeValue">700091</dd>
+                                    <dd id="cdZip">-</dd>
                                 </div>
                             </dl>
                         </section>
 
-                        <section class="info-card content-card" id="languages" aria-labelledby="languagesHeading">
+                        <section class="info-card content-card" id="update-languages">
                             <div class="card-head">
-                                <h3 id="languagesHeading">Languages</h3>
-                                <a class="text-link" id="languagesModalTrigger" href="#" aria-haspopup="dialog"
-                                    aria-controls="languagesModalOverlay">Edit</a>
+                                <h3>Languages</h3>
+                                <a class="text-link">Edit</a>
                             </div>
-                            <div class="lang-list" id="languagesList" aria-live="polite"></div>
+                            <div class="lang-list" id="languagesList"></div>
                         </section>
 
-                        <section class="info-card content-card" id="education" aria-labelledby="educationHeading">
+                        <section class="info-card content-card" id="update-qualifications">
                             <div class="card-head">
-                                <h3 id="educationHeading">Educations</h3>
-                                <a class="text-link" href="#" aria-haspopup="dialog"
-                                    aria-controls="educationModalOverlay">Add</a>
+                                <h3>Educations</h3>
+                                <a class="text-link">Add</a>
                             </div>
-                            <div class="record-list">
-                                <article class="record-item">
-                                    <div>
-                                        <p class="record-title" id="educationRecordTitle">BCA - Bachelor of Computer
-                                            Applications</p>
-                                        <p class="record-meta" id="educationRecordMeta">Brainware University, Kolkata
-                                        </p>
-                                    </div>
-                                    <p class="record-year" id="educationRecordYear">Passing year: 2028</p>
-                                </article>
-                                <article class="record-item">
-                                    <div>
-                                        <p class="record-title">Higher Secondary</p>
-                                        <p class="record-meta">WBCHSE, Kolkata</p>
-                                    </div>
-                                    <p class="record-year">Passing year: 2024</p>
-                                </article>
-                            </div>
+                            <div class="record-list" id="qualificationsList"></div>
                         </section>
 
-                        <section class="info-card content-card" id="academic-achievements"
-                            aria-labelledby="academicAchievementsHeading">
+                        <section class="info-card content-card" id="update-achievements">
                             <div class="card-head">
-                                <h3 id="academicAchievementsHeading">Academic achievements</h3>
-                                <a class="text-link" id="achievementsModalTrigger" href="#" aria-haspopup="dialog"
-                                    aria-controls="achievementsModalOverlay">Edit</a>
+                                <h3>Academic achievements</h3>
+                                <a class="text-link">Edit</a>
                             </div>
-                            <div class="achievement-list" id="academicAchievementsList" aria-live="polite"></div>
+                            <div class="record-list" id="achievementsList"></div>
                         </section>
 
-                        <section class="info-card content-card" id="skills-section" aria-labelledby="skillsHeading">
+                        <section class="info-card content-card" id="update-skills">
                             <div class="card-head">
-                                <h3 id="skillsHeading">Skills</h3>
-                                <a class="text-link test link" id="skills" href="#" aria-haspopup="dialog"
-                                    aria-controls="skillsModalOverlay">Add</a>
+                                <h3>Skills</h3>
+                                <a class="text-link">Edit</a>
                             </div>
-                            <div class="skill-list" id="profileSkillsList">
-                                <span class="skill-pill">Java</span>
-                                <span class="skill-pill">Java Developer</span>
-                                <span class="skill-pill">Java Development</span>
-                                <span class="skill-pill">Java Programming</span>
-                            </div>
+                            <div class="skill-list" id="skillsList"></div>
                         </section>
 
-                        <section class="info-card content-card" id="experience-section"
-                            aria-labelledby="experienceHeading">
+                        <section class="info-card content-card" id="update-experience">
                             <div class="card-head">
-                                <h3 id="experienceHeading">Experience</h3>
-                                <a class="text-link test-link" id="experience" href="#" aria-haspopup="dialog"
-                                    aria-controls="experienceModalOverlay">Add</a>
+                                <h3>Experience</h3>
+                                <a class="text-link">Add</a>
                             </div>
-                            <div class="record-list">
-                                <article class="record-item record-item--detail experience-record" data-experience-edit
-                                    tabindex="0" role="button"
-                                    aria-label="Edit experience Frontend Intern at Campus Project Lab">
-                                    <div class="experience-record-main">
-                                        <div>
-                                            <p class="record-title" id="experienceRoleValue">Frontend Intern</p>
-                                            <p class="record-meta" id="experienceCompanyValue">Campus Project Lab</p>
-                                        </div>
-                                        <button class="experience-remove-button" type="button" data-experience-remove
-                                            aria-label="Remove experience">
-                                            <svg viewBox="0 0 24 24" aria-hidden="true">
-                                                <path d="M4 7h16"></path>
-                                                <path d="M9 7V5h6v2"></path>
-                                                <path d="M7 7l1 12h8l1-12"></path>
-                                                <path d="M10 11v5"></path>
-                                                <path d="M14 11v5"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <p class="record-year" id="experienceTimespanValue">May 2025 - July 2025</p>
-                                    <p class="helper-copy" id="experienceDescriptionValue">Worked on responsive profile
-                                        pages, improved form usability,
-                                        and supported dashboard cleanup for student-facing flows.</p>
-                                </article>
-                                <article class="record-item record-item--detail">
-                                    <div>
-                                        <p class="record-title">Open to opportunities</p>
-                                        <p class="record-meta">Full-time roles and internships</p>
-                                    </div>
-                                    <p class="helper-copy">Add your next internship or job experience here with role,
-                                        duration, and key contributions.</p>
-                                </article>
-                            </div>
+                            <div class="record-list" id="experienceList"></div>
                         </section>
 
-                        <section class="info-card content-card" id="projects-section" aria-labelledby="projectsHeading">
+                        <section class="info-card content-card" id="update-projects">
                             <div class="card-head">
-                                <h3 id="projectsHeading">Projects</h3>
-                                <a class="text-link test link" id="projects" href="#" aria-haspopup="dialog"
-                                    aria-controls="projectsModalOverlay">Add</a>
+                                <h3>Projects</h3>
+                                <a class="text-link">Add</a>
                             </div>
-                            <div class="record-list">
-                                <article class="record-item record-item--detail">
-                                    <div>
-                                        <p class="record-title" id="projectNameValue">Job Portal Dashboard</p>
-                                        <p class="record-meta" id="projectSkillsValue">HTML, CSS, JavaScript</p>
-                                    </div>
-                                    <p class="record-year" id="projectDurationValue">January 2025 - April 2025</p>
-                                    <p class="helper-copy" id="projectDescriptionValue">Built a clean candidate
-                                        dashboard with sticky navigation,
-                                        profile cards, and responsive quick-link navigation for editing profile data.
-                                    </p>
-                                    <p class="record-meta" id="projectUrlValue">https://example.com/job-portal-dashboard
-                                    </p>
-                                </article>
-                                <article class="record-item record-item--detail">
-                                    <div>
-                                        <p class="record-title">Student Resume Builder</p>
-                                        <p class="record-meta">JavaScript UI prototype</p>
-                                    </div>
-                                    <p class="helper-copy">Designed a resume creation flow with editable blocks, preview
-                                        states, and guided content prompts for campus hiring use cases.</p>
-                                </article>
-                            </div>
+                            <div class="record-list" id="projectsList"></div>
                         </section>
 
-                        <section class="info-card content-card resume-card" id="resume" aria-labelledby="resumeHeading">
+                        <section class="info-card content-card" id="update-resume">
                             <div class="card-head">
-                                <h3 id="resumeHeading">Resume</h3>
+                                <h3>Resume</h3>
                             </div>
-                            <p class="helper-copy">Your resume is the first impression you make on potential employers.
-                                Craft it carefully to secure your desired job or internship.</p>
-                            <div id="resumeDisplay"></div>
-                            <div class="resume-dropzone" id="resumeUploadState">
-                                <button class="outline-button" id="uploadResumeBtn" type="button">Upload resume</button>
-                                <input type="file" id="resumeInput" hidden accept=".pdf,.doc,.docx,.rtf">
-                                <p>Supported formats: doc, docx, rtf, pdf, up to 2MB</p>
+                            <div id="resumeDisplay" style="margin-bottom: 16px;"></div>
+                            <div class="resume-dropzone">
+                                <button class="outline-button">Upload resume</button>
+                                <input type="file" id="resumeInput" hidden accept=".pdf,.doc,.docx">
+                                <p class="helper-copy">Supported formats: doc, docx, pdf, up to 2MB</p>
                             </div>
                         </section>
                     </div>
                 </div>
             </div>
 
-            <div class="tab-panel" id="panel-insights" data-tab-panel role="tabpanel" aria-labelledby="tab-insights">
+            <div class="tab-panel" id="panel-insights" data-tab-panel>
                 <section class="info-card insights-card">
                     <div class="card-head">
                         <h3>Activity insights</h3>
@@ -469,23 +293,22 @@
             </div>
         </section>
     </main>
-    <br>
+
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-brand-block">
-                <a class="brand footer-brand" href="#" aria-label="Naukri Campus home">
-                    <svg viewBox="0 0 36 36" aria-hidden="true">
+                <a class="brand footer-brand" href="#">
+                    <svg viewBox="0 0 36 36">
                         <circle cx="18" cy="18" r="17" fill="currentColor"></circle>
                         <path
                             d="M16.2 7.8c-4.4.7-8 4.3-8.7 8.7 2.5-1.6 5.9-1.4 8.2.8 2.3 2.3 2.5 5.7.8 8.2 4.4-.7 8-4.3 8.7-8.7-2.5 1.6-5.9 1.4-8.2-.8-2.3-2.3-2.5-5.7-.8-8.2Z"
                             fill="#fff"></path>
                         <circle cx="18" cy="18" r="4.1" fill="#fff"></circle>
                     </svg>
-                    <span class="brand-wordmark"><span class="brand-blue">naukri</span><span class="brand-orange">
-                            campus</span></span>
+                    <span class="brand-wordmark"><span class="brand-blue">naukri</span><span
+                            class="brand-orange">campus</span></span>
                 </a>
             </div>
-
             <div class="footer-links">
                 <div>
                     <a href="#">About us</a>
@@ -505,141 +328,91 @@
         </div>
     </footer>
 
-    <div class="photo-overlay" id="photoModalOverlay" hidden>
-        <section class="photo-modal" role="dialog" aria-modal="true" aria-labelledby="photoModalTitle"
-            aria-describedby="photoModalSubtitle">
-            <div class="photo-modal-header">
-                <button class="photo-modal-close" type="button" aria-label="Close photo upload modal" data-photo-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
-                <h2 class="photo-modal-title" id="photoModalTitle">Upload a recent photo</h2>
-                <p class="photo-modal-subtitle" id="photoModalSubtitle">Photo enhances memorability, and helps you
-                    demonstrate professionalism</p>
-            </div>
-
-            <div class="photo-preview">
-                <div class="photo-preview-circle" id="photoPreviewCircle" aria-hidden="true"></div>
-            </div>
-
-            <div class="photo-actions">
-                <button class="change-photo-btn" id="changePhotoBtn" type="button">Change photo</button>
-                <button class="delete-photo-link" id="deletePhotoBtn" type="button">Delete photo</button>
-            </div>
-
-            <p class="photo-note">Supported file format: png, jpg, jpeg, gif - up to 2MB</p>
-            <input type="file" id="profilePhotoInput" hidden
-                accept=".png,.jpg,.jpeg,.gif,image/png,image/jpeg,image/gif">
-        </section>
-    </div>
-
+    <!-- PROFILE DRAWER -->
     <div class="profile-overlay" id="profileDrawerOverlay" hidden>
-        <aside class="profile-drawer" role="dialog" aria-modal="true" aria-labelledby="profileDrawerTitle">
-            <button class="drawer-close" type="button" aria-label="Close profile panel" data-profile-drawer-close>
+        <aside class="profile-drawer">
+            <button class="drawer-close">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M6 6 18 18"></path>
                     <path d="M18 6 6 18"></path>
                 </svg>
             </button>
-
-            <div class="profile-drawer-summary">
-                <div class="profile-header">
-                    <div class="profile-avatar-block">
-                        <div class="profile-avatar">
-                            <div class="profile-avatar-inner" aria-hidden="true">
-                                <span class="profile-avatar-head"></span>
-                                <span class="profile-avatar-body"></span>
-                            </div>
+            <div class="profile-header">
+                <div class="profile-avatar-block">
+                    <div class="profile-avatar" id="drawerRing">
+                        <div class="profile-avatar-inner">
+                            <span class="profile-avatar-head"></span>
+                            <span class="profile-avatar-body"></span>
                         </div>
-                        <span class="profile-avatar-progress">40%</span>
                     </div>
-
-                    <div class="profile-info">
-                        <h2 class="profile-name" id="profileDrawerTitle">Cyrus</h2>
-                        <p class="profile-subtitle">BCA - Bachelor of Computer Applications Web Development at...</p>
-                        <a class="profile-link" href="#personal-details">View &amp; Update Profile</a>
-                    </div>
+                    <span class="profile-avatar-progress" id="drawerPercentage">0%</span>
                 </div>
-
-                <div class="profile-drawer-divider" aria-hidden="true"></div>
-
-                <section class="profile-performance" aria-labelledby="profilePerformanceHeading">
-                    <div class="profile-performance-head">
-                        <h3 id="profilePerformanceHeading">Your profile performance</h3>
-                        <span>Last 90 days</span>
-                    </div>
-
-                    <div class="performance-card">
-                        <article class="performance-item">
-                            <p class="performance-value">0</p>
-                            <p class="performance-label">Search Appearances</p>
-                            <a href="#">View all</a>
-                        </article>
-                        <article class="performance-item">
-                            <p class="performance-value">0</p>
-                            <p class="performance-label">Recruiter Actions</p>
-                            <a href="#">View all</a>
-                        </article>
-                    </div>
-                </section>
-
-                <nav class="profile-menu-list" aria-label="Profile drawer actions">
-                    <a class="menu-item" href="#">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M4 7h16"></path>
-                            <path d="M4 12h16"></path>
-                            <path d="M4 17h16"></path>
-                            <path d="M8 4v16"></path>
-                        </svg>
-                        <span>Career guidance</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <circle cx="12" cy="12" r="3.2"></circle>
-                            <path
-                                d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.4 1a7.9 7.9 0 0 0-2.1-1.2L14 3h-4l-.4 2.7a7.9 7.9 0 0 0-2.1 1.2l-2.4-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.4-1a7.9 7.9 0 0 0 2.1 1.2L10 21h4l.4-2.7a7.9 7.9 0 0 0 2.1-1.2l2.4 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2Z">
-                            </path>
-                        </svg>
-                        <span>Settings</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <circle cx="12" cy="12" r="9"></circle>
-                            <path d="M9.1 9a3 3 0 1 1 5.5 1.6c-.9 1.1-1.8 1.6-1.8 2.9"></path>
-                            <circle cx="12" cy="17" r="1"></circle>
-                        </svg>
-                        <span>FAQs</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M10 17 15 12 10 7"></path>
-                            <path d="M15 12H4"></path>
-                            <path d="M12 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"></path>
-                        </svg>
-                        <span>Logout</span>
-                    </a>
-                </nav>
+                <div class="profile-info">
+                    <h2 class="profile-name" id="drawerProfileName">Name</h2>
+                    <p class="profile-subtitle" id="drawerProfileSubtitle">Degree at Institution</p>
+                    <a class="profile-link" href="#update-details">View &amp; Update Profile</a>
+                </div>
             </div>
+            <div class="profile-drawer-divider"></div>
+            <section class="profile-performance">
+                <div class="profile-performance-head">
+                    <h3>Your profile performance</h3>
+                    <span>Last 90 days</span>
+                </div>
+                <div class="performance-card">
+                    <article class="performance-item">
+                        <p class="performance-value">0</p>
+                        <p class="performance-label">Search Appearances</p>
+                        <a href="#">View all</a>
+                    </article>
+                    <article class="performance-item">
+                        <p class="performance-value">0</p>
+                        <p class="performance-label">Recruiter Actions</p>
+                        <a href="#">View all</a>
+                    </article>
+                </div>
+            </section>
+            <nav class="profile-menu-list">
+                <a class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                        <path d="M4 7h16"></path>
+                        <path d="M4 12h16"></path>
+                        <path d="M4 17h16"></path>
+                        <path d="M8 4v16"></path>
+                    </svg><span>Career guidance</span></a>
+                <a class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3.2"></circle>
+                        <path
+                            d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.4 1a7.9 7.9 0 0 0-2.1-1.2L14 3h-4l-.4 2.7a7.9 7.9 0 0 0-2.1 1.2l-2.4-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.4-1a7.9 7.9 0 0 0 2.1 1.2L10 21h4l.4-2.7a7.9 7.9 0 0 0 2.1-1.2l2.4 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2Z">
+                        </path>
+                    </svg><span>Settings</span></a>
+                <a class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M9.1 9a3 3 0 1 1 5.5 1.6c-.9 1.1-1.8 1.6-1.8 2.9"></path>
+                        <circle cx="12" cy="17" r="1"></circle>
+                    </svg><span>FAQs</span></a>
+                <a class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                        <path d="M10 17 15 12 10 7"></path>
+                        <path d="M15 12H4"></path>
+                        <path d="M12 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"></path>
+                    </svg><span>Logout</span></a>
+            </nav>
         </aside>
     </div>
 
+    <!-- NOTIFICATIONS DRAWER -->
     <div class="notifications-overlay" id="notificationsOverlay" hidden>
-        <aside class="notifications-drawer" role="dialog" aria-modal="true" aria-labelledby="notificationsTitle">
+        <aside class="notifications-drawer">
             <div class="notifications-header">
-                <h2 class="notifications-title" id="notificationsTitle">Notifications</h2>
-                <button class="notifications-close" type="button" aria-label="Close notifications"
-                    data-notifications-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                <h2 class="notifications-title">Notifications</h2>
+                <button class="notifications-close">
+                    <svg viewBox="0 0 24 24">
                         <path d="M6 6 18 18"></path>
                         <path d="M18 6 6 18"></path>
                     </svg>
                 </button>
             </div>
-
             <div class="notifications-body">
-                <div class="notification-illustration" aria-hidden="true">
+                <div class="notification-illustration">
                     <svg viewBox="0 0 120 120">
                         <circle cx="84" cy="38" r="9" class="notification-dot"></circle>
                         <path
@@ -653,628 +426,257 @@
                 <p class="notification-message">Haven't got any notifications?</p>
                 <p class="notification-subtext">You will soon get notifications. Meanwhile, browse relevant jobs on
                     Naukri.</p>
-                <button class="notifications-cta" type="button">Go to recommendations</button>
+                <button class="notifications-cta">Go to recommendations</button>
             </div>
         </aside>
     </div>
 
-    <div class="education-overlay" id="educationModalOverlay" hidden>
-        <section class="education-modal" role="dialog" aria-modal="true" aria-labelledby="educationModalTitle">
-            <div class="education-modal-header">
-                <h2 class="education-modal-title" id="educationModalTitle">Edit education</h2>
-                <button class="education-modal-close" type="button" aria-label="Close education modal"
-                    data-education-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
-            </div>
+    <!-- MODALS -->
 
-            <form class="education-modal-form" id="educationModalForm">
-                <div class="education-modal-body">
-                    <div class="form-group">
-                        <label class="field-label" for="educationSchoolInput">School*</label>
-                        <input class="text-input education-input" id="educationSchoolInput" name="school" type="text"
-                            value="Universidade Federal do ABC" autocomplete="organization">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="field-label" for="educationDegreeInput">Degree</label>
-                        <input class="text-input education-input" id="educationDegreeInput" name="degree" type="text"
-                            value="Bachelor of Computer Application (Hons.)" autocomplete="organization-title">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="field-label" for="educationFieldInput">Field of study</label>
-                        <input class="text-input education-input" id="educationFieldInput" name="fieldOfStudy"
-                            type="text" value="Computer Science">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="field-label">Start date</label>
-                        <div class="form-row">
-                            <div class="form-subgroup">
-                                <label class="field-sublabel" for="educationStartMonth">Month</label>
-                                <div class="select-wrap">
-                                    <select class="select-input" id="educationStartMonth" name="startMonth">
-                                        <option>January</option>
-                                        <option>February</option>
-                                        <option>March</option>
-                                        <option>April</option>
-                                        <option>May</option>
-                                        <option>June</option>
-                                        <option>July</option>
-                                        <option selected>August</option>
-                                        <option>September</option>
-                                        <option>October</option>
-                                        <option>November</option>
-                                        <option>December</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-subgroup">
-                                <label class="field-sublabel" for="educationStartYear">Year</label>
-                                <div class="select-wrap">
-                                    <select class="select-input" id="educationStartYear" name="startYear">
-                                        <option>2022</option>
-                                        <option>2023</option>
-                                        <option selected>2024</option>
-                                        <option>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option>2028</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="field-label">End date (or expected)</label>
-                        <div class="form-row">
-                            <div class="form-subgroup">
-                                <label class="field-sublabel" for="educationEndMonth">Month</label>
-                                <div class="select-wrap">
-                                    <select class="select-input" id="educationEndMonth" name="endMonth">
-                                        <option>January</option>
-                                        <option>February</option>
-                                        <option>March</option>
-                                        <option>April</option>
-                                        <option>May</option>
-                                        <option>June</option>
-                                        <option>July</option>
-                                        <option selected>August</option>
-                                        <option>September</option>
-                                        <option>October</option>
-                                        <option>November</option>
-                                        <option>December</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-subgroup">
-                                <label class="field-sublabel" for="educationEndYear">Year</label>
-                                <div class="select-wrap">
-                                    <select class="select-input" id="educationEndYear" name="endYear">
-                                        <option>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option selected>2028</option>
-                                        <option>2029</option>
-                                        <option>2030</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="field-label" for="educationGradeInput">Grade</label>
-                        <input class="text-input education-input" id="educationGradeInput" name="grade" type="text"
-                            value="" maxlength="80">
-                        <p class="char-count" data-counter-for="educationGradeInput">0/80</p>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="field-label" for="educationActivitiesInput">Activities and societies</label>
-                        <textarea class="textarea-input" id="educationActivitiesInput" name="activities" rows="5"
-                            maxlength="500" placeholder="Ex: Alpha Phi Omega, Marching Band, Volleyball"></textarea>
-                        <p class="char-count" data-counter-for="educationActivitiesInput">0/500</p>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="field-label" for="educationDescriptionInput">Description</label>
-                        <textarea class="textarea-input textarea-input--large" id="educationDescriptionInput"
-                            name="description" rows="6" maxlength="2000"></textarea>
-                        <p class="char-count" data-counter-for="educationDescriptionInput">0/2000</p>
-                    </div>
-                </div>
-
-                <div class="education-modal-footer">
-                    <button class="delete-link" type="button">Delete education</button>
-                    <button class="save-button" type="submit">Save</button>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    <div class="experience-overlay" id="experienceModalOverlay" hidden>
-        <section class="experience-modal" role="dialog" aria-modal="true" aria-labelledby="experienceModalTitle">
-            <div class="experience-modal-header">
-                <h2 class="experience-modal-title" id="experienceModalTitle">Experience</h2>
-                <button class="experience-modal-close" type="button" aria-label="Close experience modal"
-                    data-experience-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <form class="experience-modal-form" id="experienceModalForm">
-                <div class="experience-modal-body">
-                    <div class="experience-grid">
-                        <div class="form-group">
-                            <label class="field-label" for="experienceRoleInput">Role</label>
-                            <input class="text-input experience-input" id="experienceRoleInput" name="role" type="text"
-                                placeholder="Frontend Intern" autocomplete="organization-title">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="field-label" for="experienceCompanyInput">Company / Organization</label>
-                            <input class="text-input experience-input" id="experienceCompanyInput" name="company"
-                                type="text" placeholder="Campus Project Lab" autocomplete="organization">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="field-label">Time-span</label>
-                        <div class="experience-timespan-grid">
-                            <div class="form-subgroup">
-                                <label class="field-sublabel" for="experienceStartMonth">Start month</label>
-                                <div class="select-wrap">
-                                    <select class="select-input experience-select" id="experienceStartMonth"
-                                        name="startMonth">
-                                        <option>January</option>
-                                        <option>February</option>
-                                        <option>March</option>
-                                        <option>April</option>
-                                        <option selected>May</option>
-                                        <option>June</option>
-                                        <option>July</option>
-                                        <option>August</option>
-                                        <option>September</option>
-                                        <option>October</option>
-                                        <option>November</option>
-                                        <option>December</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-subgroup">
-                                <label class="field-sublabel" for="experienceStartYear">Start year</label>
-                                <div class="select-wrap">
-                                    <select class="select-input experience-select" id="experienceStartYear"
-                                        name="startYear">
-                                        <option>2023</option>
-                                        <option>2024</option>
-                                        <option selected>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option>2028</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-subgroup">
-                                <label class="field-sublabel" for="experienceEndMonth">End month</label>
-                                <div class="select-wrap">
-                                    <select class="select-input experience-select" id="experienceEndMonth"
-                                        name="endMonth">
-                                        <option>January</option>
-                                        <option>February</option>
-                                        <option>March</option>
-                                        <option>April</option>
-                                        <option>May</option>
-                                        <option>June</option>
-                                        <option selected>July</option>
-                                        <option>August</option>
-                                        <option>September</option>
-                                        <option>October</option>
-                                        <option>November</option>
-                                        <option>December</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-subgroup">
-                                <label class="field-sublabel" for="experienceEndYear">End year</label>
-                                <div class="select-wrap">
-                                    <select class="select-input experience-select" id="experienceEndYear"
-                                        name="endYear">
-                                        <option>2023</option>
-                                        <option>2024</option>
-                                        <option selected>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option>2028</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="field-label" for="experienceDescriptionInput">Work description</label>
-                        <textarea class="textarea-input textarea-input--large experience-textarea"
-                            id="experienceDescriptionInput" name="description" rows="7"
-                            placeholder="Describe what kind of work you did, tools used, responsibilities, and achievements..."></textarea>
-                    </div>
-                </div>
-
-                <div class="experience-modal-footer">
-                    <button class="btn-cancel" type="button" data-experience-close>Cancel</button>
-                    <button class="btn-save experience-save" type="submit">Save</button>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    <div class="projects-overlay" id="projectsModalOverlay" hidden>
-        <section class="projects-modal" role="dialog" aria-modal="true" aria-labelledby="projectsModalTitle"
-            aria-describedby="projectsModalSubtitle">
-            <div class="projects-modal-header">
-                <div>
-                    <h2 class="projects-modal-title" id="projectsModalTitle">Projects</h2>
-                    <p class="projects-modal-subtitle" id="projectsModalSubtitle">Showcase your talent with the best
-                        projects you have worked on during college and work</p>
-                </div>
-                <button class="projects-modal-close" type="button" aria-label="Close projects modal"
-                    data-projects-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <form class="projects-modal-form" id="projectsModalForm">
-                <div class="projects-modal-body">
-                    <div class="form-group">
-                        <label class="field-label" for="projectNameInput">Project name</label>
-                        <input class="text-input projects-input" id="projectNameInput" name="projectName" type="text"
-                            placeholder="Enter the name of the project you worked on" autocomplete="off">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="field-label">Project duration</label>
-                        <div class="projects-duration-row">
-                            <div class="projects-duration-group">
-                                <div class="select-wrap">
-                                    <select class="select-input projects-select" id="projectStartMonth"
-                                        name="startMonth">
-                                        <option value="">Month</option>
-                                        <option>January</option>
-                                        <option>February</option>
-                                        <option>March</option>
-                                        <option>April</option>
-                                        <option>May</option>
-                                        <option>June</option>
-                                        <option>July</option>
-                                        <option>August</option>
-                                        <option>September</option>
-                                        <option>October</option>
-                                        <option>November</option>
-                                        <option>December</option>
-                                    </select>
-                                </div>
-                                <div class="select-wrap">
-                                    <select class="select-input projects-select" id="projectStartYear" name="startYear">
-                                        <option value="">Year</option>
-                                        <option>2023</option>
-                                        <option>2024</option>
-                                        <option>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option>2028</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <span class="inline-separator">to</span>
-
-                            <div class="projects-duration-group">
-                                <div class="select-wrap">
-                                    <select class="select-input projects-select" id="projectEndMonth" name="endMonth">
-                                        <option value="">Month</option>
-                                        <option>January</option>
-                                        <option>February</option>
-                                        <option>March</option>
-                                        <option>April</option>
-                                        <option>May</option>
-                                        <option>June</option>
-                                        <option>July</option>
-                                        <option>August</option>
-                                        <option>September</option>
-                                        <option>October</option>
-                                        <option>November</option>
-                                        <option>December</option>
-                                    </select>
-                                </div>
-                                <div class="select-wrap">
-                                    <select class="select-input projects-select" id="projectEndYear" name="endYear">
-                                        <option value="">Year</option>
-                                        <option>2023</option>
-                                        <option>2024</option>
-                                        <option>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option>2028</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="field-label" for="projectDescriptionInput">Describe what the project was
-                            about</label>
-                        <textarea class="textarea-input projects-textarea" id="projectDescriptionInput"
-                            name="description" rows="7" maxlength="1000"
-                            placeholder="Enter your learnings throughout the process of making the project and what you liked the most about it"></textarea>
-                        <p class="char-count" data-counter-for="projectDescriptionInput">0/1000</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="field-label" for="projectSkillsInput">Key skills used in the project
-                            (optional)</label>
-                        <input class="text-input projects-input" id="projectSkillsInput" name="skills" type="text"
-                            placeholder="Enter keyskills used in the project." autocomplete="off">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="field-label" for="projectUrlInput">Project URL (optional)</label>
-                        <input class="text-input projects-input" id="projectUrlInput" name="projectUrl" type="url"
-                            placeholder="Enter the website link of your project" autocomplete="url">
-                    </div>
-                </div>
-
-                <div class="projects-modal-footer">
-                    <button class="btn-cancel" type="button" data-projects-close>Cancel</button>
-                    <button class="btn-save projects-save" type="submit">Save</button>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    <div class="skills-overlay" id="skillsModalOverlay" hidden>
-        <section class="skills-modal" role="dialog" aria-modal="true" aria-labelledby="skillsModalTitle"
-            aria-describedby="skillsModalSubtitle">
-            <div class="skills-modal-header">
-                <div>
-                    <h2 class="skills-modal-title" id="skillsModalTitle">Key skills</h2>
-                    <p class="skills-modal-subtitle" id="skillsModalSubtitle">Recruiters look for candidates with
-                        specific keyskills. Add them here to appear in searches.</p>
-                </div>
-                <button class="skills-modal-close" type="button" aria-label="Close key skills modal" data-skills-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <form class="skills-modal-form" id="skillsModalForm">
-                <div class="skills-box">
-                    <div class="skills-chip-list" id="skillsChipList" aria-live="polite"></div>
-                    <div class="skills-input-row">
-                        <label class="sr-only" for="skillsInput">Enter your key skills</label>
-                        <input class="skills-input" id="skillsInput" name="skillsInput" type="text" autocomplete="off">
-                        <span class="skills-placeholder" id="skillsPlaceholder">Enter your key skills</span>
-                    </div>
-                </div>
-
-                <div class="skills-modal-footer">
-                    <button class="btn-cancel" type="button" data-skills-close>Cancel</button>
-                    <button class="btn-save" type="submit">Save</button>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    <div class="modal-overlay" id="languagesModalOverlay" hidden>
-        <section class="profile-modal languages-modal" role="dialog" aria-modal="true"
-            aria-labelledby="languagesModalTitle">
+    <div class="modal-overlay" id="detailsModal">
+        <div class="profile-modal">
             <div class="modal-header">
-                <h2 class="modal-title" id="languagesModalTitle">Update Languages</h2>
-                <button class="modal-close" type="button" aria-label="Close languages modal" data-languages-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
+                <h2 class="modal-title">Update Personal Details</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
             </div>
-
-            <form class="modal-form" id="languagesModalForm">
+            <form class="modal-form">
                 <div class="form-group">
-                    <label class="form-label" for="languagesInput">Languages (Press Enter to add)</label>
-                    <div class="tag-input-container" id="languagesTagContainer">
-                        <div class="tag-chip-list" id="languagesChipList" aria-live="polite"></div>
-                        <input type="text" id="languagesInput" name="languagesInput" autocomplete="off"
-                            placeholder="Type a language">
-                    </div>
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="text-input" id="inpName" required>
                 </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" data-languages-close>Cancel</button>
-                    <button type="submit" class="btn-save">Save</button>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    <div class="modal-overlay" id="summaryModalOverlay" hidden>
-        <section class="profile-modal summary-modal" role="dialog" aria-modal="true"
-            aria-labelledby="summaryModalTitle">
-            <div class="modal-header">
-                <h2 class="modal-title" id="summaryModalTitle">Update Summary</h2>
-                <button class="modal-close" type="button" aria-label="Close summary modal" data-summary-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <form class="modal-form" id="summaryModalForm">
                 <div class="form-group">
-                    <label class="form-label" for="summaryInput">Professional Summary</label>
-                    <textarea class="textarea-input summary-textarea" id="summaryInput" name="summaryInput"
-                        rows="5"></textarea>
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" class="text-input" id="inpPhone" required>
                 </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" data-summary-close>Cancel</button>
-                    <button type="submit" class="btn-save">Save</button>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    <div class="modal-overlay" id="achievementsModalOverlay" hidden>
-        <section class="profile-modal achievements-modal" role="dialog" aria-modal="true"
-            aria-labelledby="achievementsModalTitle">
-            <div class="modal-header">
-                <h2 class="modal-title" id="achievementsModalTitle">Update Achievements</h2>
-                <button class="modal-close" type="button" aria-label="Close achievements modal" data-achievements-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <form class="modal-form" id="achievementsModalForm">
                 <div class="form-group">
-                    <label class="form-label" for="achievementsInput">Achievements (Press Enter to add)</label>
-                    <div class="tag-input-container">
-                        <div class="tag-chip-list" id="achievementsChipList" aria-live="polite"></div>
-                        <input type="text" id="achievementsInput" name="achievementsInput" autocomplete="off"
-                            placeholder="Type an achievement">
-                    </div>
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" class="text-input" id="inpDOB" required>
                 </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" data-achievements-close>Cancel</button>
-                    <button type="submit" class="btn-save">Save</button>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    <div class="modal-overlay" id="profileModalOverlay" hidden>
-        <section class="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
-            <div class="modal-header">
-                <h2 class="modal-title" id="profileModalTitle">All about you</h2>
-                <button class="modal-close" type="button" aria-label="Close edit profile modal" data-modal-close>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M6 6 18 18"></path>
-                        <path d="M18 6 6 18"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <form class="modal-form" id="profileModalForm">
-                <div class="form-group">
-                    <label class="form-label" for="fullNameInput">Full name</label>
-                    <input class="text-input" id="fullNameInput" name="fullName" type="text" value="Cyrus"
-                        autocomplete="name">
-                </div>
-
                 <fieldset class="form-group">
                     <legend class="form-label">Gender</legend>
-                    <div class="chip-group" role="radiogroup" aria-label="Gender">
-                        <label class="chip">
-                            <input type="radio" name="gender" value="Male" checked>
-                            <span>Male</span>
-                        </label>
-                        <label class="chip">
-                            <input type="radio" name="gender" value="Female">
-                            <span>Female</span>
-                        </label>
-                        <label class="chip">
-                            <input type="radio" name="gender" value="Transgender">
-                            <span>Transgender</span>
-                        </label>
+                    <div class="chip-group">
+                        <label class="chip"><input type="radio" name="inpGender" value="Male"><span>Male</span></label>
+                        <label class="chip"><input type="radio" name="inpGender"
+                                value="Female"><span>Female</span></label>
+                        <label class="chip"><input type="radio" name="inpGender"
+                                value="Other"><span>Other</span></label>
                     </div>
                 </fieldset>
-
-                <div class="form-group">
-                    <label class="form-label" for="birthDate">Date of birth (DD/MM/YYYY)</label>
-                    <input class="text-input" type="text" id="birthDate" name="birthDate" placeholder="DD/MM/YYYY"
-                        maxlength="10" inputmode="numeric" autocomplete="off" class="fn-inp-md reachable">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="mobileInput">Mobile number</label>
-                    <input class="text-input" id="mobileInput" name="mobileNumber" type="text" value="+91 1234567890"
-                        inputmode="tel" autocomplete="tel">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="Email">Email</label>
-                    <input class="text-input" id="Email" name="mobileNumber" type="email" value="abc@gmail.com"
-                        inputmode="email" autocomplete="email">
-                </div>
-
                 <fieldset class="form-group">
                     <legend class="form-label">Category</legend>
-                    <div class="chip-group" role="radiogroup" aria-label="Category">
-                        <label class="chip">
-                            <input type="radio" name="category" value="Fresher" checked>
-                            <span>Fresher</span>
-                        </label>
-                        <label class="chip">
-                            <input type="radio" name="category" value="Experienced">
-                            <span>Experienced</span>
-                        </label>
+                    <div class="chip-group">
+                        <label class="chip"><input type="radio" name="inpCategory"
+                                value="Fresher"><span>Fresher</span></label>
+                        <label class="chip"><input type="radio" name="inpCategory"
+                                value="Experienced"><span>Experienced</span></label>
                     </div>
                 </fieldset>
-
-                <div class="form-group">
-                    <label class="form-label" for="StateInput">State</label>
-                    <input class="text-input" id="StateInput" name="state" type="text" value="West Bengal"
-                        placeholder="Enter your state" autocomplete="address-level1">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="cityInput">City</label>
-                    <input class="text-input" id="cityInput" name="city" type="text" value="Kolkata"
-                        placeholder="Enter your city" autocomplete="address-level2">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="streetInput">Street</label>
-                    <input class="text-input" id="streetInput" name="street" type="text" value=""
-                        placeholder="Enter your street address" autocomplete="street-address">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="pinCodeInput">Pin Code</label>
-                    <input class="text-input" id="pinCodeInput" name="pinCode" type="text" value="700091"
-                        placeholder="Enter your pin code" autocomplete="postal-code" inputmode="numeric">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="CountryInput">Country</label>
-                    <input class="text-input" id="CountryInput" name="country" type="text" value="India"
-                        placeholder="Enter your country" autocomplete="country-name">
-                </div>
-
                 <div class="modal-actions">
-                    <button class="btn-cancel" type="button" data-modal-close>Cancel</button>
-                    <button class="btn-save" type="submit">Save</button>
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
                 </div>
             </form>
-        </section>
+        </div>
     </div>
+
+    <div class="modal-overlay" id="addressModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Address</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
+            </div>
+            <form class="modal-form">
+                <div class="form-group"><label class="form-label">Street</label><input type="text" class="text-input"
+                        id="inpStreet" required></div>
+                <div class="form-group"><label class="form-label">City</label><input type="text" class="text-input"
+                        id="inpCity" required></div>
+                <div class="form-group"><label class="form-label">State</label><input type="text" class="text-input"
+                        id="inpState" required></div>
+                <div class="form-group"><label class="form-label">Zip Code</label><input type="text" class="text-input"
+                        id="inpZip" required></div>
+                <div class="form-group"><label class="form-label">Country</label><input type="text" class="text-input"
+                        id="inpCountry" required></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="qualificationsModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Qualification</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
+            </div>
+            <form class="modal-form">
+                <div class="form-group"><label class="form-label">Degree</label><input type="text" class="text-input"
+                        id="inpDegree" placeholder="e.g. BCA" required></div>
+                <div class="form-group"><label class="form-label">Department</label><input type="text"
+                        class="text-input" id="inpDept" placeholder="e.g. Computer Science" required></div>
+                <div class="form-group"><label class="form-label">Institution</label><input type="text"
+                        class="text-input" id="inpInst" required></div>
+                <div class="form-group"><label class="form-label">Year of Passing</label><input type="number"
+                        class="text-input" id="inpYear" required></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="experienceModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Experience</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
+            </div>
+            <form class="modal-form">
+                <div class="form-group"><label class="form-label">Company</label><input type="text" class="text-input"
+                        id="inpCompany" required></div>
+                <div class="form-group"><label class="form-label">Position</label><input type="text" class="text-input"
+                        id="inpPosition" required></div>
+                <div class="form-group"><label class="form-label">Start Date</label><input type="date"
+                        class="text-input" id="inpExpStart" required></div>
+                <div class="form-group"><label class="form-label">End Date</label><input type="date" class="text-input"
+                        id="inpExpEnd" required></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="skillsModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Skills</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Skills (Press Enter to add)</label>
+                    <div class="tag-input-container" id="skillsTagContainer">
+                        <input type="text" id="inpSkillTag" placeholder="Add skill">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="projectsModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Project</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
+            </div>
+            <form class="modal-form">
+                <div class="form-group"><label class="form-label">Title</label><input type="text" class="text-input"
+                        id="inpProjTitle" required></div>
+                <div class="form-group"><label class="form-label">Link</label><input type="url" class="text-input"
+                        id="inpProjLink" required></div>
+                <div class="form-group">
+                    <label class="form-label">Technologies (Press Enter to add)</label>
+                    <div class="tag-input-container" id="techTagContainer">
+                        <input type="text" id="inpTechTag" placeholder="Add technology">
+                    </div>
+                </div>
+                <div class="form-group"><label class="form-label">Description</label><textarea class="textarea-input"
+                        id="inpProjDesc" required></textarea></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="languagesModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Languages</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Languages (Press Enter to add)</label>
+                    <div class="tag-input-container" id="langsTagContainer">
+                        <input type="text" id="inpLangTag" placeholder="Add language">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="summaryModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Summary</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Professional Summary</label>
+                    <textarea class="textarea-input" id="inpSummary" required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="achievementsModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Achievements</h2>
+                <div class="modal-close"><svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg></div>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Achievements (Press Enter to add)</label>
+                    <div class="tag-input-container" id="achieveTagContainer">
+                        <input type="text" id="inpAchieveTag" placeholder="Add achievement">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>
