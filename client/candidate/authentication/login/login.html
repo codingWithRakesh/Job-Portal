@@ -11,6 +11,7 @@
 
 <body>
 
+  <!-- Page 1: Sign In -->
   <div id="page1" class="step active">
     <div class="card">
       <div class="left-panel">
@@ -33,14 +34,16 @@
         <div class="actions">
           <div class="links-group">
             <button class="btn-link" type="button">Forgot password?</button>
-            <button class="btn-link" type="button" onclick="navigate('page1', 'page2')">Create account</button>
+            <!-- ID added to handle navigation in JS -->
+            <button id="btn-go-to-register" class="btn-link" type="button">Create account</button>
           </div>
-          <button class="btn-primary" type="button">Next</button>
+          <button id="btn-login-submit" class="btn-primary" type="button">Next</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Page 2: Registration Step 1 -->
   <div id="page2" class="step">
     <div class="card">
       <div class="left-panel">
@@ -61,13 +64,15 @@
         </div>
 
         <div class="actions">
-          <button class="btn-ghost" type="button" onclick="navigate('page2', 'page1')">Back</button>
-          <button class="btn-primary" type="button" onclick="navigate('page2', 'page3')">Next</button>
+          <!-- ID added for back button -->
+          <button id="btn-back-to-login" class="btn-ghost" type="button">Back</button>
+          <button id="btn-register-step1-next" class="btn-primary" type="button">Next</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Page 3: Registration Step 2 (Basic Info) -->
   <div id="page3" class="step">
     <div class="card">
       <div class="left-panel">
@@ -113,13 +118,15 @@
         </div>
 
         <div class="actions">
-          <button class="btn-ghost" type="button" onclick="navigate('page3', 'page2')">Back</button>
-          <button class="btn-primary" type="button" onclick="navigate('page3', 'page4')">Next</button>
+          <!-- ID added for back button -->
+          <button id="btn-back-to-register-step1" class="btn-ghost" type="button">Back</button>
+          <button id="btn-register-step2-next" class="btn-primary" type="button">Next</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Page 4: Registration Step 3 (Password) -->
   <div id="page4" class="step">
     <div class="card">
       <div class="left-panel">
@@ -139,13 +146,15 @@
           <input type="password" id="confirm-password" placeholder="Confirm Password" required>
         </div>
         <label class="checkbox-group">
-          <input type="checkbox" onchange="togglePasswordVisibility(this)">
+          <!-- ID added to handle toggle in JS -->
+          <input type="checkbox" id="toggle-password-checkbox">
           Show password
         </label>
 
         <div class="actions">
-          <button class="btn-ghost" type="button" onclick="navigate('page4', 'page3')">Back</button>
-          <button class="btn-primary" type="button" onclick="navigate('page4', 'page1')">Next</button>
+          <!-- ID added for back button -->
+          <button id="btn-back-to-register-step2" class="btn-ghost" type="button">Back</button>
+          <button id="btn-register-final-submit" class="btn-primary" type="button">Next</button>
         </div>
       </div>
     </div>

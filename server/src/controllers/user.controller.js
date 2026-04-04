@@ -145,36 +145,60 @@ const updateDetails = asyncHandler(async (req, res) => {
     if (!userId) {
         throw new ApiError(401, "Unauthorized");
     }
-    if(!name || !phoneNumber || !DOB || !summary || !languages.length || !achievements.length) {
-        throw new ApiError(400, "All fields are required");
+
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new ApiError(404, "User not found");
     }
-    if(!['Fresher', 'Experienced'].includes(category)) {
-        throw new ApiError(400, "Invalid category");
-    }
-    if(gender && !['Male', 'Female', 'Other'].includes(gender)) {
-        throw new ApiError(400, "Invalid gender");
+
+    if(name){
+        user.name = name;
     }
 
 
-    const updatedUser = await User.findByIdAndUpdate(userId, {
-        name,
-        phoneNumber,
-        DOB,
-        gender,
-        summary,
-        category,
-        languages,
-        achievements
-    }, { returnDocument: 'after', runValidators: true }).select("-password -refreshToken");
-
-    if(!updatedUser) {
-        throw new ApiError(500, "User not found");
+    if (phoneNumber) {
+        if (!/^[0-9]{10}$/.test(phoneNumber)) {
+            throw new ApiError(400, "Invalid phone number");
+        }
+        user.phoneNumber = phoneNumber;
     }
+
+    if (DOB) {
+        user.DOB = new Date(DOB);
+    }
+
+    if (gender) {
+        if (!['Male', 'Female', 'Other'].includes(gender)) {
+            throw new ApiError(400, "Invalid gender");
+        }
+        user.gender = gender;
+    }
+
+    if(summary){
+        user.summary = summary;
+    }
+
+    if (category) {
+        if (!['Fresher', 'Experienced'].includes(category)) {
+            throw new ApiError(400, "Invalid category");
+        }
+        user.category = category;
+    }
+
+    if (languages && Array.isArray(languages)) {
+        user.languages = languages;
+    }
+
+    if (achievements && Array.isArray(achievements)) {
+        user.achievements = achievements;
+    }
+
+    await user.save();
 
     return res
         .status(200)
         .json(
-            new ApiResponse(200, updatedUser, "User details updated successfully")
+            new ApiResponse(200, user, "User details updated successfully")
         )
 
 })

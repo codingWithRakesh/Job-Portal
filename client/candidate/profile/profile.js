@@ -723,3 +723,23 @@ function setupScrollSpy() {
 
     sections.forEach(sec => observer.observe(sec));
 }
+
+//logout
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", async () => {
+    try {
+        const res = await fetch(`${API_BASE_URL}/logout`, {
+            method: "POST",
+            credentials: "include"
+        });
+        const json = await res.json();
+        if (json.success) {
+            localStorage.removeItem("userData");
+            window.location.href = "../authentication/login/login.html";
+        } else {
+            alert(json.message || "Failed to logout");
+        }
+    } catch (err) { 
+        alert(err.message); 
+    }
+});
