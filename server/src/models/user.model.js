@@ -87,7 +87,7 @@ const projectSchema = new Schema({
         type: String,
         trim: true
     }
-});
+}, {_id: false});
 
 const userSchema = new Schema({
     name: {
