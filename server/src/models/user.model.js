@@ -69,7 +69,7 @@ const experienceSchema = new Schema({
         type: Date,
         required: true
     }
-});
+}, {_id: false});
 
 const projectSchema = new Schema({
     title: {
