@@ -48,7 +48,7 @@ const qualificationSchema = new Schema({
         type: Number,
         required: true
     }
-});
+}, {_id: false});
 
 const experienceSchema = new Schema({
     company: {
