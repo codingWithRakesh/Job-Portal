@@ -26,7 +26,7 @@ const addressSchema = new Schema({
         required: true,
         trim: true
     }
-});
+}, {_id: false});
 
 const qualificationSchema = new Schema({
     degree: {
