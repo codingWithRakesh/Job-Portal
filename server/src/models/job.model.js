@@ -17,7 +17,7 @@ const experienceSchema = new Schema({
         type: Number,
         required: true
     }
-});
+}, { _id: false });
 
 const jobSchema = new Schema({
     title: {
