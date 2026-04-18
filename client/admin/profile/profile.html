@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company profile - Naukri Campus</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="profile.js" type="module" defer></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <svg class="icon" style="width:24px; height:24px" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            TechCorp
+        </div>
+        <div class="navbar-user">
+            <button class="profile-menu" id="profileMenuButton" type="button" aria-label="Account menu"
+                aria-haspopup="menu" aria-expanded="false" aria-controls="profilePopup">
+                <img id="headerProfileAvatar" src="" alt="Company Logo">
+            </button>
+
+            <div class="profile-popup" id="profilePopup" role="menu" aria-labelledby="profileMenuButton" hidden>
+                <p class="profile-popup-title" id="profilePopupTitle">Hello CYRUS</p>
+                <button class="profile-popup-button" id="logoutBtn" type="button" role="menuitem">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-shell">
+        <section class="company-summary">
+            <div class="company-logo-panel">
+                <button type="button" class="company-logo-trigger" id="companyLogoTrigger"
+                    aria-label="Upload company logo">
+                    <div class="company-logo-frame" id="companyLogo">NC</div>
+                    <span class="company-logo-edit">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 20h4l9.5-9.5-4-4L4 16v4Z"></path>
+                            <path d="m13 7 4 4"></path>
+                        </svg>
+                    </span>
+                </button>
+                <input type="file" id="companyLogoInput" hidden accept="image/*">
+            </div>
+
+            <section class="company-main">
+                <div class="company-heading-row">
+                    <div class="company-title-block">
+                        <h1 id="displayCompanyName">Company Name</h1>
+                        <p class="company-industry" id="displayIndustry">Industry</p>
+                    </div>
+                    <button type="button" class="edit-link" id="editCompanySummary" aria-label="Edit company details">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="company-meta-grid">
+                    <div class="company-meta-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 21s6-5.1 6-10a6 6 0 1 0-12 0c0 4.9 6 10 6 10Z"></path>
+                            <circle cx="12" cy="11" r="2.3"></circle>
+                        </svg>
+                        <div>
+                            <span class="meta-label">Location</span>
+                            <p id="displayLocation">Location</p>
+                        </div>
+                    </div>
+                    <div class="company-meta-item">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                            <path d="m4 7 8 6 8-6"></path>
+                        </svg>
+                        <div>
+                            <span class="meta-label">Primary email</span>
+                            <p id="displayEmail">email@example.com</p>
+                        </div>
+                    </div>
+                    <div class="company-meta-item">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M10 13a5 5 0 0 0 7.1 0l1.4-1.4a5 5 0 0 0-7.1-7.1L10.2 5.7"></path>
+                            <path d="M14 11a5 5 0 0 0-7.1 0L5.5 12.4a5 5 0 1 0 7.1 7.1l1.2-1.2"></path>
+                        </svg>
+                        <div>
+                            <span class="meta-label">Website</span>
+                            <p id="displayWebsite">Not added yet</p>
+                        </div>
+                    </div>
+                    <div class="company-meta-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 21h18"></path>
+                            <path d="M5 21V7l7-4 7 4v14"></path>
+                            <path d="M9 9h6"></path>
+                            <path d="M9 13h6"></path>
+                        </svg>
+                        <div>
+                            <span class="meta-label">Company size</span>
+                            <p id="displaySize">Not added yet</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+        <section class="company-content">
+            <section class="info-card content-card" id="company-overview">
+                <div class="card-head">
+                    <h3>Company Overview</h3>
+                    <button type="button" class="text-link" data-open-modal="overviewModal">Edit</button>
+                </div>
+                <p class="body-copy" id="companyOverviewText">No company overview added yet.</p>
+            </section>
+
+            <section class="info-card content-card" id="organizational-details">
+                <div class="card-head">
+                    <h3>Organizational Details</h3>
+                    <button type="button" class="text-link" data-open-modal="detailsModal">Edit</button>
+                </div>
+                <dl class="profile-data-grid">
+                    <div class="data-pair">
+                        <dt>Industry</dt>
+                        <dd id="orgIndustry">-</dd>
+                    </div>
+                    <div class="data-pair">
+                        <dt>Company size</dt>
+                        <dd id="orgSize">-</dd>
+                    </div>
+                    <div class="data-pair">
+                        <dt>Headquarters</dt>
+                        <dd id="orgLocation">-</dd>
+                    </div>
+                    <div class="data-pair">
+                        <dt>Website</dt>
+                        <dd id="orgWebsite">-</dd>
+                    </div>
+                </dl>
+            </section>
+
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand-block">
+                <a class="brand footer-brand" href="#">
+                    <svg viewBox="0 0 36 36">
+                        <circle cx="18" cy="18" r="17" fill="currentColor"></circle>
+                        <path
+                            d="M16.2 7.8c-4.4.7-8 4.3-8.7 8.7 2.5-1.6 5.9-1.4 8.2.8 2.3 2.3 2.5 5.7.8 8.2 4.4-.7 8-4.3 8.7-8.7-2.5 1.6-5.9 1.4-8.2-.8-2.3-2.3-2.5-5.7-.8-8.2Z"
+                            fill="#fff"></path>
+                        <circle cx="18" cy="18" r="4.1" fill="#fff"></circle>
+                    </svg>
+                    <span class="brand-wordmark"><span class="brand-blue">naukri</span><span
+                            class="brand-orange">campus</span></span>
+                </a>
+            </div>
+            <div class="footer-links">
+                <div>
+                    <a href="#">About us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Employer home</a>
+                </div>
+                <div style="margin-top: 0.8rem;">
+                    <a href="#">Help center</a>
+                    <a href="#">Report issue</a>
+                </div>
+                <div>
+                    <a href="#">Privacy policy</a>
+                    <a href="#">Terms &amp; conditions</a>
+                    <a href="#">Trust &amp; safety</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="detailsModal" hidden>
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Company Details</h2>
+                <button type="button" class="modal-close" aria-label="Close modal">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label" for="inpCompanyName">Company Name</label>
+                    <input type="text" class="text-input" id="inpCompanyName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inpIndustry">Industry</label>
+                    <select class="select-input" id="inpIndustry">
+                        <option value="">Select industry</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Education">Education</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inpLocation">Location</label>
+                    <input type="text" class="text-input" id="inpLocation" placeholder="e.g. Bengaluru, India">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inpWebsite">Website</label>
+                    <input type="url" class="text-input" id="inpWebsite" placeholder="https://example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inpSize">Company Size</label>
+                    <select class="select-input" id="inpSize">
+                        <option value="">Select company size</option>
+                        <option value="1-10">1-10</option>
+                        <option value="11-50">11-50</option>
+                        <option value="51-200">51-200</option>
+                        <option value="201-500">201-500</option>
+                        <option value="501-1000">501-1000</option>
+                        <option value="1001+">1001+</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="overviewModal" hidden>
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Company Overview</h2>
+                <button type="button" class="modal-close" aria-label="Close modal">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label" for="inpOverview">Company Overview</label>
+                    <textarea class="textarea-input" id="inpOverview"
+                        placeholder="Describe your company, mission, and what makes your team stand out."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="hiringModal" hidden>
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Hiring Preferences</h2>
+                <button type="button" class="modal-close" aria-label="Close modal">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Preferred Roles</label>
+                    <div class="tag-input-container" id="rolesTagContainer">
+                        <input type="text" id="inpRoleTag" placeholder="Press Enter to add a role">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inpHiringMode">Hiring Mode</label>
+                    <select class="select-input" id="inpHiringMode">
+                        <option value="">Select hiring mode</option>
+                        <option value="Rolling">Rolling</option>
+                        <option value="Campus drive">Campus drive</option>
+                        <option value="Scheduled intake">Scheduled intake</option>
+                        <option value="Referral-first">Referral-first</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inpWorkType">Work Type</label>
+                    <select class="select-input" id="inpWorkType">
+                        <option value="">Select work type</option>
+                        <option value="On-site">On-site</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="Remote">Remote</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Hiring Locations</label>
+                    <div class="tag-input-container" id="locationsTagContainer">
+                        <input type="text" id="inpHiringLocationTag" placeholder="Press Enter to add a location">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="cultureModal" hidden>
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Company Culture</h2>
+                <button type="button" class="modal-close" aria-label="Close modal">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 6 6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Core Values</label>
+                    <div class="tag-input-container" id="valuesTagContainer">
+                        <input type="text" id="inpValueTag" placeholder="Press Enter to add a value">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inpTeamStyle">Team Style</label>
+                    <textarea class="textarea-input" id="inpTeamStyle"
+                        placeholder="Describe how teams collaborate and make decisions."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inpWorkEnvironment">Work Environment</label>
+                    <textarea class="textarea-input" id="inpWorkEnvironment"
+                        placeholder="Describe the day-to-day work environment."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
