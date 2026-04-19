@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+        <!-- Top Navbar -->
+        <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="#">
+                <svg viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" r="17" fill="currentColor"></circle>
+                    <path
+                        d="M16.2 7.8c-4.4.7-8 4.3-8.7 8.7 2.5-1.6 5.9-1.4 8.2.8 2.3 2.3 2.5 5.7.8 8.2 4.4-.7 8-4.3 8.7-8.7-2.5 1.6-5.9 1.4-8.2-.8-2.3-2.3-2.5-5.7-.8-8.2Z"
+                        fill="#fff"></path>
+                    <circle cx="18" cy="18" r="4.1" fill="#fff"></circle>
+                </svg>
+                <span class="brand-wordmark"><span class="brand-blue">naukri</span><span
+                        class="brand-orange">campus</span></span>
+            </a>
+            <nav class="topbar-nav">
+                <a href="#">Prepare</a>
+                <a href="#">Participate</a>
+                <a href="#">Opportunities</a>
+            </nav>
+            <div class="topbar-actions">
+                <button class="icon-button">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7 9a5 5 0 0 1 10 0c0 5.5 2 6.5 2 6.5H5S7 14.5 7 9"></path>
+                        <path d="M10 18a2 2 0 0 0 4 0"></path>
+                    </svg>
+                </button>
+                <button class="profile-menu">
+                    <span class="menu-lines"><span></span></span>
+                    <span class="menu-avatar" id="headerProfileAvatar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Second Row: Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="stat-applied">0</div>
+                <div class="stat-label">Jobs Applied</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-selected" style="color: var(--success);">0</div>
+                <div class="stat-label">Shortlisted</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-rejected" style="color: var(--danger);">0</div>
+                <div class="stat-label">Applications Rejected</div>
+            </div>
+        </div>
+
+        <!-- Third Row: Applied Jobs List -->
+        <div class="section-header">
+            <h2 class="section-title">My Applications</h2>
+        </div>
+        
+        <div class="job-list" id="application-list-container">
+            <!-- Applications will be injected here via JavaScript -->
+        </div>
+    </main>
+
+        <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand-block">
+                <a class="brand footer-brand" href="#">
+                    <svg viewBox="0 0 36 36">
+                        <circle cx="18" cy="18" r="17" fill="currentColor"></circle>
+                        <path
+                            d="M16.2 7.8c-4.4.7-8 4.3-8.7 8.7 2.5-1.6 5.9-1.4 8.2.8 2.3 2.3 2.5 5.7.8 8.2 4.4-.7 8-4.3 8.7-8.7-2.5 1.6-5.9 1.4-8.2-.8-2.3-2.3-2.5-5.7-.8-8.2Z"
+                            fill="#fff"></path>
+                        <circle cx="18" cy="18" r="4.1" fill="#fff"></circle>
+                    </svg>
+                    <span class="brand-wordmark"><span class="brand-blue">naukri</span><span
+                            class="brand-orange">campus</span></span>
+                </a>
+            </div>
+            <div class="footer-links">
+                <div>
+                    <a href="#">About us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Employer home</a>
+                </div>
+                <div style="margin-top: 0.8rem;">
+                    <a href="#">Help center</a>
+                    <a href="#">Report issue</a>
+                </div>
+                <div>
+                    <a href="#">Privacy policy</a>
+                    <a href="#">Terms &amp; conditions</a>
+                    <a href="#">Trust &amp; safety</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <!-- PROFILE DRAWER -->
+    <div class="profile-overlay" id="profileDrawerOverlay" hidden>
+        <aside class="profile-drawer">
+            <button class="drawer-close">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 6 18 18"></path>
+                    <path d="M18 6 6 18"></path>
+                </svg>
+            </button>
+            <div class="profile-header">
+                <div class="profile-avatar-block">
+                    <div class="profile-avatar" id="drawerRing">
+                        <div class="profile-avatar-inner">
+                            <span class="profile-avatar-head"></span>
+                            <span class="profile-avatar-body"></span>
+                        </div>
+                    </div>
+                    <span class="profile-avatar-progress" id="drawerPercentage">0%</span>
+                </div>
+                <div class="profile-info">
+                    <h2 class="profile-name" id="drawerProfileName">Name</h2>
+                    <p class="profile-subtitle" id="drawerProfileSubtitle">Degree at Institution</p>
+                    <a class="profile-link" href="#update-details">View &amp; Update Profile</a>
+                </div>
+            </div>
+            <div class="profile-drawer-divider"></div>
+            <section class="profile-performance">
+                <div class="profile-performance-head">
+                    <h3>Your profile performance</h3>
+                    <span>Last 90 days</span>
+                </div>
+                <div class="performance-card">
+                    <article class="performance-item">
+                        <p class="performance-value">0</p>
+                        <p class="performance-label">Search Appearances</p>
+                        <a href="#">View all</a>
+                    </article>
+                    <article class="performance-item">
+                        <p class="performance-value">0</p>
+                        <p class="performance-label">Recruiter Actions</p>
+                        <a href="#">View all</a>
+                    </article>
+                </div>
+            </section>
+            <nav class="profile-menu-list">
+                <a class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                        <path d="M4 7h16"></path>
+                        <path d="M4 12h16"></path>
+                        <path d="M4 17h16"></path>
+                        <path d="M8 4v16"></path>
+                    </svg><span>Career guidance</span></a>
+                <a class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3.2"></circle>
+                        <path
+                            d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.4 1a7.9 7.9 0 0 0-2.1-1.2L14 3h-4l-.4 2.7a7.9 7.9 0 0 0-2.1 1.2l-2.4-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.4-1a7.9 7.9 0 0 0 2.1 1.2L10 21h4l.4-2.7a7.9 7.9 0 0 0 2.1-1.2l2.4 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2Z">
+                        </path>
+                    </svg><span>Settings</span></a>
+                <a class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M9.1 9a3 3 0 1 1 5.5 1.6c-.9 1.1-1.8 1.6-1.8 2.9"></path>
+                        <circle cx="12" cy="17" r="1"></circle>
+                    </svg><span>FAQs</span></a>
+                <button id="logoutBtn" class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                        <path d="M10 17 15 12 10 7"></path>
+                        <path d="M15 12H4"></path>
+                        <path d="M12 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"></path>
+                    </svg><span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+    </div>
+
+    <!-- NOTIFICATIONS DRAWER -->
+    <div class="notifications-overlay" id="notificationsOverlay" hidden>
+        <aside class="notifications-drawer">
+            <div class="notifications-header">
+                <h2 class="notifications-title">Notifications</h2>
+                <button class="notifications-close">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 6 18 18"></path>
+                        <path d="M18 6 6 18"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="notifications-body">
+                <div class="notification-illustration">
+                    <svg viewBox="0 0 120 120">
+                        <circle cx="84" cy="38" r="9" class="notification-dot"></circle>
+                        <path
+                            d="M59 22c-12.7 0-23 10.3-23 23v12.4c0 5.8-1.8 11.4-5.2 16l-5.1 6.8c-1.4 1.9 0 4.6 2.3 4.6h62c2.3 0 3.7-2.7 2.3-4.6l-5.1-6.8c-3.4-4.6-5.2-10.2-5.2-16V45c0-12.7-10.3-23-23-23Z"
+                            class="notification-bell"></path>
+                        <path d="M49 93c1.8 8 8 12.5 16.1 12.5 8 0 14.2-4.5 16.1-12.5" class="notification-bell"></path>
+                        <path d="M52 18c2.1-6 8.6-9.1 14.6-7 3.3 1.2 5.8 3.7 7 7" class="notification-bell"></path>
+                        <circle cx="38" cy="83" r="6" class="notification-soft-dot"></circle>
+                    </svg>
+                </div>
+                <p class="notification-message">Haven't got any notifications?</p>
+                <p class="notification-subtext">You will soon get notifications. Meanwhile, browse relevant jobs on
+                    Naukri.</p>
+                <button class="notifications-cta">Go to recommendations</button>
+            </div>
+        </aside>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

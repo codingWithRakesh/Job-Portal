@@ -6,7 +6,7 @@
                 company: 'Google',
                 logo: 'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg',
                 location: ['Mountain View, CA'], 
-                salaryRange: '$130,000 - $180,000',
+                salaryRange: '20,000 - 50,000',
                 jobType: 'Full-time', 
                 workMode: 'Hybrid',
                 experience: '0-2 Years',
@@ -23,7 +23,7 @@
                 company: 'Spotify',
                 logo: 'https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg',
                 location: ['Remote'], 
-                salaryRange: '$110,000 - $150,000',
+                salaryRange: '25,000 - 35,000',
                 jobType: 'Contract', 
                 workMode: 'Remote',
                 experience: '2-5 Years',
@@ -40,7 +40,7 @@
                 company: 'Netflix',
                 logo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg',
                 location: ['Los Gatos, CA'], 
-                salaryRange: '$5,000 / month',
+                salaryRange: '10,000 / month',
                 jobType: 'Internship', 
                 workMode: 'On-site',
                 experience: 'Fresher',
@@ -56,7 +56,9 @@
         // --- ICONS (SVG Strings) ---
         const icons = {
             location: '<svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>',
-            salary: '<svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>',
+            salary: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-rupee" viewBox="0 0 16 16">
+  <path d="M4 3.06h2.726c1.22 0 2.12.575 2.325 1.724H4v1.051h5.051C8.855 7.001 8 7.558 6.788 7.558H4v1.317L8.437 14h2.11L6.095 8.884h.855c2.316-.018 3.465-1.476 3.688-3.049H12V4.784h-1.345c-.08-.778-.357-1.335-.793-1.732H12V2H4z"/>
+</svg>`,
             briefcase: '<svg class="icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>',
             clock: '<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>',
             send: '<svg class="icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>',
