@@ -1,6 +1,7 @@
 import { API_BASE_URL as API_URL } from "../../constants/constant.js";
 
 const API_BASE_URL = `${API_URL}/users`;
+const PROGRESS_RING_START_ANGLE = 225;
 
 
 let userData = JSON.parse(localStorage.getItem("userData") || "{}");
@@ -95,6 +96,10 @@ function bindEvents() {
     document.getElementById("inpTechTag").addEventListener("keydown", (e) => handleTagInput(e, "tech"));
     document.getElementById("inpLangTag").addEventListener("keydown", (e) => handleTagInput(e, "langs"));
     document.getElementById("inpAchieveTag").addEventListener("keydown", (e) => handleTagInput(e, "achieve"));
+
+    document.getElementById("qualificationsList").addEventListener("click", handleQualificationDelete);
+    document.getElementById("experienceList").addEventListener("click", handleExperienceDelete);
+    document.getElementById("projectsList").addEventListener("click", handleProjectDelete);
 }
 
 //current user fetch
@@ -173,33 +178,69 @@ function renderUI() {
 
     document.getElementById("summaryText").textContent = userData.summary || "-";
 
-    renderList("qualificationsList", userData.qualifications, q => `
+    renderList("qualificationsList", userData.qualifications, (q, index) => `
         <article class="record-item record-item--detail">
-            <div class="experience-record-main">
-                <div><p class="record-title">${q.degree} - ${q.department}</p><p class="record-meta">${q.institution}</p></div>
+            <div class="record-item-head">
+                <div>
+                    <p class="record-title">${q.degree} - ${q.department}</p>
+                    <p class="record-meta">${q.institution}</p>
+                </div>
+                <button type="button" class="item-delete-button" data-action="delete-qualification" data-index="${index}" aria-label="Delete education entry">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                        <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
+                        <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
+                </button>
             </div>
             <p class="record-year">Passing year: ${q.year}</p>
         </article>
-    `);
+    `, "No education added yet");
 
-    renderList("experienceList", userData.experiences, e => `
+    renderList("experienceList", userData.experiences, (e, index) => `
         <article class="record-item record-item--detail">
-            <div class="experience-record-main">
-                <div><p class="record-title">${e.position}</p><p class="record-meta">${e.company}</p></div>
+            <div class="record-item-head">
+                <div>
+                    <p class="record-title">${e.position}</p>
+                    <p class="record-meta">${e.company}</p>
+                </div>
+                <button type="button" class="delete-btn experience-delete" data-action="delete-experience" data-index="${index}" aria-label="Delete experience">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                        <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
+                        <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
+                </button>
             </div>
             <p class="record-year">${new Date(e.startDate).toLocaleDateString(undefined, { month: "short", year: "numeric" })} - ${new Date(e.endDate).toLocaleDateString(undefined, { month: "short", year: "numeric" })}</p>
         </article>
-    `);
+    `, "No experience added yet");
 
-    renderList("projectsList", userData.projects, p => `
+    renderList("projectsList", userData.projects, (p, index) => `
         <article class="record-item record-item--detail">
-            <div class="experience-record-main">
-                <div><p class="record-title">${p.title}</p><p class="record-meta">${p.technologies.join(", ")}</p></div>
+            <div class="record-item-head">
+                <div>
+                    <p class="record-title">${p.title}</p>
+                    <p class="record-meta">${p.technologies.join(", ")}</p>
+                </div>
+                <button type="button" class="delete-btn project-delete" data-action="delete-project" data-index="${index}" aria-label="Delete project">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                        <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
+                        <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
+                </button>
             </div>
             <p class="helper-copy" style="margin: 8px 0;">${p.description}</p>
             ${p.link ? `<a href="${p.link}" target="_blank" class="text-link" style="font-size:0.85rem;">View Project</a>` : ""}
         </article>
-    `);
+    `, "No projects added yet");
 
     renderList("achievementsList", userData.achievements, a => `
         <article class="record-item record-item--detail">
@@ -207,7 +248,9 @@ function renderUI() {
         </article>
     `);
 
-    document.getElementById("skillsList").innerHTML = (userData.skills || []).map(s => `<span class="skill-pill">${s}</span>`).join("");
+    document.getElementById("skillsList").innerHTML = (userData.skills || []).length
+        ? (userData.skills || []).map(s => `<span class="skill-pill">${s}</span>`).join("")
+        : '<span class="empty-value">Not added yet</span>';
     document.getElementById("languagesList").innerHTML = (userData.languages || []).map(l => `<span class="lang-pill">${l}</span>`).join("");
 
     if (userData.profilePicture?.url) {
@@ -238,10 +281,10 @@ function renderUI() {
     }
 }
 
-function renderList(elementId, arr, templateFn) {
+function renderList(elementId, arr, templateFn, emptyMessage = "Not added yet") {
     const el = document.getElementById(elementId);
-    if (!arr || arr.length === 0) { el.innerHTML = '<span class="empty-value">Not added yet</span>'; return; }
-    el.innerHTML = arr.map(templateFn).join("");
+    if (!arr || arr.length === 0) { el.innerHTML = `<span class="empty-value">${emptyMessage}</span>`; return; }
+    el.innerHTML = arr.map((item, index) => templateFn(item, index)).join("");
 }
 
 //tab switching
@@ -269,15 +312,21 @@ function updateProgressRing(percentage) {
     else if (percentage > 75) color = "#2abf68";
 
     circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset = offset;
     circle.style.stroke = color;
+    if (percentage === 0) {
+        circle.style.strokeDashoffset = circumference;
+        circle.style.opacity = "0";
+    } else {
+        circle.style.opacity = "1";
+        circle.style.strokeDashoffset = offset;
+    }
     text.textContent = `${percentage}%`;
     text.style.color = color;
 
     if (drawerText && drawerRing) {
         drawerText.textContent = `${percentage}%`;
         drawerText.style.color = color;
-        drawerRing.style.background = `conic-gradient(from 220deg, ${color} 0 ${percentage}%, #e4e8f2 ${percentage}% 100%)`;
+        drawerRing.style.background = `conic-gradient(from ${PROGRESS_RING_START_ANGLE}deg, ${color} 0 ${percentage}%, #e4e8f2 ${percentage}% 100%)`;
     }
 }
 
@@ -343,6 +392,55 @@ function closeModal(id) {
     const modal = document.getElementById(id);
     modal.classList.remove("open");
     setTimeout(() => modal.hidden = true, 200);
+}
+
+function persistUserData() {
+    localStorage.setItem("userData", JSON.stringify(userData));
+}
+
+function handleQualificationDelete(event) {
+    const deleteButton = event.target.closest('[data-action="delete-qualification"]');
+    if (!deleteButton) return;
+
+    const qualificationIndex = Number(deleteButton.dataset.index);
+    if (!Number.isInteger(qualificationIndex) || !Array.isArray(userData.qualifications)) return;
+
+    const shouldDelete = window.confirm("Are you sure you want to delete this education entry?");
+    if (!shouldDelete) return;
+
+    userData.qualifications = userData.qualifications.filter((_, index) => index !== qualificationIndex);
+    persistUserData();
+    renderUI();
+}
+
+function handleExperienceDelete(event) {
+    const deleteButton = event.target.closest('[data-action="delete-experience"]');
+    if (!deleteButton) return;
+
+    const experienceIndex = Number(deleteButton.dataset.index);
+    if (!Number.isInteger(experienceIndex) || !Array.isArray(userData.experiences)) return;
+
+    const shouldDelete = window.confirm("Are you sure you want to delete this experience?");
+    if (!shouldDelete) return;
+
+    userData.experiences = userData.experiences.filter((_, index) => index !== experienceIndex);
+    persistUserData();
+    renderUI();
+}
+
+function handleProjectDelete(event) {
+    const deleteButton = event.target.closest('[data-action="delete-project"]');
+    if (!deleteButton) return;
+
+    const projectIndex = Number(deleteButton.dataset.index);
+    if (!Number.isInteger(projectIndex) || !Array.isArray(userData.projects)) return;
+
+    const shouldDelete = window.confirm("Delete this project?");
+    if (!shouldDelete) return;
+
+    userData.projects = userData.projects.filter((_, index) => index !== projectIndex);
+    persistUserData();
+    renderUI();
 }
 
 //form submissions

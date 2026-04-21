@@ -145,10 +145,16 @@ function renderUI() {
     setText("orgSize", companyData.size || "Not added yet");
     setText("orgLocation", location);
     setWebsiteText("orgWebsite", websiteText, websiteLink);
+    renderAccountInfoSection();
 
     applyMediaState(document.getElementById("companyLogo"), companyData.logoDataUrl, initials);
     setProfileAvatar(document.getElementById("headerProfileAvatar"), companyData.logoDataUrl, initials);
     setText("profilePopupTitle", `Hello ${companyData.name || "TechCorp"}`);
+}
+
+function renderAccountInfoSection() {
+    setText("accountCreatedOn", formatAccountCreatedDate(companyData.createdAt));
+    setText("accountRegisteredEmail", companyData.email || "Not available");
 }
 
 function applyMediaState(element, imageUrl, fallbackText) {
@@ -367,6 +373,21 @@ function getInitials(name = "") {
 function normalizeWebsite(value) {
     if (!value) return "";
     return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+}
+
+function formatAccountCreatedDate(value) {
+    if (!value) return "Not available";
+
+    const parsedDate = new Date(value);
+    if (Number.isNaN(parsedDate.getTime())) {
+        return "Not available";
+    }
+
+    return new Intl.DateTimeFormat("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }).format(parsedDate);
 }
 
 function escapeHtml(value = "") {

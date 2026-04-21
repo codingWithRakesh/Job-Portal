@@ -769,6 +769,13 @@
      align-items: start;
  }
 
+ .record-item-head {
+     display: flex;
+     align-items: flex-start;
+     justify-content: space-between;
+     gap: 12px;
+ }
+
  .experience-record-main {
      display: flex;
      align-items: start;
@@ -823,6 +830,53 @@
      font-size: 0.78rem;
      font-weight: 600;
      background: #fff;
+ }
+
+ .skill-pill {
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     padding-right: 8px;
+ }
+
+ .delete-btn,
+ .item-delete-button {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     width: 32px;
+     height: 32px;
+     flex: 0 0 auto;
+     border: 1px solid transparent;
+     border-radius: 50%;
+     color: #8b94ad;
+     background: transparent;
+     transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+ }
+
+ .delete-btn svg,
+ .item-delete-button svg {
+     width: 15px;
+     height: 15px;
+     stroke: currentColor;
+     stroke-width: 1.8;
+     fill: none;
+     stroke-linecap: round;
+     stroke-linejoin: round;
+ }
+
+ .delete-btn:hover,
+ .item-delete-button:hover {
+     color: #d65959;
+     background: rgba(214, 89, 89, 0.08);
+     transform: scale(1.04);
+ }
+
+ .delete-btn:focus-visible,
+ .item-delete-button:focus-visible {
+     outline: 0;
+     border-color: rgba(46, 91, 255, 0.22);
+     box-shadow: 0 0 0 3px rgba(46, 91, 255, 0.14);
  }
 
  .resume-dropzone {
@@ -1231,7 +1285,7 @@
      display: grid;
      place-items: center;
      border-radius: 50%;
-     background: conic-gradient(from 220deg, #f04c4d 0 40%, #e4e8f2 40% 100%);
+     background: conic-gradient(from 225deg, #f04c4d 0 40%, #e4e8f2 40% 100%);
  }
 
  .profile-avatar::before {
@@ -1594,5 +1648,22 @@
      .profile-drawer {
          width: min(82vw, 470px);
          min-width: 0;
+     }
+ }
+
+ @media (max-width: 640px) {
+     .record-item {
+         gap: 12px;
+         padding: 14px;
+     }
+
+     .record-item-head {
+         gap: 10px;
+     }
+
+     .delete-btn,
+     .item-delete-button {
+         width: 36px;
+         height: 36px;
      }
  }
