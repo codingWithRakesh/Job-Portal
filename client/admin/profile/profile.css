@@ -170,8 +170,8 @@
      min-height: 44px;
      border: 0;
      border-radius: 8px;
-     background: #f3f4f6;
-     color: #111827;
+     background: #0666EB;
+     color: #f3f4f6;
      font-size: 0.95rem;
      font-weight: 600;
      transition: background 0.18s ease, color 0.18s ease;
@@ -179,8 +179,8 @@
 
  .profile-popup-button:hover,
  .profile-popup-button:focus-visible {
-     background: #e5e7eb;
-     color: #111827;
+     background: #0555c4;
+     color: #e5e7eb;
  }
 
  .brand {
@@ -394,20 +394,41 @@
      padding: 22px 24px 24px;
  }
 
- .card-head {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     gap: 12px;
-     margin-bottom: 16px;
- }
+.card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
 
- .card-head h3 {
-     margin: 0;
-     color: var(--text);
-     font-size: 1.03rem;
-     line-height: 1.25;
- }
+.card-head-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.card-head h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.03rem;
+    line-height: 1.25;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 10px;
+    border: 1px solid #dbe4f4;
+    border-radius: var(--radius-pill);
+    background: #f8fbff;
+    color: #5f6d8d;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
 
  .text-link {
      color: var(--link);
@@ -421,12 +442,21 @@
      line-height: 1.75;
  }
 
- .profile-data-grid {
-     display: grid;
-     grid-template-columns: repeat(2, minmax(0, 1fr));
-     gap: 14px;
-     margin: 0;
- }
+.profile-data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+}
+
+.account-data-grid {
+    align-items: stretch;
+}
+
+.account-data-pair {
+    background: #ffffff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
 
  .data-pair {
      margin: 0;
