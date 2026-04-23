@@ -661,6 +661,8 @@
  .site-footer {
      background: var(--surface);
      border-top: 1px solid var(--border);
+     
+     
  }
 
  .footer-inner {

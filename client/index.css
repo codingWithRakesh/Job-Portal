@@ -109,11 +109,12 @@
             --profile-ring-color: var(--success);
             width: 96px;
             height: 96px;
-            margin: 0 auto 1rem auto;
+            margin: 0 auto 1.35rem auto;
             display: grid;
             place-items: center;
             padding: 4px;
             border-radius: 50%;
+            isolation: isolate;
             background: conic-gradient(from 180deg, var(--profile-ring-color) 0 var(--profile-progress), var(--ring-track, #d9dee9) var(--profile-progress) 100%);
         }
 
@@ -123,11 +124,14 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--bg-surface);
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            object-position: center;
         }
 
         .profile-progress-badge {
             position: absolute;
-            bottom: -5px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
             background-color: var(--bg-surface);
@@ -138,6 +142,8 @@
             border-radius: 9999px;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
+            z-index: 1;
+            white-space: nowrap;
         }
 
         .profile-name {
