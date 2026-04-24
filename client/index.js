@@ -110,7 +110,7 @@ function formatPostedAt(createdAt) {
 
 function getPostedBadgeClass(createdAt) {
     const days = getPostedDays(createdAt);
-    if (days >= 1 && days <= 10) return "posted-at--green";
+    if (days >= 0 && days <= 10) return "posted-at--green";
     if (days >= 11 && days <= 20) return "posted-at--yellow";
     return "posted-at--red";
 }
@@ -243,7 +243,7 @@ async function renderJobFeed() {
         container.innerHTML = '';
 
         if (!jobs.length) {
-            container.innerHTML = '<p style="text-align:center; padding: 2rem; color: var(--text-secondary);">No jobs available at the moment. Check back soon!</p>';
+            container.innerHTML = '<div class="empty-state">No jobs available at the moment. Check back soon!</div>';
             return;
         }
 
