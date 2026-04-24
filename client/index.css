@@ -247,6 +247,16 @@
             gap: 1rem;
         }
 
+        .empty-state {
+            width: 100%;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            background: var(--bg-surface);
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-md);
+        }
+
         /* Job Card Styling */
         .job-card {
             background-color: var(--bg-surface);
