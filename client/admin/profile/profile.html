@@ -210,29 +210,60 @@
                 </svg>
             </button>
 
-            <div class="company-sidebar-header">
-                <div class="company-sidebar-logo" id="drawerCompanyLogo">NC</div>
-                <div class="company-sidebar-copy">
-                    <p class="company-sidebar-eyebrow">Company account</p>
-                    <h2 class="company-sidebar-name" id="drawerCompanyName">Company Name</h2>
-                    <p class="company-sidebar-subtitle" id="drawerCompanySubtitle">Industry</p>
-                    <p class="company-sidebar-headline" id="drawerCompanyHeadline">Keep your company story, hiring details, and contact information up to date for candidates.</p>
-                    <a class="company-sidebar-link" href="#company-overview">View &amp; Update Company Profile</a>
+            <div class="company-sidebar-shell">
+                <header class="company-sidebar-header">
+                    <div class="company-sidebar-logo" id="drawerCompanyLogo">NC</div>
+                    <div class="company-sidebar-copy">
+                        <h2 class="company-sidebar-name" id="drawerCompanyName">Company Name</h2>
+                        <p class="company-sidebar-location" id="drawerCompanyLocation">Location not added</p>
+                    </div>
+                </header>
+
+                <nav class="company-sidebar-menu" aria-label="Company account actions">
+                    <button class="company-menu-item company-menu-item--primary" id="drawerViewProfile" type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 17A2.5 2.5 0 0 0 4 14.5V5a2 2 0 0 1 2-2h14v14"></path>
+                            <path d="M8 7h8"></path>
+                            <path d="M8 11h6"></path>
+                        </svg>
+                        <span>View &amp; Update Profile</span>
+                    </button>
+                    <button class="company-menu-item" id="drawerSearchAppearance" type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="11" cy="11" r="6"></circle>
+                            <path d="m20 20-4.2-4.2"></path>
+                        </svg>
+                        <span>Search Appearance</span>
+                    </button>
+                    <button class="company-menu-item" id="drawerSettings" type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 0 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 0 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.4 1z"></path>
+                        </svg>
+                        <span>Settings</span>
+                    </button>
+                    <button class="company-menu-item" id="drawerFaq" type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9.1 9a3 3 0 1 1 5.8 1c-.4 1.2-1.5 1.8-2.2 2.3-.7.4-1.1.9-1.1 1.7"></path>
+                            <circle cx="12" cy="17.2" r=".8" fill="currentColor" stroke="none"></circle>
+                            <circle cx="12" cy="12" r="9"></circle>
+                        </svg>
+                        <span>FAQ</span>
+                    </button>
+                </nav>
+
+                <div class="company-sidebar-footer">
+                    <button id="logoutBtn" class="company-menu-item company-menu-item--logout" type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M10 17 15 12 10 7"></path>
+                            <path d="M15 12H4"></path>
+                            <path d="M12 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"></path>
+                        </svg>
+                        <span>Logout</span>
+                    </button>
                 </div>
             </div>
-
-            <div class="company-sidebar-divider"></div>
-
-            <nav class="company-sidebar-menu" aria-label="Company account actions">
-                <button id="logoutBtn" class="company-menu-item company-menu-item--logout" type="button">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M10 17 15 12 10 7"></path>
-                        <path d="M15 12H4"></path>
-                        <path d="M12 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"></path>
-                    </svg>
-                    <span>Logout</span>
-                </button>
-            </nav>
         </aside>
     </div>
 

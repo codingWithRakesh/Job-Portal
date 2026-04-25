@@ -589,16 +589,16 @@ textarea.form-control {
     position: absolute;
     top: 0;
     right: 0;
-    width: min(36vw, 500px);
-    min-width: 430px;
+    width: min(100%, 400px);
+    min-width: 360px;
     height: 100dvh;
-    padding: 32px 28px 34px;
-    border-radius: 34px 0 0 34px;
+    padding: 24px 24px 28px;
+    border-left: 1px solid rgba(207, 218, 236, 0.85);
     background: #fff;
-    box-shadow: -18px 0 48px rgba(25, 36, 61, 0.14);
+    box-shadow: -24px 0 56px rgba(25, 36, 61, 0.16);
     transform: translateX(100%);
-    transition: transform 0.22s ease;
-    overflow-y: auto;
+    transition: transform 0.26s ease;
+    overflow: hidden;
 }
 
 .company-overlay.open .company-sidebar {
@@ -607,17 +607,18 @@ textarea.form-control {
 
 .company-sidebar-close {
     position: absolute;
-    top: 22px;
-    right: 22px;
-    width: 38px;
-    height: 38px;
+    top: 18px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
     display: grid;
     place-items: center;
-    border-radius: 50%;
-    color: #7e8bb0;
+    border-radius: 14px;
+    color: #6b7a9b;
     border: 0;
     background: transparent;
     cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
 }
 
 .company-sidebar-close svg,
@@ -631,28 +632,46 @@ textarea.form-control {
     stroke-linejoin: round;
 }
 
+.company-sidebar-close:hover,
+.company-sidebar-close:focus-visible {
+    background: #f3f7ff;
+    color: #3457b1;
+    outline: none;
+}
+
+.company-sidebar-shell {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 28px;
+}
+
 .company-sidebar-header {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 20px;
-    align-items: start;
-    padding: 10px 32px 0 6px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 24px 18px 0;
 }
 
 .company-sidebar-logo {
-    width: 104px;
-    height: 104px;
+    width: 100px;
+    height: 100px;
     display: grid;
     place-items: center;
-    border: 1px solid var(--border);
-    border-radius: 28px;
-    background: linear-gradient(145deg, #f7f9fe, #edf3ff);
+    border: 1px solid #dbe5f4;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #f9fbff, #edf3ff);
     color: #32466f;
     font-size: 2rem;
     font-weight: 700;
     letter-spacing: -0.04em;
     text-transform: uppercase;
     overflow: hidden;
+    box-shadow: 0 12px 28px rgba(42, 88, 176, 0.08);
 }
 
 .company-sidebar-logo.has-photo {
@@ -663,80 +682,60 @@ textarea.form-control {
 }
 
 .company-sidebar-copy {
+    width: 100%;
     min-width: 0;
-    padding-top: 6px;
-}
-
-.company-sidebar-eyebrow {
-    margin: 0 0 8px;
-    color: #6f7e9f;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
 }
 
 .company-sidebar-name {
-    margin: 0 0 8px;
+    margin: 0;
     color: #081a44;
-    font-size: 1.3rem;
+    font-size: 1.45rem;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.25;
 }
 
-.company-sidebar-subtitle {
-    margin: 0 0 10px;
-    color: #384868;
-    font-size: 0.96rem;
-    font-weight: 600;
+.company-sidebar-location {
+    margin: 8px 0 0;
+    color: #7584a4;
+    font-size: 0.97rem;
+    font-weight: 500;
     line-height: 1.45;
 }
 
-.company-sidebar-headline {
-    margin: 0 0 16px;
-    color: #687897;
-    font-size: 0.92rem;
-    line-height: 1.65;
-}
-
-.company-sidebar-link {
-    color: #2f63ff;
-    font-size: 0.92rem;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.company-sidebar-divider {
-    height: 1px;
-    margin: 26px 8px;
-    background: #e6ebf4;
-}
-
 .company-sidebar-menu {
-    display: grid;
-    gap: 4px;
-    margin: 22px 8px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 32px;
+    padding: 0 4px 0 0;
 }
 
 .company-menu-item {
     display: flex;
     align-items: center;
-    gap: 14px;
-    min-height: 50px;
-    padding: 0 6px;
-    border: 0;
-    border-radius: 14px;
-    background: transparent;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+    min-height: 54px;
+    padding: 0 16px;
+    border: 1px solid #e2e9f6;
+    border-radius: 18px;
+    background: #f9fbff;
     color: #101b39;
-    font-size: 0.97rem;
-    font-weight: 500;
+    font-size: 0.98rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.18s ease, color 0.18s ease;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease,
+        transform 0.18s ease;
 }
 
 .company-menu-item:hover,
 .company-menu-item:focus-visible {
-    background: #f6f8fc;
+    background: #f4f8ff;
+    border-color: #cfdcf8;
+    color: #1845ad;
+    transform: translateY(-1px);
     outline: none;
 }
 
@@ -745,13 +744,44 @@ textarea.form-control {
     color: #6f81a8;
 }
 
+.company-menu-item--primary {
+    color: #2452c7;
+    border-color: #d6e3ff;
+    background: #f4f8ff;
+}
+
+.company-menu-item--primary svg {
+    color: #6a85c7;
+}
+
+.company-menu-item--primary:hover,
+.company-menu-item--primary:focus-visible {
+    color: #1d46ad;
+    border-color: #bdd0fb;
+    background: #edf4ff;
+}
+
+.company-sidebar-footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 20px 4px 0 0;
+}
+
 .company-menu-item--logout {
-    margin-top: 8px;
+    border-color: rgba(212, 71, 71, 0.2);
     color: #d44747;
+    background: #fff8f8;
 }
 
 .company-menu-item--logout svg {
     color: currentColor;
+}
+
+.company-menu-item--logout:hover,
+.company-menu-item--logout:focus-visible {
+    background: #fff1f1;
+    border-color: rgba(212, 71, 71, 0.32);
+    color: #bf3434;
 }
 
 .success-icon {
@@ -843,13 +873,8 @@ textarea.form-control {
     }
 
     .company-sidebar {
-        width: min(86vw, 500px);
+        width: min(86vw, 420px);
         min-width: 0;
-    }
-
-    .company-sidebar-header {
-        grid-template-columns: 1fr;
-        padding-right: 44px;
     }
 }
 
@@ -888,10 +913,10 @@ textarea.form-control {
     }
 
     .company-sidebar {
-        width: min(92vw, 500px);
-        padding-left: 20px;
-        padding-right: 20px;
-        border-radius: 28px 0 0 28px;
+        width: min(92vw, 420px);
+        min-width: 0;
+        padding-left: 18px;
+        padding-right: 18px;
     }
 
     .company-sidebar-close {
