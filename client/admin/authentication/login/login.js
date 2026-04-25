@@ -21,6 +21,19 @@ function hideError(elementId) {
   el.style.display = "none";
 }
 
+// ─── Global Enter Key Listener ───────────────────────────────────────────────
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    // Find the active step and click its primary button
+    const activeStep = document.querySelector(".step.active");
+    if (activeStep) {
+      const primaryBtn = activeStep.querySelector(".btn-primary");
+      if (primaryBtn) primaryBtn.click();
+    }
+  }
+});
+
 // ─── Password Visibility Toggle ───────────────────────────────────────────────
 
 document.getElementById("show-password-toggle").addEventListener("change", function () {
@@ -43,8 +56,9 @@ document.getElementById("go-to-password").addEventListener("click", () => {
   const name = document.getElementById("register-name").value.trim();
   const email = document.getElementById("register-email").value.trim();
 
+  // Updated Warning System for Step 2
   if (!name || !email) {
-    alert("Please fill in all fields.");
+    alert("Please fill in all fields."); // Or use a div-based error if preferred
     return;
   }
 
@@ -63,9 +77,10 @@ document.getElementById("signin-btn").addEventListener("click", async () => {
   const email = document.getElementById("signin-email").value.trim();
   const password = document.getElementById("signin-password").value;
 
+  // Warning System: If empty, show error and stop execution (stays on page)
   if (!email || !password) {
-    showError("signin-error", "Email and password are required.");
-    return;
+    showError("signin-error", "Please enter both email and password.");
+    return; 
   }
 
   const btn = document.getElementById("signin-btn");
@@ -76,7 +91,7 @@ document.getElementById("signin-btn").addEventListener("click", async () => {
     const response = await fetch(`${API_BASE_URL}/companies/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include", // needed to receive cookies
+      credentials: "include",
       body: JSON.stringify({ email, password }),
     });
 
@@ -87,13 +102,10 @@ document.getElementById("signin-btn").addEventListener("click", async () => {
       return;
     }
 
-    // Login successful — redirect or handle as needed
-    console.log("Logged in:", data);
-    window.location.href = "../../dashboard/controlJob/controlJob.html"; // change to your actual redirect path
+    window.location.href = "../../dashboard/controlJob/controlJob.html";
 
   } catch (err) {
     showError("signin-error", "Network error. Please try again.");
-    console.error(err);
   } finally {
     btn.disabled = false;
     btn.textContent = "Next";
@@ -110,6 +122,7 @@ document.getElementById("register-btn").addEventListener("click", async () => {
   const password = document.getElementById("new-password").value;
   const confirmPassword = document.getElementById("confirm-password").value;
 
+  // Warning System for Registration
   if (!password || !confirmPassword) {
     showError("register-error", "Please fill in both password fields.");
     return;
@@ -134,15 +147,14 @@ document.getElementById("register-btn").addEventListener("click", async () => {
     const data = await response.json();
 
     if (!response.ok) {
-      showError("register-error", data.message || "Registration failed. Please try again.");
+      showError("register-error", data.message || "Registration failed.");
       return;
     }
 
-    // Registration successful — go back to sign in
     alert("Account created successfully! Please sign in.");
     navigate("step-password", "step-signin");
 
-    // Clear register fields
+    // Clear fields
     document.getElementById("register-name").value = "";
     document.getElementById("register-email").value = "";
     document.getElementById("new-password").value = "";
@@ -150,7 +162,6 @@ document.getElementById("register-btn").addEventListener("click", async () => {
 
   } catch (err) {
     showError("register-error", "Network error. Please try again.");
-    console.error(err);
   } finally {
     btn.disabled = false;
     btn.textContent = "Next";
