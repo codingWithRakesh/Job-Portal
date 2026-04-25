@@ -20,8 +20,8 @@ import {API_BASE_URL} from "../../../constants/constant.js";
     var headerProfileAvatar = document.getElementById("headerProfileAvatar");
     var drawerCompanyLogo = document.getElementById("drawerCompanyLogo");
     var drawerCompanyName = document.getElementById("drawerCompanyName");
-    var drawerCompanySubtitle = document.getElementById("drawerCompanySubtitle");
-    var drawerCompanyHeadline = document.getElementById("drawerCompanyHeadline");
+    var drawerCompanyLocation = document.getElementById("drawerCompanyLocation");
+    var drawerViewProfile = document.getElementById("drawerViewProfile");
     var lastProfileMenuFocusedElement = null;
     var companyData = loadCompanyData();
     var tagFields = {
@@ -305,20 +305,33 @@ import {API_BASE_URL} from "../../../constants/constant.js";
         element.alt = companyData.name ? companyData.name + " logo" : "Company Logo";
     }
 
+    function getCompanyLocationLabel() {
+        var locationFields = [
+            companyData.city,
+            companyData.state,
+            companyData.headquartersCity,
+            companyData.headquartersState
+        ].map(function (value) {
+            return String(value || "").trim();
+        }).filter(Boolean);
+
+        if (locationFields.length) {
+            return Array.from(new Set(locationFields)).join(", ");
+        }
+
+        var savedLocation = String(companyData.location || "").trim();
+        return savedLocation || "Location not added";
+    }
+
     function renderCompanyDrawer() {
         var initials = getInitials(companyData.name);
-        var subtitleParts = [companyData.industry, companyData.location].filter(Boolean);
-        var subtitle = subtitleParts.join(" | ") || "Company profile";
-        var headline = companyData.description
-            ? String(companyData.description).trim().slice(0, 128)
-            : "Keep your company story, hiring details, and contact information up to date for candidates.";
+        var location = getCompanyLocationLabel();
 
         applyMediaState(drawerCompanyLogo, companyData.logoDataUrl, initials);
         setProfileAvatar(headerProfileAvatar, companyData.logoDataUrl, initials);
 
         if (drawerCompanyName) drawerCompanyName.textContent = companyData.name || "Company Name";
-        if (drawerCompanySubtitle) drawerCompanySubtitle.textContent = subtitle;
-        if (drawerCompanyHeadline) drawerCompanyHeadline.textContent = headline;
+        if (drawerCompanyLocation) drawerCompanyLocation.textContent = location;
     }
 
     function isCompanyDrawerOpen() {
@@ -496,6 +509,12 @@ import {API_BASE_URL} from "../../../constants/constant.js";
         logoutButton.addEventListener("click", function () {
             console.log("Logout requested");
             closeCompanyDrawer();
+        });
+    }
+
+    if (drawerViewProfile) {
+        drawerViewProfile.addEventListener("click", function () {
+            window.location.href = "../../profile/profile.html";
         });
     }
 

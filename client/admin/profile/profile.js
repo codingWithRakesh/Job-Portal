@@ -90,8 +90,8 @@ function bindEvents() {
     });
 
     document.getElementById("companyDrawerClose")?.addEventListener("click", () => closeCompanyDrawer());
-    document.querySelectorAll(".company-sidebar-menu a, .company-sidebar-link").forEach((link) => {
-        link.addEventListener("click", () => closeCompanyDrawer({ restoreFocus: false }));
+    document.getElementById("drawerViewProfile")?.addEventListener("click", () => {
+        window.location.href = "profile.html";
     });
 
     document.querySelectorAll(".modal-overlay").forEach((modal) => {
@@ -242,20 +242,11 @@ function renderAccountInfoSection() {
 
 function renderCompanyDrawer() {
     const initials = getInitials(companyData.name);
-    const subtitleParts = [companyData.industry, companyData.location].filter(Boolean);
-    const subtitle = subtitleParts.join(" | ") || "Company profile";
-    const headline = companyData.description
-        ? truncateText(companyData.description, 128)
-        : "Keep your company story, hiring details, and contact information up to date for candidates.";
+    const location = getCompanyLocationLabel();
 
     applyMediaState(document.getElementById("drawerCompanyLogo"), companyData.logoDataUrl, initials);
     setText("drawerCompanyName", companyData.name || "Company Name");
-    setText("drawerCompanySubtitle", subtitle);
-    setText("drawerCompanyHeadline", headline);
-    setText("drawerFactIndustry", companyData.industry || "Not added yet");
-    setText("drawerFactLocation", companyData.location || "Not added yet");
-    setText("drawerFactSize", companyData.size || "Not added yet");
-    setText("drawerFactHiring", getHiringFocus());
+    setText("drawerCompanyLocation", location);
 }
 
 // ---------------------------------------------------------------------------
@@ -689,6 +680,24 @@ function getInitials(name = "") {
     const parts = name.trim().split(/\s+/).filter(Boolean).slice(0, 2);
     if (!parts.length) return "NC";
     return parts.map((part) => part[0]).join("").toUpperCase();
+}
+
+function getCompanyLocationLabel() {
+    const locationFields = [
+        companyData.city,
+        companyData.state,
+        companyData.headquartersCity,
+        companyData.headquartersState
+    ]
+        .map((value) => String(value || "").trim())
+        .filter(Boolean);
+
+    if (locationFields.length) {
+        return Array.from(new Set(locationFields)).join(", ");
+    }
+
+    const savedLocation = String(companyData.location || "").trim();
+    return savedLocation || "Location not added";
 }
 
 function getHiringSummary() {
