@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         alert("Registered successfully 🎉");
         console.log(data);
-        navigate('page4', 'page1');
+        showPage(0);
       } catch (err) {
         console.error(err);
         alert("Something went wrong");
@@ -391,12 +391,6 @@ document.getElementById('btn-register-step2-next')?.addEventListener('click', ()
 // Page 4: Final Password Step
 document.getElementById('btn-back-to-register-step2')?.addEventListener('click', () => {
   showPage(2);
-});
-
-document.getElementById('btn-register-final-submit')?.addEventListener('click', () => {
-  if (validateCurrentPage(3)) {
-    alert("Account setup complete!"); // Replace with actual submit logic
-  }
 });
 
 // Password Toggle Logic
