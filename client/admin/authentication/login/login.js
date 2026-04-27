@@ -1,5 +1,7 @@
 import { API_BASE_URL } from "../../../constants/constant.js";
 
+const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+
 // ─── Navigation ───────────────────────────────────────────────────────────────
 
 function navigate(fromId, toId) {
@@ -103,7 +105,7 @@ document.getElementById("signin-btn").addEventListener("click", async () => {
     }
 
     // window.location.href = "../../dashboard/controlJob/controlJob.html";
-    window.location.href = "/admin/dashboard/controlJob/controlJob";
+    window.location.href = isLocal ? "../../dashboard/controlJob/controlJob.html" : "/admin/dashboard/controlJob/controlJob";
 
   } catch (err) {
     showError("signin-error", "Network error. Please try again.");

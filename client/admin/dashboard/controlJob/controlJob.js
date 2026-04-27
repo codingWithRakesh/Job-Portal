@@ -2,6 +2,8 @@ import { API_BASE_URL } from "../../../constants/constant.js";
 
 const COMPANY_STORAGE_KEY = "naukriCampusCompanyProfile";
 
+const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+
 const icons = {
     location: '<svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>',
     salary: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-rupee" viewBox="0 0 16 16">
@@ -97,7 +99,7 @@ async function fetchAndSyncCompanyData() {
     } catch (err) {
         console.error("Failed to load company profile:", err);
         // window.location.href = "../../authentication/login/login.html";
-        window.location.href = "/admin/authentication/login/login";
+        window.location.href = isLocal ? "../../authentication/login/login.html" : "/admin/authentication/login/login";
     }
 }
 
@@ -215,22 +217,22 @@ function bindDrawerEvents() {
     document.getElementById("companyDrawerClose")?.addEventListener("click", () => closeCompanyDrawer());
     document.getElementById("drawerViewProfile")?.addEventListener("click", () => {
         // window.location.href = "../../profile/profile.html";
-        window.location.href = "/admin/profile/profile";
+        window.location.href = isLocal ? "../../profile/profile.html" : "/admin/profile/profile";
     });
     document.getElementById("drawerSearchAppearance")?.addEventListener("click", () => {
         closeCompanyDrawer();
         // window.location.href = "../../profile/profile.html#company-overview";
-        window.location.href = "/admin/profile/profile#company-overview";
+        window.location.href = isLocal ? "../../profile/profile.html#company-overview" : "/admin/profile/profile#company-overview";
     });
     document.getElementById("drawerSettings")?.addEventListener("click", () => {
         closeCompanyDrawer();
         // window.location.href = "../../profile/profile.html#account-information";
-        window.location.href = "/admin/profile/profile#account-information";
+        window.location.href = isLocal ? "../../profile/profile.html#account-information" : "/admin/profile/profile#account-information";
     });
     document.getElementById("drawerFaq")?.addEventListener("click", () => {
         closeCompanyDrawer();
         // window.location.href = "../../profile/profile.html";
-        window.location.href = "/admin/profile/profile";
+        window.location.href = isLocal ? "../../profile/profile.html" : "/admin/profile/profile";
     });
     document.getElementById("logoutBtn")?.addEventListener("click", logoutCompany);
 
@@ -351,7 +353,7 @@ async function logoutCompany() {
             closeCompanyDrawer({ restoreFocus: false });
             localStorage.removeItem(COMPANY_STORAGE_KEY);
             // window.location.href = "../../authentication/login/login.html";
-            window.location.href = "/admin/authentication/login/login";
+            window.location.href = isLocal ? "../../authentication/login/login.html" : "/admin/authentication/login/login";
         }
     } catch (error) {
         console.error("Logout failed:", error.message);

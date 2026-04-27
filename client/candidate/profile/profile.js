@@ -3,6 +3,8 @@ import { API_BASE_URL as API_URL } from "../../constants/constant.js";
 const API_BASE_URL = `${API_URL}/users`;
 const PROGRESS_RING_START_ANGLE = 225;
 
+const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+
 (async () => {
     try {
         const authRes = await fetch(`${API_BASE_URL}/current`, {
@@ -12,7 +14,7 @@ const PROGRESS_RING_START_ANGLE = 225;
 
         if (!authRes.ok) {
             // window.location.href = "../authentication/login/login.html";
-            window.location.href = "/candidate/authentication/login/login";
+            window.location.href = isLocal ? "../authentication/login/login.html" : "/candidate/authentication/login/login";
         }
     } catch (err) {
         console.error(err);
@@ -875,7 +877,7 @@ logoutBtn.addEventListener("click", async () => {
         if (json.success) {
             localStorage.removeItem("userData");
             // window.location.href = "../authentication/login/login.html";
-            window.location.href = "/candidate/authentication/login/login";
+            window.location.href = isLocal ? "../authentication/login/login.html" : "/candidate/authentication/login/login";
         } else {
             alert(json.message || "Failed to logout");
         }

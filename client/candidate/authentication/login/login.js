@@ -2,6 +2,8 @@ import { API_BASE_URL } from "../../../constants/constant.js";
 
 const BASE_URL = `${API_BASE_URL}/users`;
 
+const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+
 async function redirectBasedOnProfile() {
   const profileRes = await fetch(`${API_BASE_URL}/users/profile-completion`, {
     method: "GET",
@@ -13,10 +15,10 @@ async function redirectBasedOnProfile() {
 
   if (percentage >= 50) {
     // window.location.href = "../../../index.html";
-    window.location.href = "/home/index";
+    window.location.href = isLocal ? "../../../home/index.html" : "/home/index";
   } else {
     // window.location.href = "../../profile/profile.html";
-    window.location.href = "/candidate/profile/profile";
+    window.location.href = isLocal ? "../../profile/profile.html" : "/candidate/profile/profile";
   }
 }
 

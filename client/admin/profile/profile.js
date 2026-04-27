@@ -3,6 +3,8 @@ import { API_BASE_URL } from "../../constants/constant.js";
 const COMPANY_STORAGE_KEY = "naukriCampusCompanyProfile";
 const tagInputs = new Map();
 
+const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+
 (async () => {
     try {
         const authRes = await fetch(`${API_BASE_URL}/companies/current`, {
@@ -12,7 +14,7 @@ const tagInputs = new Map();
 
         if (!authRes.ok) {
             // window.location.href = "../authentication/login/login.html";
-            window.location.href = "/admin/authentication/login/login";
+            window.location.href = isLocal ? "../authentication/login/login.html" : "/admin/authentication/login/login";
         }
     } catch (err) {
         console.error(err);
@@ -108,7 +110,7 @@ function bindEvents() {
     document.getElementById("companyDrawerClose")?.addEventListener("click", () => closeCompanyDrawer());
     document.getElementById("drawerViewProfile")?.addEventListener("click", () => {
         // window.location.href = "profile.html";
-        window.location.href = "/admin/profile/profile";
+        window.location.href = isLocal ? "profile.html" : "/admin/profile/profile";
     });
 
     document.querySelectorAll(".modal-overlay").forEach((modal) => {
@@ -430,7 +432,7 @@ async function logoutCompany() {
             companyData = createDefaultCompanyData();
             renderUI();
             // window.location.href = "../authentication/login/login.html";
-            window.location.href = "/admin/authentication/login/login";
+            window.location.href = isLocal ? "../authentication/login/login.html" : "/admin/authentication/login/login";
         }
     } catch (error) {
         console.error("Logout failed:", error.message);
