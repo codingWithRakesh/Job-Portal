@@ -59,7 +59,8 @@ function setProfileAvatar(element, imageUrl, fallbackText) {
         data = await authRes.json();
 
         if (!authRes.ok) {
-            window.location.href = "../../authentication/login/login.html";
+            // window.location.href = "../../authentication/login/login.html";
+            window.location.href = "/admin/authentication/login";
             return;
         }
 
@@ -508,7 +509,8 @@ function setProfileAvatar(element, imageUrl, fallbackText) {
                 });
                 if (response.ok) {
                     closeCompanyDrawer();
-                    window.location.href = "../../authentication/login/login.html";
+                    // window.location.href = "../../authentication/login/login.html";
+                    window.location.href = "/admin/authentication/login";
                 }
             } catch (error) {
                 console.error("Logout failed:", error.message);
@@ -518,7 +520,8 @@ function setProfileAvatar(element, imageUrl, fallbackText) {
 
     if (drawerViewProfile) {
         drawerViewProfile.addEventListener("click", function () {
-            window.location.href = "../../profile/profile.html";
+            // window.location.href = "../../profile/profile.html";
+            window.location.href = "/admin/profile";
         });
     }
 

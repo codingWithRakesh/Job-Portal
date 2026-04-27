@@ -22,7 +22,8 @@ const icons = {
         });
 
         if (!authRes.ok) {
-            window.location.href = "../authentication/login/login.html";
+            // window.location.href = "../authentication/login/login.html";
+            window.location.href = "/candidate/authentication/login";
         }
     } catch (err) {
         console.error(err);
@@ -334,7 +335,8 @@ function bindDrawerEvents() {
 
     profileLink?.addEventListener('click', event => {
         event.preventDefault();
-        window.location.href = '../profile/profile.html';
+        // window.location.href = '../profile/profile.html';
+        window.location.href = '/candidate/profile';
     });
 
     // logout
@@ -353,7 +355,8 @@ function bindDrawerEvents() {
             console.warn('Logout request failed (proceeding anyway):', err.message);
         } finally {
             localStorage.removeItem('userData');
-            window.location.href = '../authentication/login/login.html';
+            // window.location.href = '../authentication/login/login.html';
+            window.location.href = '/candidate/authentication/login';
         }
     });
 }

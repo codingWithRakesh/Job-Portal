@@ -11,7 +11,8 @@ const tagInputs = new Map();
         });
 
         if (!authRes.ok) {
-            window.location.href = "../authentication/login/login.html";
+            // window.location.href = "../authentication/login/login.html";
+            window.location.href = "/admin/authentication/login";
         }
     } catch (err) {
         console.error(err);
@@ -106,7 +107,8 @@ function bindEvents() {
 
     document.getElementById("companyDrawerClose")?.addEventListener("click", () => closeCompanyDrawer());
     document.getElementById("drawerViewProfile")?.addEventListener("click", () => {
-        window.location.href = "profile.html";
+        // window.location.href = "profile.html";
+        window.location.href = "/admin/profile";
     });
 
     document.querySelectorAll(".modal-overlay").forEach((modal) => {
@@ -427,7 +429,8 @@ async function logoutCompany() {
             localStorage.removeItem(COMPANY_STORAGE_KEY);
             companyData = createDefaultCompanyData();
             renderUI();
-            window.location.href = "../authentication/login/login.html";
+            // window.location.href = "../authentication/login/login.html";
+            window.location.href = "/admin/authentication/login";
         }
     } catch (error) {
         console.error("Logout failed:", error.message);

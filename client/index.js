@@ -24,7 +24,8 @@ let profileCompletion = 0;
         });
 
         if (!userRes.ok) {
-            window.location.href = "candidate/authentication/login/login.html";
+            // window.location.href = "candidate/authentication/login/login.html";
+            window.location.href = "/candidate/authentication/login";
             return;
         }
 
@@ -47,7 +48,8 @@ let profileCompletion = 0;
 
     } catch (err) {
         console.error("Init error:", err);
-        window.location.href = "candidate/authentication/login/login.html";
+        // window.location.href = "candidate/authentication/login/login.html";
+        window.location.href = "/candidate/authentication/login";
     }
 })();
 
@@ -381,7 +383,8 @@ async function handleLogout() {
     } catch (error) {
         console.warn("Logout request failed.", error);
     } finally {
-        window.location.href = "candidate/authentication/login/login.html";
+        // window.location.href = "candidate/authentication/login/login.html";
+        window.location.href = "/candidate/authentication/login";
     }
 }
 
@@ -396,7 +399,8 @@ function bindDrawerEvents() {
     });
     document.querySelector(".profile-link")?.addEventListener("click", (event) => {
         event.preventDefault();
-        window.location.href = "candidate/profile/profile.html";
+        // window.location.href = "candidate/profile/profile.html";
+        window.location.href = "/candidate/profile";
     });
     document.getElementById("logoutBtn")?.addEventListener("click", handleLogout);
 

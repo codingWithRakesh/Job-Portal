@@ -12,9 +12,11 @@ async function redirectBasedOnProfile() {
   const percentage = profileData?.data?.profileCompletePercentage ?? profileData?.profileCompletePercentage;
 
   if (percentage >= 50) {
-    window.location.href = "../../../index.html";
+    // window.location.href = "../../../index.html";
+    window.location.href = "/home";
   } else {
-    window.location.href = "../../profile/profile.html";
+    // window.location.href = "../../profile/profile.html";
+    window.location.href = "/candidate/profile";
   }
 }
 

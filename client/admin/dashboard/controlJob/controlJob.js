@@ -96,7 +96,8 @@ async function fetchAndSyncCompanyData() {
         persistCompanyData();
     } catch (err) {
         console.error("Failed to load company profile:", err);
-        window.location.href = "../../authentication/login/login.html";
+        // window.location.href = "../../authentication/login/login.html";
+        window.location.href = "/admin/authentication/login";
     }
 }
 
@@ -213,19 +214,23 @@ function bindDrawerEvents() {
 
     document.getElementById("companyDrawerClose")?.addEventListener("click", () => closeCompanyDrawer());
     document.getElementById("drawerViewProfile")?.addEventListener("click", () => {
-        window.location.href = "../../profile/profile.html";
+        // window.location.href = "../../profile/profile.html";
+        window.location.href = "/admin/profile";
     });
     document.getElementById("drawerSearchAppearance")?.addEventListener("click", () => {
         closeCompanyDrawer();
-        window.location.href = "../../profile/profile.html#company-overview";
+        // window.location.href = "../../profile/profile.html#company-overview";
+        window.location.href = "/admin/profile#company-overview";
     });
     document.getElementById("drawerSettings")?.addEventListener("click", () => {
         closeCompanyDrawer();
-        window.location.href = "../../profile/profile.html#account-information";
+        // window.location.href = "../../profile/profile.html#account-information";
+        window.location.href = "/admin/profile#account-information";
     });
     document.getElementById("drawerFaq")?.addEventListener("click", () => {
         closeCompanyDrawer();
-        window.location.href = "../../profile/profile.html";
+        // window.location.href = "../../profile/profile.html";
+        window.location.href = "/admin/profile";
     });
     document.getElementById("logoutBtn")?.addEventListener("click", logoutCompany);
 
@@ -345,7 +350,8 @@ async function logoutCompany() {
         if (response.ok) {
             closeCompanyDrawer({ restoreFocus: false });
             localStorage.removeItem(COMPANY_STORAGE_KEY);
-            window.location.href = "../../authentication/login/login.html";
+            // window.location.href = "../../authentication/login/login.html";
+            window.location.href = "/admin/authentication/login";
         }
     } catch (error) {
         console.error("Logout failed:", error.message);
