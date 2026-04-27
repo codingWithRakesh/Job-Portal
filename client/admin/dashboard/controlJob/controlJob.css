@@ -86,6 +86,29 @@ body.modal-open {
     color: var(--text-secondary);
 }
 
+.navbar-links {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-right: 28px;
+}
+
+.nav-link {
+    color: #0666eb;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+    color: #0555c4;
+    outline: none;
+}
+
 .profile-menu {
     display: inline-flex;
     align-items: center;
@@ -896,6 +919,16 @@ body.modal-open {
         height: auto;
         padding-top: 18px;
         padding-bottom: 18px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .navbar-links {
+        margin-left: 0;
+        padding-right: 0;
+        order: 3;
+        width: 100%;
+        justify-content: flex-end;
     }
 
     .footer-inner,
