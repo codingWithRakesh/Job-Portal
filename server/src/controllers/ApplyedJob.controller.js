@@ -62,6 +62,9 @@ const findAppliedJobsForUser = asyncHandler(async (req, res) => {
                     }
                 ]
             }
+        },
+        {
+            $sort: { createdAt: -1 }
         }
     ])
 
