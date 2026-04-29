@@ -96,13 +96,13 @@
    margin-bottom: 24px;
    display: flex;
    align-items: center;
-   gap: 8px;
+   gap: 6px;
  }
 
  .logo-icon {
    width: 32px;
    height: 32px;
-   background-color: var(--secondary);
+   /* background-color: var(--secondary); */
    border-radius: 8px;
    color: var(--white);
    display: flex;
