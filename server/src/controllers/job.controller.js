@@ -93,6 +93,11 @@ const getCompanyJobs = asyncHandler(async (req, res) => {
             $addFields: {
                 totalApplications: { $size: "$applications" }
             }
+        },
+        {
+            $sort: {
+                createdAt: -1
+            }
         }
     ])
 
