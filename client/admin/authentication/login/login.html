@@ -6,117 +6,154 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Account Setup Flow</title>
+  <script>(function () { try { if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add("theme-dark"); } } catch (error) { } })();</script>
   <link rel="shortcut icon" href="../../../assets/images/JobNest-logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="../../../assets/css/theme.css">
   <link rel="stylesheet" href="login.css">
+  <script src="../../../assets/js/theme.js" defer></script>
   <script src="login.js" type="module" defer></script>
 </head>
 
 
 <body>
-
-
-  <!-- Step 1: Sign In -->
-  <div id="step-signin" class="step active">
-    <div class="card">
-      <div class="left-panel">
-        <div class="logo">
-          <div class="logo-icon">
-            <img src="../../../assets/images/JobNest-logo.png" alt="JobNest logo"
-              style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
-          </div>
-          <span style="color: #1f6feb;">Job</span><span style="color: #0f2d6b; margin-left: -6px;">Nest</span>
-        </div>
-        <h1>Sign in</h1>
-        <p class="subtitle">to continue to your account</p>
+  <div class="auth-page">
+    <header class="auth-topbar">
+      <div class="auth-role-switcher" data-admin-login="../../../admin/authentication/login/login.html"
+        data-candidate-login="../../../candidate/authentication/login/login.html">
+        <span class="auth-role-switch-question">Are you a candidate?</span>
+        <a class="auth-role-switch" href="../../../candidate/authentication/login/login.html"
+          aria-label="Switch to candidate login">
+          <span class="auth-role-switch-label">Candidate Login</span>
+        </a>
       </div>
+    </header>
 
-      <div class="right-panel">
-        <div id="signin-error" class="error-msg" style="display:none;"></div>
-        <div class="form-group">
-          <input id="signin-email" type="email" placeholder="Email" required>
-        </div>
-        <div class="form-group">
-          <input id="signin-password" type="password" placeholder="Password" required>
-        </div>
 
-        <div class="actions">
-          <div class="links-group">
-            <button class="btn-link" type="button">Forgot password?</button>
-            <button class="btn-link" type="button" id="go-to-create">Create account</button>
+    <!-- Step 1: Sign In -->
+    <div id="step-signin" class="step active">
+      <div class="card">
+        <div class="left-panel">
+          <div class="logo">
+            <div class="logo-icon">
+              <img src="../../../assets/images/JobNest-logo.png" alt="JobNest logo"
+                style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            </div>
+            <span style="color: #1f6feb;">Job</span><span style="color: #0f2d6b; margin-left: -6px;">Nest</span>
           </div>
-          <button class="btn-primary" type="button" id="signin-btn">Next</button>
+          <h1>Sign in</h1>
+          <p class="subtitle">to continue to your account</p>
+        </div>
+
+        <div class="right-panel">
+          <div id="signin-error" class="error-msg" style="display:none;"></div>
+          <div class="form-group">
+            <input id="signin-email" type="email" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <input id="signin-password" type="password" placeholder="Password" required>
+          </div>
+
+          <div class="actions">
+            <div class="links-group">
+              <button class="btn-link" type="button">Forgot password?</button>
+              <button class="btn-link" type="button" id="go-to-create">Create account</button>
+            </div>
+            <button class="btn-primary" type="button" id="signin-btn">Next</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  
 
 
-  <!-- Step 2: Create Account (name + email) -->
-  <div id="step-create-account" class="step">
-    <div class="card">
-      <div class="left-panel">
-        <div class="logo">
-          <div class="logo-icon">
-            <img src="../../../assets/images/JobNest-logo.png" alt="JobNest logo"
-              style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+    <!-- Step 2: Create Account (name + email) -->
+    <div id="step-create-account" class="step">
+      <div class="card">
+        <div class="left-panel">
+          <div class="logo">
+            <div class="logo-icon">
+              <img src="../../../assets/images/JobNest-logo.png" alt="JobNest logo"
+                style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            </div>
+            <span style="color: #1f6feb;">Job</span><span style="color: #0f2d6b; margin-left: -3px;">Nest</span>
           </div>
-          <span style="color: #1f6feb;">Job</span><span style="color: #0f2d6b; margin-left: -3px;">Nest</span>
-        </div>
-        <h1>Create Account</h1>
-        <p class="subtitle">Enter your details to get started</p>
-      </div>
-
-      <div class="right-panel">
-        <div class="form-group">
-          <input id="register-name" type="text" placeholder="Name" required>
-        </div>
-        <div class="form-group">
-          <input id="register-email" type="email" placeholder="Email" required>
+          <h1>Create Account</h1>
+          <p class="subtitle">Enter your details to get started</p>
         </div>
 
-        <div class="actions">
-          <button class="btn-ghost" type="button" id="back-to-signin">Back</button>
-          <button class="btn-primary" type="button" id="go-to-password">Next</button>
+        <div class="right-panel">
+          <div class="form-group">
+            <input id="register-name" type="text" placeholder="Name" required>
+          </div>
+          <div class="form-group">
+            <input id="register-email" type="email" placeholder="Email" required>
+          </div>
+
+          <div class="actions">
+            <button class="btn-ghost" type="button" id="back-to-signin">Back</button>
+            <button class="btn-primary" type="button" id="go-to-password">Next</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  
 
 
-  <!-- Step 3: Set Password -->
-  <div id="step-password" class="step">
-    <div class="card">
-      <div class="left-panel">
-        <div class="logo">
-          <div class="logo-icon">
-            <img src="../../../assets/images/JobNest-logo.png" alt="JobNest logo"
-              style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+    <!-- Step 3: Set Password -->
+    <div id="step-password" class="step">
+      <div class="card">
+        <div class="left-panel">
+          <div class="logo">
+            <div class="logo-icon">
+              <img src="../../../assets/images/JobNest-logo.png" alt="JobNest logo"
+                style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            </div>
+            <span style="color: #1f6feb;">Job</span><span style="color: #0f2d6b; margin-left: -3px;">Nest</span>
           </div>
-          <span style="color: #1f6feb;">Job</span><span style="color: #0f2d6b; margin-left: -3px;">Nest</span>
+          <h1>Create Your Password</h1>
+          <p class="subtitle">Secure your new account</p>
         </div>
-        <h1>Create Your Password</h1>
-        <p class="subtitle">Secure your new account</p>
+
+        <div class="right-panel">
+          <div id="register-error" class="error-msg" style="display:none;"></div>
+          <div class="form-group">
+            <input type="password" id="new-password" placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+          </div>
+          <label class="checkbox-group">
+            <input type="checkbox" id="show-password-toggle">
+            Show password
+          </label>
+
+
+          <div class="actions">
+            <button class="btn-ghost" type="button" id="back-to-create">Back</button>
+            <button class="btn-primary" type="button" id="register-btn">Next</button>
+          </div>
+        </div>
       </div>
-
-      <div class="right-panel">
-        <div id="register-error" class="error-msg" style="display:none;"></div>
-        <div class="form-group">
-          <input type="password" id="new-password" placeholder="Password" required>
-        </div>
-        <div class="form-group">
-          <input type="password" id="confirm-password" placeholder="Confirm Password" required>
-        </div>
-        <label class="checkbox-group">
-          <input type="checkbox" id="show-password-toggle">
-          Show password
-        </label>
-
-
-        <div class="actions">
-          <button class="btn-ghost" type="button" id="back-to-create">Back</button>
-          <button class="btn-primary" type="button" id="register-btn">Next</button>
-        </div>
-      </div>
+    </div>
+    <div class="auth-theme-utility">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"
+        aria-pressed="false">
+        <svg class="theme-toggle-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m4.93 19.07 1.41-1.41"></path>
+          <path d="m17.66 6.34 1.41-1.41"></path>
+        </svg>
+        <svg class="theme-toggle-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 12 21a9 9 0 0 0 9-8.21Z"></path>
+        </svg>
+        <span class="theme-toggle-ball" aria-hidden="true"></span>
+      </button>
     </div>
   </div>
 

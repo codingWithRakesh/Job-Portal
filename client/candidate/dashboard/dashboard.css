@@ -957,7 +957,7 @@
      align-items: center;
      gap: 14px;
      min-height: 48px;
-     padding: 0 2px;
+     padding: 0 0.75rem;
      border-radius: 12px;
      color: #101b39;
      font-size: 0.97rem;
@@ -968,16 +968,53 @@
      background: #f6f8fc;
  }
 
- .menu-item svg {
-     width: 22px;
-     height: 22px;
-     flex: 0 0 auto;
-     stroke: #6f81a8;
+.menu-item svg {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    stroke: #6f81a8;
      stroke-width: 1.8;
      fill: none;
-     stroke-linecap: round;
-     stroke-linejoin: round;
- }
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.menu-item--logout {
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+.menu-item--logout:hover,
+.menu-item--logout:focus-visible {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #991b1b;
+    outline: none;
+}
+
+.menu-item--logout svg {
+    stroke: #dc2626;
+}
+
+html.theme-dark .menu-item--logout {
+    background: #3a1f28;
+    border: 1px solid #7f1d1d;
+    color: #fda4af;
+    box-shadow: none;
+}
+
+html.theme-dark .menu-item--logout:hover,
+html.theme-dark .menu-item--logout:focus-visible {
+    background: #4a1f2a;
+    border-color: #b91c1c;
+    color: #fecdd3;
+    outline: none;
+}
+
+html.theme-dark .menu-item--logout svg {
+    stroke: #fda4af;
+}
 
  /* NOTIFICATIONS DRAWER CSS */
  .notifications-overlay {

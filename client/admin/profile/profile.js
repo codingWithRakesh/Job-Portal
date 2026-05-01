@@ -663,13 +663,33 @@ function renderChipCloud(containerId, items, emptyLabel) {
 function applyMediaState(element, imageUrl, fallbackText) {
     if (!element) return;
 
+    const logo = String(imageUrl || "").trim();
+    const name = String(fallbackText || "");
+    const hasImage =
+        logo.startsWith("data:image") ||
+        logo.startsWith("http://") ||
+        logo.startsWith("https://") ||
+        logo.startsWith("/") ||
+        logo.startsWith("./") ||
+        logo.startsWith("../") ||
+        logo.startsWith("blob:");
+
+    element.innerHTML = "";
     element.classList.remove("has-photo");
     element.style.backgroundImage = "";
-    element.textContent = fallbackText;
 
-    if (imageUrl) {
+    if (hasImage) {
+        const img = document.createElement("img");
+        img.src = logo;
+        img.className = "logo-img";
+        img.alt = companyData.name ? `${companyData.name} logo` : "Company Logo";
+        element.appendChild(img);
         element.classList.add("has-photo");
-        element.style.backgroundImage = `url("${imageUrl}")`;
+    } else {
+        const initial = document.createElement("span");
+        initial.className = "logo-initial";
+        initial.textContent = name.charAt(0).toUpperCase();
+        element.appendChild(initial);
     }
 }
 

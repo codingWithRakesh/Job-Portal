@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-        <link rel="shortcut icon" href="../assets/images/JobNest-logo.png" type="image/x-icon">
+    <script>(function () { try { if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add("theme-dark"); } } catch (error) { } })();</script>
+    <link rel="shortcut icon" href="../assets/images/JobNest-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/theme.css">
     <link rel="stylesheet" href="../home/index.css">
+    <script src="../assets/js/theme.js" defer></script>
     <script src="../home/index.js" type="module" defer></script>
 </head>
 <body>
@@ -20,9 +23,28 @@
                         style="color: #0f2d6b; margin-left: -3px;">Nest</span></span>
             </a>
             <nav class="topbar-nav">
+                <a href="../../home/index.html">Home</a>
                 <a href="../candidate/dashboard/dashboard.html">Dashboard</a>
             </nav>
             <div class="topbar-actions">
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"
+                    aria-pressed="false">
+                    <svg class="theme-toggle-sun" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4.5"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m4.93 19.07 1.41-1.41"></path>
+                        <path d="m17.66 6.34 1.41-1.41"></path>
+                    </svg>
+                    <svg class="theme-toggle-moon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 12 21a9 9 0 0 0 9-8.21Z"></path>
+                    </svg>
+                    <span class="theme-toggle-ball" aria-hidden="true"></span>
+                </button>
                 <button class="icon-button">
                     <svg viewBox="0 0 24 24">
                         <path d="M7 9a5 5 0 0 1 10 0c0 5.5 2 6.5 2 6.5H5S7 14.5 7 9"></path>
@@ -145,12 +167,12 @@
                 </div>
                 <div class="performance-card">
                     <article class="performance-item">
-                        <p class="performance-value">0</p>
+                        <p class="performance-value">33</p>
                         <p class="performance-label">Search Appearances</p>
                         <a href="#">View all</a>
                     </article>
                     <article class="performance-item">
-                        <p class="performance-value">0</p>
+                        <p class="performance-value">5</p>
                         <p class="performance-label">Recruiter Actions</p>
                         <a href="#">View all</a>
                     </article>
@@ -174,7 +196,7 @@
                         <path d="M9.1 9a3 3 0 1 1 5.5 1.6c-.9 1.1-1.8 1.6-1.8 2.9"></path>
                         <circle cx="12" cy="17" r="1"></circle>
                     </svg><span>FAQs</span></a>
-                <button id="logoutBtn" class="menu-item" href="#"><svg viewBox="0 0 24 24">
+                <button id="logoutBtn" class="menu-item menu-item--logout" href="#"><svg viewBox="0 0 24 24">
                         <path d="M10 17 15 12 10 7"></path>
                         <path d="M15 12H4"></path>
                         <path d="M12 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"></path>
