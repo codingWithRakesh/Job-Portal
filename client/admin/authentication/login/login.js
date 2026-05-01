@@ -2,6 +2,25 @@ import { API_BASE_URL } from "../../../constants/constant.js";
 
 const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
 
+function initRoleSwitcher() {
+  const switcher = document.querySelector(".auth-role-switcher");
+  const link = switcher?.querySelector(".auth-role-switch");
+  const question = switcher?.querySelector(".auth-role-switch-question");
+  const label = switcher?.querySelector(".auth-role-switch-label");
+
+  if (!switcher || !link || !question || !label) return;
+
+  const isAdminPage = window.location.pathname.toLowerCase().includes("admin");
+  const targetPath = isAdminPage ? switcher.dataset.candidateLogin : switcher.dataset.adminLogin;
+
+  question.textContent = isAdminPage ? "Are you a candidate?" : "Are you an admin?";
+  label.textContent = isAdminPage ? "Candidate Login" : "Admin Login";
+  link.href = targetPath;
+  link.setAttribute("aria-label", isAdminPage ? "Switch to candidate login" : "Switch to admin login");
+}
+
+initRoleSwitcher();
+
 // ─── Navigation ───────────────────────────────────────────────────────────────
 
 function navigate(fromId, toId) {

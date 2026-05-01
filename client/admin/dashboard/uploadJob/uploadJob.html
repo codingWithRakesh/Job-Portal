@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post a Job</title>
+    <script>(function () { try { if (localStorage.getItem("theme") === "dark") { document.documentElement.classList.add("theme-dark"); } } catch (error) { } })();</script>
+    <link rel="stylesheet" href="../../../assets/css/theme.css">
     <link rel="stylesheet" href="./uploadJob.css">
     <link rel="shortcut icon" href="../../../assets/images/JobNest-logo.png" type="image/x-icon">
+    <script src="../../../assets/js/theme.js" defer></script>
     <script src="./uploadJob.js" type="module" defer></script>
 </head>
 
@@ -18,11 +21,30 @@
                     style="width:24px; height:24px; object-fit: contain; border-radius: 6px;">
                 <span style="color: #1f6feb;">Job</span><span style="color: #0f2d6b; margin-left: -6px;">Nest</span>
             </div>
+        </a>
         <div class="navbar-links">
+            <a href="../controlJob/controlJob.html" class="nav-link"><b>Dashboard</b></a>
             <a href="../uploadJob/uploadJob.html" class="nav-link"><b>Upload Job</b></a>
         </div>
-        </a>
         <div class="navbar-user">
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"
+                aria-pressed="false">
+                <svg class="theme-toggle-sun" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4.5"></circle>
+                    <path d="M12 2v2"></path>
+                    <path d="M12 20v2"></path>
+                    <path d="m4.93 4.93 1.41 1.41"></path>
+                    <path d="m17.66 17.66 1.41 1.41"></path>
+                    <path d="M2 12h2"></path>
+                    <path d="M20 12h2"></path>
+                    <path d="m4.93 19.07 1.41-1.41"></path>
+                    <path d="m17.66 6.34 1.41-1.41"></path>
+                </svg>
+                <svg class="theme-toggle-moon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 12 21a9 9 0 0 0 9-8.21Z"></path>
+                </svg>
+                <span class="theme-toggle-ball" aria-hidden="true"></span>
+            </button>
             <button class="profile-menu" id="profileMenuButton" type="button" aria-label="Account menu"
                 aria-haspopup="dialog" aria-expanded="false" aria-controls="companyDrawerOverlay">
                 <span class="menu-lines" aria-hidden="true"><span></span></span>

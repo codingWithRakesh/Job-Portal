@@ -52,7 +52,6 @@ textarea {
     height: 68px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 0.95rem 5%;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
@@ -90,23 +89,27 @@ textarea {
 }
 
 .navbar-links {
+    margin-left: auto;
+    margin-right: 1rem;
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 0px;
     color: var(--brand);
 }
 
-.nav-link{
-    text-decoration:none;
-    color:#0666eb;
-    font-size:15px;
-    font-weight:600;
-    line-height:1;
-    padding:8px 14px;
-    border-radius:8px;
-    transition:all .2s ease;
-    left:32rem;
-    position:relative
+.navbar-user {
+    margin-left: 0;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #0666eb;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all .2s ease;
 }
 
 .profile-menu {
@@ -662,6 +665,7 @@ textarea.form-control {
     height: 100px;
     display: grid;
     place-items: center;
+    position: relative;
     border: 1px solid #dbe5f4;
     border-radius: 20px;
     background: linear-gradient(145deg, #f9fbff, #edf3ff);
@@ -676,9 +680,21 @@ textarea.form-control {
 
 .company-sidebar-logo.has-photo {
     color: transparent;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+}
+
+.logo-initial {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
 }
 
 .company-sidebar-copy {
@@ -718,7 +734,7 @@ textarea.form-control {
     gap: 12px;
     width: 100%;
     min-height: 54px;
-    padding: 0 16px;
+    padding: 0 0.75rem;
     border: 1px solid #e2e9f6;
     border-radius: 18px;
     background: #f9fbff;

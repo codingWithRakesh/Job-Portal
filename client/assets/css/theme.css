@@ -1,0 +1,659 @@
+:root {
+    color-scheme: light;
+    --theme-page-bg: #f7f8fc;
+    --theme-surface-bg: #ffffff;
+    --theme-surface-soft-bg: #f8fafc;
+    --theme-navbar-bg: #ffffff;
+    --theme-text-color: #1e2640;
+    --theme-muted-text: #717b96;
+    --theme-subtle-text: #8b94ad;
+    --theme-border-color: #e4e9f3;
+    --theme-border-strong-color: #d8deeb;
+    --theme-shadow-sm: 0 8px 22px rgba(27, 39, 79, 0.05);
+    --theme-shadow-md: 0 14px 34px rgba(27, 39, 79, 0.08);
+    --theme-modal-bg: #ffffff;
+    --theme-sidebar-bg: #ffffff;
+    --theme-button-bg: #2e5bff;
+    --theme-toggle-switch-bg: #e2e5e9;
+    --theme-toggle-switch-active-bg: #2f343d;
+    --theme-toggle-border: rgba(18, 24, 38, 0.08);
+    --theme-toggle-ball-bg: #f7c978;
+    --theme-toggle-ball-active-bg: #5f636b;
+    --theme-toggle-icon: #354052;
+    --theme-toggle-icon-active: #f8fafc;
+}
+
+html.theme-dark {
+    color-scheme: dark;
+    --theme-page-bg: #0f172a;
+    --theme-surface-bg: #172033;
+    --theme-surface-soft-bg: #111827;
+    --theme-surface-soft-2-bg: #1b2740;
+    --theme-navbar-bg: #151e31;
+    --theme-text-color: #e6edf7;
+    --theme-muted-text: #a5b4c8;
+    --theme-subtle-text: #7f8ea5;
+    --theme-border-color: #2d3b52;
+    --theme-border-strong-color: #3c4c66;
+    --theme-shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.24);
+    --theme-shadow-md: 0 18px 42px rgba(0, 0, 0, 0.34);
+    --theme-modal-bg: #172033;
+    --theme-sidebar-bg: #151e31;
+    --theme-button-bg: #4f7cff;
+    --theme-toggle-switch-bg: #2f343d;
+    --theme-toggle-switch-active-bg: #2f343d;
+    --theme-toggle-border: rgba(255, 255, 255, 0.08);
+    --theme-toggle-ball-bg: #f7c978;
+    --theme-toggle-ball-active-bg: #5f636b;
+    --theme-toggle-icon: #dbe4f0;
+    --theme-toggle-icon-active: #ffffff;
+
+    --bg: var(--theme-page-bg);
+    --page-bg: var(--theme-page-bg);
+    --background: var(--theme-page-bg);
+    --bg-body: var(--theme-page-bg);
+    --surface: var(--theme-surface-bg);
+    --bg-surface: var(--theme-surface-bg);
+    --surface-soft: #182235;
+    --surface-blue: #1d2d4a;
+    --brand-soft: #182b4b;
+    --soft-blue: #182b4b;
+    --soft-green: #143225;
+    --soft-orange: #3a2815;
+    --white: #f8fafc;
+    --text: var(--theme-text-color);
+    --text-main: var(--theme-text-color);
+    --text-secondary: var(--theme-muted-text);
+    --text-soft: var(--theme-muted-text);
+    --text-muted: var(--theme-subtle-text);
+    --text-tertiary: var(--theme-subtle-text);
+    --muted: var(--theme-muted-text);
+    --border: var(--theme-border-color);
+    --border-hover: #40516c;
+    --border-strong: var(--theme-border-strong-color);
+    --shadow-sm: var(--theme-shadow-sm);
+    --shadow-md: var(--theme-shadow-md);
+    --primary-light: #1d315d;
+    --success-light: #143225;
+    --success-text: #9af0c5;
+    --danger-light: #3a1f28;
+    --danger-text: #fda4af;
+    --warning-light: #3a2a12;
+    --warning-text: #fcd58a;
+    --ring-track: #34435c;
+    --brand-ring: #28416f;
+}
+
+html {
+    background: var(--theme-page-bg);
+}
+
+body {
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle {
+    position: relative;
+    flex: 0 0 auto;
+    width: 56px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7px;
+    border: 1px solid var(--theme-toggle-border);
+    border-radius: 999px;
+    background: var(--theme-toggle-switch-bg);
+    box-shadow: inset 0 1px 4px rgba(15, 23, 42, 0.2), 0 1px 2px rgba(15, 23, 42, 0.08);
+    color: var(--theme-toggle-icon);
+    cursor: pointer;
+    line-height: 0;
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.theme-toggle svg {
+    position: relative;
+    z-index: 3;
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+    transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.theme-toggle-ball {
+    position: absolute;
+    z-index: 2;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--theme-toggle-ball-bg);
+    box-shadow: 0 2px 7px rgba(15, 23, 42, 0.18);
+    pointer-events: none;
+    transform: translateX(0);
+    transition: transform 0.28s ease, background-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--theme-button-bg);
+    outline-offset: 3px;
+}
+
+html.theme-dark .theme-toggle {
+    background: var(--theme-toggle-switch-active-bg);
+    color: var(--theme-toggle-icon-active);
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.38), 0 1px 3px rgba(0, 0, 0, 0.24);
+}
+
+html.theme-dark .theme-toggle-ball {
+    background: var(--theme-toggle-ball-active-bg);
+    transform: translateX(26px);
+}
+
+html.theme-dark body {
+    background: var(--theme-page-bg);
+    color: var(--theme-text-color);
+}
+
+html.theme-dark .topbar,
+html.theme-dark .navbar,
+html.theme-dark .site-footer,
+html.theme-dark .page-footer {
+    background: var(--theme-navbar-bg);
+    border-color: var(--theme-border-color);
+    box-shadow: var(--theme-shadow-sm);
+}
+
+html.theme-dark .profile-card,
+html.theme-dark .job-card,
+html.theme-dark .app-card,
+html.theme-dark .stat-card,
+html.theme-dark .info-card,
+html.theme-dark .content-card,
+html.theme-dark .profile-summary,
+html.theme-dark .company-summary,
+html.theme-dark .card,
+html.theme-dark .main-container,
+html.theme-dark .performance-box,
+html.theme-dark .performance-card,
+html.theme-dark .meta-grid,
+html.theme-dark .empty-state,
+html.theme-dark .data-pair,
+html.theme-dark .record-item,
+html.theme-dark .company-meta-item,
+html.theme-dark .info-pill-card,
+html.theme-dark .faq-item,
+html.theme-dark .resume-dropzone,
+html.theme-dark .applicant-item,
+html.theme-dark .profile-menu,
+html.theme-dark .tag-input-container,
+html.theme-dark .tag,
+html.theme-dark .skill-chip,
+html.theme-dark .skill-tag,
+html.theme-dark .skill-pill,
+html.theme-dark .language-pill,
+html.theme-dark .lang-pill,
+html.theme-dark .status-badge,
+html.theme-dark .outline-button,
+html.theme-dark .btn-secondary-link,
+html.theme-dark .company-menu-item,
+html.theme-dark .menu-item,
+html.theme-dark .chip span,
+html.theme-dark .pill,
+html.theme-dark .delete-job-btn,
+html.theme-dark .btn-reject {
+    background: var(--theme-surface-bg);
+    border-color: var(--theme-border-color);
+    color: var(--theme-text-color);
+    box-shadow: var(--theme-shadow-sm);
+}
+
+html.theme-dark .performance-box,
+html.theme-dark .performance-card,
+html.theme-dark .company-meta-item,
+html.theme-dark .info-pill-card,
+html.theme-dark .faq-item,
+html.theme-dark .data-pair,
+html.theme-dark .record-item,
+html.theme-dark .insight-block,
+html.theme-dark .resume-dropzone,
+html.theme-dark .notification-soft-dot,
+html.theme-dark .input-addon,
+html.theme-dark .job-details,
+html.theme-dark .app-details,
+html.theme-dark .quick-nav-link.active,
+html.theme-dark .quick-nav-link.is-active {
+    background: var(--theme-surface-soft-2-bg);
+}
+
+html.theme-dark .job-details,
+html.theme-dark .app-details,
+html.theme-dark .applicants-container,
+html.theme-dark .sidebar,
+html.theme-dark .company-sidebar,
+html.theme-dark .profile-drawer,
+html.theme-dark .notifications-drawer,
+html.theme-dark .success-overlay {
+    background: var(--theme-sidebar-bg);
+    border-color: var(--theme-border-color);
+    color: var(--theme-text-color);
+}
+
+html.theme-dark .profile-modal {
+    background: var(--theme-modal-bg);
+    border-color: var(--theme-border-color);
+    color: var(--theme-text-color);
+}
+
+html.theme-dark .tabs-nav {
+    background: var(--theme-page-bg);
+    border-color: var(--theme-border-color);
+}
+
+html.theme-dark .topbar-nav a,
+html.theme-dark .navbar-user,
+html.theme-dark .footer-links a,
+html.theme-dark .profile-name,
+html.theme-dark .profile-subtitle,
+html.theme-dark .profile-title,
+html.theme-dark .profile-degree,
+html.theme-dark .profile-school,
+html.theme-dark .profile-info,
+html.theme-dark .profile-link,
+html.theme-dark .profile-performance-head h3,
+html.theme-dark .profile-performance-head span,
+html.theme-dark .performance-title,
+html.theme-dark .performance-label,
+html.theme-dark .section-title,
+html.theme-dark .feed-header,
+html.theme-dark .job-title,
+html.theme-dark .company-name,
+html.theme-dark .company-sidebar-name,
+html.theme-dark .company-sidebar-location,
+html.theme-dark .company-title-block h1,
+html.theme-dark .company-industry,
+html.theme-dark .company-meta-item p,
+html.theme-dark .body-copy,
+html.theme-dark .card-head h3,
+html.theme-dark .data-pair dd,
+html.theme-dark .record-title,
+html.theme-dark .record-meta,
+html.theme-dark .record-year,
+html.theme-dark .helper-copy,
+html.theme-dark .detail-row,
+html.theme-dark .detail-section p,
+html.theme-dark .details-section p,
+html.theme-dark .info-tag,
+html.theme-dark .data-item,
+html.theme-dark .info-item,
+html.theme-dark .stat-label,
+html.theme-dark .notification-message,
+html.theme-dark .notification-subtext,
+html.theme-dark .modal-title,
+html.theme-dark .form-label,
+html.theme-dark .checkbox-group,
+html.theme-dark .performance-value,
+html.theme-dark p.subtitle,
+html.theme-dark h1,
+html.theme-dark h2,
+html.theme-dark h3,
+html.theme-dark h4 {
+    color: var(--theme-text-color);
+}
+
+html.theme-dark .helper-copy,
+html.theme-dark .company-meta-item svg,
+html.theme-dark .detail-row svg,
+html.theme-dark .info-item svg,
+html.theme-dark .data-item svg,
+html.theme-dark .meta-label,
+html.theme-dark .data-pair dt,
+html.theme-dark .section-heading p,
+html.theme-dark .empty-value,
+html.theme-dark .empty-state,
+html.theme-dark .quick-list li,
+html.theme-dark .quick-nav-link,
+html.theme-dark .tab-button,
+html.theme-dark .text-soft,
+html.theme-dark .posted-at,
+html.theme-dark .step-item,
+html.theme-dark .company-menu-item svg,
+html.theme-dark .menu-item svg,
+html.theme-dark .drawer-close,
+html.theme-dark .notifications-close,
+html.theme-dark .modal-close,
+html.theme-dark .subtitle {
+    color: var(--theme-muted-text);
+}
+
+html.theme-dark .icon-button,
+html.theme-dark .edit-link,
+html.theme-dark .edit-mini,
+html.theme-dark .company-sidebar-close {
+    color: #b7c5d9;
+}
+
+html.theme-dark input,
+html.theme-dark select,
+html.theme-dark textarea,
+html.theme-dark .form-control,
+html.theme-dark .text-input,
+html.theme-dark .textarea-input,
+html.theme-dark .select-input,
+html.theme-dark .tag-input-field,
+html.theme-dark .tag-input-container input {
+    background-color: var(--theme-surface-soft-bg);
+    border-color: var(--theme-border-strong-color);
+    color: var(--theme-text-color);
+}
+
+html.theme-dark input::placeholder,
+html.theme-dark textarea::placeholder {
+    color: var(--theme-subtle-text);
+}
+
+html.theme-dark select.form-control,
+html.theme-dark select.select-input {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a5b4c8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+html.theme-dark .profile-overlay,
+html.theme-dark .notifications-overlay,
+html.theme-dark .company-overlay,
+html.theme-dark .modal-overlay {
+    background: rgba(3, 7, 18, 0.66);
+}
+
+html.theme-dark .menu-lines::before,
+html.theme-dark .menu-lines::after,
+html.theme-dark .menu-lines span {
+    background: #aab7ca;
+}
+
+html.theme-dark .step-item::before {
+    background: #22314f;
+    border-color: #40516c;
+}
+
+html.theme-dark .step-item:not(:last-child)::after {
+    background: #33425e;
+}
+
+html.theme-dark .step-item.active,
+html.theme-dark .step-item.completed {
+    color: var(--theme-text-color);
+}
+
+html.theme-dark .step-item.active::before,
+html.theme-dark .step-item.completed::before {
+    background: var(--theme-button-bg);
+    border-color: var(--brand-ring);
+}
+
+html.theme-dark .profile-avatar::before,
+html.theme-dark .progress-ring::before,
+html.theme-dark .match-ring span {
+    background: var(--theme-surface-bg);
+}
+
+html.theme-dark .company-logo-frame,
+html.theme-dark .company-sidebar-logo,
+html.theme-dark .menu-avatar,
+html.theme-dark .avatar-shell,
+html.theme-dark .profile-avatar-inner {
+    background-color: #243149;
+    background-image: linear-gradient(145deg, #263650, #182235);
+    border-color: var(--theme-border-color);
+    color: var(--theme-text-color);
+}
+
+html.theme-dark .notification-bell {
+    stroke: #dbe4f0;
+}
+
+html.theme-dark .notification-soft-dot {
+    fill: #1d315d;
+}
+
+html.theme-dark .quick-nav-link.active,
+html.theme-dark .quick-nav-link.is-active,
+html.theme-dark .chip input:checked + span,
+html.theme-dark .tag-chip,
+html.theme-dark .location-chip,
+html.theme-dark .applicant-count span,
+html.theme-dark .pill.active,
+html.theme-dark .company-menu-item--primary {
+    background: #1d315d;
+    border-color: #385d9c;
+    color: #cfe0ff;
+}
+
+html.theme-dark .posted-at--green,
+html.theme-dark .status-Shortlisted,
+html.theme-dark .status-shortlisted,
+html.theme-dark .badge-free {
+    background: #143225;
+    border-color: #24543f;
+    color: #9af0c5;
+}
+
+html.theme-dark .posted-at--yellow,
+html.theme-dark .status-Pending {
+    background: #3a2a12;
+    border-color: #6a4b16;
+    color: #fcd58a;
+}
+
+html.theme-dark .posted-at--red,
+html.theme-dark .status-Rejected,
+html.theme-dark .status-rejected {
+    background: #3a1f28;
+    border-color: #6b3441;
+    color: #fda4af;
+}
+
+html.theme-dark .company-menu-item--logout {
+    background: #341b24;
+    border-color: rgba(248, 113, 113, 0.28);
+    color: #fca5a5;
+}
+
+html.theme-dark .btn-select {
+    background: #1f8f5f;
+    color: #f8fafc;
+}
+
+html.theme-dark .btn-select:hover {
+    background: #18734d;
+}
+
+html.theme-dark .btn-reject {
+    background: #231924;
+    border-color: #6b3441;
+    color: #fda4af;
+}
+
+html.theme-dark .btn-reject:hover {
+    background: #321f2b;
+    color: #fecdd3;
+}
+
+html.theme-dark .delete-job-btn {
+    background: #231924;
+    border-color: #6b3441;
+    color: #fda4af;
+}
+
+html.theme-dark .delete-job-btn:hover,
+html.theme-dark .delete-job-btn:focus-visible {
+    background: #321f2b;
+    border-color: #8e4455;
+    color: #fecdd3;
+}
+
+html.theme-dark .btn-primary,
+html.theme-dark .btn-next,
+html.theme-dark .btn-save,
+html.theme-dark .btn-apply,
+html.theme-dark .post-job-btn,
+html.theme-dark .notifications-cta {
+    background: var(--theme-button-bg);
+    color: #ffffff;
+}
+
+html.theme-dark .btn-primary:hover,
+html.theme-dark .btn-next:hover,
+html.theme-dark .btn-save:hover,
+html.theme-dark .btn-apply:hover,
+html.theme-dark .post-job-btn:hover,
+html.theme-dark .notifications-cta:hover {
+    background: #6a90ff;
+}
+
+html.theme-dark .btn-link,
+html.theme-dark .btn-ghost,
+html.theme-dark .btn-cancel,
+html.theme-dark .text-link,
+html.theme-dark .expand-hint,
+html.theme-dark .job-expand-footer,
+html.theme-dark .nav-link {
+    color: #8fb4ff;
+}
+
+html.theme-dark .btn-ghost:hover,
+html.theme-dark .btn-link:hover,
+html.theme-dark .btn-cancel:hover,
+html.theme-dark .text-link:hover,
+html.theme-dark .quick-nav-link:hover,
+html.theme-dark .nav-link:hover {
+    color: #bfd3ff;
+}
+
+html.theme-dark .performance-value {
+    color: #f8fbff;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+}
+
+html.theme-dark .performance-item a {
+    color: #8fb4ff;
+}
+
+html.theme-dark .performance-item a:hover,
+html.theme-dark .performance-item a:focus-visible {
+    color: #bfd3ff;
+}
+
+html.theme-dark .chip span,
+html.theme-dark .pill,
+html.theme-dark .tag,
+html.theme-dark .tag-chip,
+html.theme-dark .location-chip,
+html.theme-dark .skill-chip,
+html.theme-dark .skill-tag,
+html.theme-dark .skill-pill,
+html.theme-dark .language-pill,
+html.theme-dark .lang-pill {
+    background: var(--theme-surface-soft-2-bg);
+    border-color: #40516c;
+    color: #d6e3f5;
+}
+
+html.theme-dark .tag button,
+html.theme-dark .chip-remove-button {
+    background: rgba(143, 180, 255, 0.16);
+    color: #cfe0ff;
+}
+
+html.theme-dark .tag button:hover,
+html.theme-dark .chip-remove-button:hover,
+html.theme-dark .chip-remove-button:focus-visible {
+    background: rgba(143, 180, 255, 0.24);
+}
+
+html.theme-dark .progress-badge,
+html.theme-dark .profile-progress-badge {
+    background: var(--theme-surface-bg);
+    border-color: #40516c;
+    color: #f87171;
+}
+
+html.theme-dark .success-overlay {
+    background: rgba(10, 15, 28, 0.92);
+}
+
+html.theme-dark .success-title,
+html.theme-dark .success-copy {
+    color: var(--theme-text-color);
+}
+
+html.theme-dark .success-icon {
+    background: #1f8f5f;
+    color: #ffffff;
+}
+
+html.theme-dark .btn-secondary-link {
+    background: var(--theme-surface-soft-2-bg);
+    border-color: #40516c;
+    color: #d6e3f5;
+}
+
+html.theme-dark .btn-secondary-link:hover,
+html.theme-dark .btn-secondary-link:focus-visible {
+    border-color: #5b82d1;
+    color: #ffffff;
+}
+
+html.theme-dark .brand-wordmark span[style*="#0f2d6b"],
+html.theme-dark .logo span[style*="#0f2d6b"],
+html.theme-dark .navbar-brand span[style*="#0f2d6b"] {
+    color: #93c5fd !important;
+}
+
+html.theme-dark .brand-wordmark span[style*="#1f6feb"],
+html.theme-dark .logo span[style*="#1f6feb"],
+html.theme-dark .navbar-brand span[style*="#1f6feb"] {
+    color: #60a5fa !important;
+}
+
+.navbar-links .nav-link {
+    left: auto;
+    position: static;
+}
+
+@media (max-width: 640px) {
+    .theme-toggle {
+        width: 52px;
+        height: 28px;
+        padding: 0 6px;
+    }
+
+    .theme-toggle svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .theme-toggle-ball {
+        width: 24px;
+        height: 24px;
+    }
+
+    html.theme-dark .theme-toggle-ball {
+        transform: translateX(24px);
+    }
+}
+
+@media (max-width: 760px) {
+    .navbar .navbar-user {
+        width: auto;
+        flex-direction: row;
+        align-items: center;
+        align-self: flex-end;
+        justify-content: flex-end;
+    }
+}

@@ -72,6 +72,18 @@ function bindEvents() {
     document.querySelector(".notifications-close").addEventListener("click", () => closeDrawer("notificationsOverlay"));
     document.querySelector(".notifications-cta").addEventListener("click", () => closeDrawer("notificationsOverlay"));
 
+    document.getElementById("profileDrawerOverlay").addEventListener("click", (event) => {
+        if (event.target === event.currentTarget) {
+            closeDrawer("profileDrawerOverlay");
+        }
+    });
+
+    document.getElementById("notificationsOverlay").addEventListener("click", (event) => {
+        if (event.target === event.currentTarget) {
+            closeDrawer("notificationsOverlay");
+        }
+    });
+
     // Drawer "View & Update Profile" link
     document.querySelector(".profile-link").addEventListener("click", () => closeDrawer("profileDrawerOverlay"));
 
@@ -313,8 +325,14 @@ function renderUI() {
                         <a href="${userData.resume.url}" target="_blank" class="text-link" style="font-size:0.85rem;">View File</a>
                     </div>
                 </div>
-                <button class="experience-remove-button" id="deleteResumeBtn">
-                    <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+                <button type="button" class="delete-btn" id="deleteResumeBtn" aria-label="Delete resume">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                        <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
+                        <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
                 </button>
             </div>
         `;
