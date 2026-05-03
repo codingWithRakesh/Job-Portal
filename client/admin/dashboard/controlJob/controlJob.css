@@ -57,7 +57,7 @@ body.modal-open {
     background-color: var(--bg-surface);
     border-bottom: 1px solid var(--border);
     min-height: 68px;
-    padding: 0.75rem 5%;
+    padding: 0.75rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -907,6 +907,51 @@ body.modal-open {
     color: #bf3434;
 }
 
+@media (max-width: 1024px) {
+    .navbar,
+    .container,
+    .footer-inner {
+        width: min(calc(100% - 32px), 1100px);
+    }
+
+    .navbar {
+        margin: 0 auto;
+        padding: 0.75rem 0;
+        gap: 1rem;
+    }
+
+    .container {
+        padding: 0;
+        margin-top: 1.5rem;
+    }
+
+    .stats-grid {
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .section-header {
+        margin-bottom: 1.25rem;
+    }
+
+    .job-summary {
+        padding: 1.25rem;
+    }
+
+    .job-data-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .applicant-list {
+        padding: 1rem;
+    }
+
+    .footer-inner {
+        gap: 32px;
+        padding: 30px 0;
+    }
+}
+
 @media (max-width: 980px) {
     .company-sidebar {
         width: min(86vw, 420px);
@@ -916,11 +961,13 @@ body.modal-open {
 
 @media (max-width: 760px) {
     .navbar {
+        width: min(calc(100% - 24px), 1100px);
         height: auto;
-        padding-top: 18px;
-        padding-bottom: 18px;
+        padding-top: 14px;
+        padding-bottom: 14px;
         flex-wrap: wrap;
         gap: 12px;
+        align-items: center;
     }
 
     .navbar-links {
@@ -928,7 +975,103 @@ body.modal-open {
         padding-right: 0;
         order: 3;
         width: 100%;
-        justify-content: flex-end;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 2px;
+    }
+
+    .navbar-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .container {
+        width: min(calc(100% - 24px), 1100px);
+        margin-top: 1.25rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-card,
+    .post-job-btn {
+        min-height: 96px;
+        padding: 1.15rem;
+    }
+
+    .stat-value {
+        font-size: 1.9rem;
+    }
+
+    .section-header {
+        margin-bottom: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .job-list,
+    .applicant-list {
+        gap: 0.9rem;
+    }
+
+    .job-summary {
+        padding: 1rem;
+    }
+
+    .job-header-top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .job-header-actions {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .job-title-group h3 {
+        font-size: 1.1rem;
+    }
+
+    .job-data-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .job-expand-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .applicant-item {
+        padding: 1rem;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.9rem;
+    }
+
+    .applicant-profile,
+    .applicant-actions {
+        width: 100%;
+    }
+
+    .applicant-actions {
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .match-ring {
+        margin: 0;
+    }
+
+    .btn {
+        flex: 1 1 140px;
+        text-align: center;
     }
 
     .footer-inner,
@@ -940,9 +1083,40 @@ body.modal-open {
     .footer-links {
         grid-template-columns: 1fr;
     }
+
+    .footer-inner {
+        width: min(calc(100% - 24px), 1100px);
+        padding: 28px 0;
+    }
 }
 
 @media (max-width: 480px) {
+    .navbar,
+    .container,
+    .footer-inner {
+        width: min(calc(100% - 20px), 1100px);
+    }
+
+    .navbar-brand {
+        font-size: 1.05rem;
+    }
+
+    .profile-menu {
+        min-height: 42px;
+        padding: 6px 10px;
+        gap: 10px;
+    }
+
+    .navbar-user img,
+    .profile-menu img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .container {
+        margin-top: 1rem;
+    }
+
     .job-header-top,
     .applicant-item,
     .applicant-actions {
@@ -955,14 +1129,64 @@ body.modal-open {
         justify-content: space-between;
     }
 
+    .deadline-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.55rem;
+    }
+
+    .delete-job-btn {
+        width: 34px;
+        height: 34px;
+    }
+
+    .applicant-profile {
+        gap: 0.75rem;
+    }
+
     .applicant-actions {
         width: 100%;
+        gap: 0.75rem;
+    }
+
+    .applicant-actions > p {
+        font-size: 0.875rem;
+    }
+
+    .btn {
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .company-sidebar-shell {
+        padding-top: 22px;
+    }
+
+    .company-sidebar-header {
+        padding-inline: 8px;
+        gap: 14px;
+    }
+
+    .company-sidebar-logo {
+        width: 84px;
+        height: 84px;
+        font-size: 1.6rem;
+        border-radius: 18px;
+    }
+
+    .company-sidebar-name {
+        font-size: 1.2rem;
+    }
+
+    .company-sidebar-location {
+        font-size: 0.9rem;
     }
 
     .company-sidebar {
-        width: min(92vw, 420px);
+        width: 100vw;
         min-width: 0;
+        min-height: 100dvh;
         padding-left: 18px;
         padding-right: 18px;
+        border-left: 0;
     }
 }
