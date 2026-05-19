@@ -1078,12 +1078,15 @@ body.modal-open {
         flex-wrap: wrap;
     }
 
+    .match-label {
+        margin: auto;
+    }
     .match-ring {
-        margin: 0;
+        margin: auto;
     }
 
     .btn {
-        flex: 1 1 140px;
+        flex: 1 1  s0px;
         text-align: center;
     }
 

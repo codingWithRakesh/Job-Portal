@@ -503,7 +503,7 @@ function renderApplicantList(listEl, applicants) {
             badgeHtml = `<span class="status-badge status-rejected">${icons.x} Rejected</span>`;
         }
 
-        const profilePic = user.profilePicture?.url || `https://i.pravatar.cc/150?u=${appId}`;
+        const profilePic = user.profilePicture?.url || `../../../assets/images/default.jpeg`;
 
         const appItem = document.createElement("div");
         appItem.className = "applicant-item";
@@ -516,7 +516,7 @@ function renderApplicantList(listEl, applicants) {
                 </div>
             </div>
             <div class="applicant-actions">
-                <p>Matched</p>
+                <p class="match-label">Matched</p>
                 <div class="match-ring" style="--match: ${matchPercentage};" aria-label="${matchPercentage}% profile match">
                     <span>${matchPercentage}%</span>
                 </div>
