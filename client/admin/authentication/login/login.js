@@ -32,14 +32,18 @@ function navigate(fromId, toId) {
 
 function showError(elementId, message) {
   const el = document.getElementById(elementId);
-  el.textContent = message;
-  el.style.display = "block";
+  if (el) {
+    el.textContent = message;
+    el.style.display = "block";
+  }
 }
 
 function hideError(elementId) {
   const el = document.getElementById(elementId);
-  el.textContent = "";
-  el.style.display = "none";
+  if (el) {
+    el.textContent = "";
+    el.style.display = "none";
+  }
 }
 
 // ─── Global Enter Key Listener ───────────────────────────────────────────────
@@ -55,13 +59,35 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// ─── Clear Error Outlines on Input ────────────────────────────────────────────
+
+// Feature: Automatically remove the red outline when the user starts typing
+document.addEventListener("input", (e) => {
+  if (e.target.tagName === "INPUT") {
+    e.target.classList.remove("input-error");
+  }
+});
+
 // ─── Password Visibility Toggle ───────────────────────────────────────────────
 
-document.getElementById("show-password-toggle").addEventListener("change", function () {
-  const type = this.checked ? "text" : "password";
-  document.getElementById("new-password").type = type;
-  document.getElementById("confirm-password").type = type;
-});
+// Fix: Logic for Step 1 Sign-in Show Password checkbox
+const toggleSignInPassword = document.getElementById("toggle-password-checkbox");
+if (toggleSignInPassword) {
+  toggleSignInPassword.addEventListener("change", function () {
+    const type = this.checked ? "text" : "password";
+    document.getElementById("signin-password").type = type;
+  });
+}
+
+// Step 3 Create Password Show Password checkbox
+const toggleCreatePassword = document.getElementById("show-password-toggle");
+if (toggleCreatePassword) {
+  toggleCreatePassword.addEventListener("change", function () {
+    const type = this.checked ? "text" : "password";
+    document.getElementById("new-password").type = type;
+    document.getElementById("confirm-password").type = type;
+  });
+}
 
 // ─── Navigation Buttons ───────────────────────────────────────────────────────
 
@@ -74,12 +100,20 @@ document.getElementById("back-to-signin").addEventListener("click", () => {
 });
 
 document.getElementById("go-to-password").addEventListener("click", () => {
-  const name = document.getElementById("register-name").value.trim();
-  const email = document.getElementById("register-email").value.trim();
+  const nameInput = document.getElementById("register-name");
+  const emailInput = document.getElementById("register-email");
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
 
-  // Updated Warning System for Step 2
-  if (!name || !email) {
-    alert("Please fill in all fields."); // Or use a div-based error if preferred
+  let hasError = false;
+  hideError("create-account-error");
+
+  // Feature: Apply red outlines if empty
+  if (!name) { nameInput.classList.add("input-error"); hasError = true; }
+  if (!email) { emailInput.classList.add("input-error"); hasError = true; }
+
+  if (hasError) {
+    showError("create-account-error", "Please fill in all fields.");
     return;
   }
 
@@ -95,11 +129,18 @@ document.getElementById("back-to-create").addEventListener("click", () => {
 document.getElementById("signin-btn").addEventListener("click", async () => {
   hideError("signin-error");
 
-  const email = document.getElementById("signin-email").value.trim();
-  const password = document.getElementById("signin-password").value;
+  const emailInput = document.getElementById("signin-email");
+  const passwordInput = document.getElementById("signin-password");
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
 
-  // Warning System: If empty, show error and stop execution (stays on page)
-  if (!email || !password) {
+  let hasError = false;
+
+  // Feature: Apply red outlines if empty
+  if (!email) { emailInput.classList.add("input-error"); hasError = true; }
+  if (!password) { passwordInput.classList.add("input-error"); hasError = true; }
+
+  if (hasError) {
     showError("signin-error", "Please enter both email and password.");
     return; 
   }
@@ -123,7 +164,6 @@ document.getElementById("signin-btn").addEventListener("click", async () => {
       return;
     }
 
-    // window.location.href = "../../dashboard/controlJob/controlJob.html";
     window.location.href = isLocal ? "../../dashboard/controlJob/controlJob.html" : "/admin/dashboard/controlJob/controlJob";
 
   } catch (err) {
@@ -141,16 +181,26 @@ document.getElementById("register-btn").addEventListener("click", async () => {
 
   const name = document.getElementById("register-name").value.trim();
   const email = document.getElementById("register-email").value.trim();
-  const password = document.getElementById("new-password").value;
-  const confirmPassword = document.getElementById("confirm-password").value;
+  
+  const passInput = document.getElementById("new-password");
+  const confirmPassInput = document.getElementById("confirm-password");
+  const password = passInput.value;
+  const confirmPassword = confirmPassInput.value;
 
-  // Warning System for Registration
-  if (!password || !confirmPassword) {
+  let hasError = false;
+
+  // Feature: Apply red outlines if empty
+  if (!password) { passInput.classList.add("input-error"); hasError = true; }
+  if (!confirmPassword) { confirmPassInput.classList.add("input-error"); hasError = true; }
+
+  if (hasError) {
     showError("register-error", "Please fill in both password fields.");
     return;
   }
 
   if (password !== confirmPassword) {
+    passInput.classList.add("input-error");
+    confirmPassInput.classList.add("input-error");
     showError("register-error", "Passwords do not match.");
     return;
   }
@@ -179,8 +229,8 @@ document.getElementById("register-btn").addEventListener("click", async () => {
     // Clear fields
     document.getElementById("register-name").value = "";
     document.getElementById("register-email").value = "";
-    document.getElementById("new-password").value = "";
-    document.getElementById("confirm-password").value = "";
+    passInput.value = "";
+    confirmPassInput.value = "";
 
   } catch (err) {
     showError("register-error", "Network error. Please try again.");

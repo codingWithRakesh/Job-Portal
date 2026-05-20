@@ -53,13 +53,17 @@
           <div class="form-group">
             <input id="signin-password" type="password" placeholder="Password" required>
           </div>
-
+            <label class="checkbox-group">
+            <!-- ID added to handle toggle in JS -->
+            <input type="checkbox" id="toggle-password-checkbox">
+            Show password
+            </label>
           <div class="actions">
-            <div class="links-group">
+          <div class="links-group">
               <button class="btn-link" type="button">Forgot password?</button>
               <button class="btn-link" type="button" id="go-to-create">Create account</button>
-            </div>
-            <button class="btn-primary" type="button" id="signin-btn">Next</button>
+          </div>
+          <button class="btn-primary" type="button" id="signin-btn">Next</button>
           </div>
         </div>
       </div>
@@ -83,6 +87,9 @@
         </div>
 
         <div class="right-panel">
+          <!-- Add this error container for Step 2 -->
+          <div id="create-account-error" class="error-msg" style="display:none;"></div>
+          
           <div class="form-group">
             <input id="register-name" type="text" placeholder="Name" required>
           </div>

@@ -515,3 +515,16 @@
       transform: translateX(26px);
     }
   }
+
+  /* --- Error Validation Styles --- */
+input.input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+}
+
+.error-msg {
+  color: #ef4444;
+  font-size: 14px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}

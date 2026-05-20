@@ -1,16 +1,96 @@
 import { API_BASE_URL } from "../../../constants/constant.js";
 
 const BASE_URL = `${API_BASE_URL}/users`;
-
 const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
 
+// ==========================================
+// 1. State Management
+// ==========================================
+let registerData = {};
+let pages = [];
+let currentPageIndex = 0;
+
+// Shared DOM Elements
+let monthSelect, daySelect, yearSelect, genderSelect;
+
+// ==========================================
+// 2. Initialization Flow
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Cache page elements
+  pages = [
+    document.getElementById('page1'),
+    document.getElementById('page2'),
+    document.getElementById('page3'),
+    document.getElementById('page4')
+  ];
+
+  // Cache calendar elements
+  monthSelect = document.querySelector('select[aria-label="Month"]');
+  daySelect = document.querySelector('select[aria-label="Day"]');
+  yearSelect = document.querySelector('select[aria-label="Year"]');
+  genderSelect = document.querySelector('select[aria-label="Gender"]');
+
+  // Initialize UI Features
+  initRoleSwitcher();
+  initCalendar();
+  showPage(0); // Show login by default
+
+  // Setup interactions & check session
+  setupEventListeners();
+  checkExistingSession();
+});
+
+// ==========================================
+// 3. Authentication & Session Logic
+// ==========================================
+async function checkExistingSession() {
+  try {
+    const authRes = await fetch(`${BASE_URL}/current`, {
+      method: "GET",
+      credentials: "include"
+    });
+
+    if (authRes.ok) {
+      await redirectBasedOnProfile();
+    }
+  } catch (err) {
+    console.error("Session check failed:", err);
+  }
+}
+
+async function redirectBasedOnProfile() {
+  try {
+    const profileRes = await fetch(`${BASE_URL}/profile-completion`, {
+      method: "GET",
+      credentials: "include"
+    });
+
+    const profileData = await profileRes.json();
+    const percentage = profileData?.data?.profileCompletePercentage ?? profileData?.profileCompletePercentage;
+
+    if (percentage >= 50) {
+      window.location.href = isLocal ? "../../../home/index.html" : "/home/index";
+    } else {
+      window.location.href = isLocal ? "../../profile/profile.html" : "/candidate/profile/profile";
+    }
+  } catch (err) {
+    console.error("Redirection check failed:", err);
+  }
+}
+
+// ==========================================
+// 4. UI Navigation & Validation
+// ==========================================
 function initRoleSwitcher() {
   const switcher = document.querySelector(".auth-role-switcher");
-  const link = switcher?.querySelector(".auth-role-switch");
-  const question = switcher?.querySelector(".auth-role-switch-question");
-  const label = switcher?.querySelector(".auth-role-switch-label");
+  if (!switcher) return;
 
-  if (!switcher || !link || !question || !label) return;
+  const link = switcher.querySelector(".auth-role-switch");
+  const question = switcher.querySelector(".auth-role-switch-question");
+  const label = switcher.querySelector(".auth-role-switch-label");
+  
+  if (!link || !question || !label) return;
 
   const isAdminPage = window.location.pathname.toLowerCase().includes("admin");
   const targetPath = isAdminPage ? switcher.dataset.candidateLogin : switcher.dataset.adminLogin;
@@ -21,72 +101,176 @@ function initRoleSwitcher() {
   link.setAttribute("aria-label", isAdminPage ? "Switch to candidate login" : "Switch to admin login");
 }
 
-initRoleSwitcher();
-
-async function redirectBasedOnProfile() {
-  const profileRes = await fetch(`${API_BASE_URL}/users/profile-completion`, {
-    method: "GET",
-    credentials: "include"
+function showPage(index) {
+  pages.forEach((page, i) => {
+    if (!page) return;
+    if (i === index) {
+      page.classList.add('active');
+      page.style.display = 'block';
+    } else {
+      page.classList.remove('active');
+      page.style.display = 'none';
+    }
   });
-
-  const profileData = await profileRes.json();
-  const percentage = profileData?.data?.profileCompletePercentage ?? profileData?.profileCompletePercentage;
-
-  if (percentage >= 50) {
-    // window.location.href = "../../../index.html";
-    window.location.href = isLocal ? "../../../home/index.html" : "/home/index";
-  } else {
-    // window.location.href = "../../profile/profile.html";
-    window.location.href = isLocal ? "../../profile/profile.html" : "/candidate/profile/profile";
-  }
+  currentPageIndex = index;
 }
 
 function navigate(fromId, toId) {
-  const fromPage = document.getElementById(fromId);
-  const toPage = document.getElementById(toId);
   const targetIndex = pages.findIndex((page) => page?.id === toId);
-
   if (targetIndex !== -1) {
     showPage(targetIndex);
-    return;
-  }
-
-  if (fromPage && toPage) {
-    fromPage.classList.remove('active');
-    toPage.classList.add('active');
   }
 }
 
-let registerData = {};
+function validateCurrentPage(pageIndex) {
+  const currentPage = pages[pageIndex];
+  if (!currentPage) return false;
 
-document.addEventListener("DOMContentLoaded", () => {
+  let isValid = true;
+  const inputsToValidate = currentPage.querySelectorAll('input[required], select');
 
-  //check is user is already logged in
-  (async () => {
-    try {
-      const authRes = await fetch(`${API_BASE_URL}/users/current`, {
-        method: "GET",
-        credentials: "include"
-      });
+  // Clear previous warnings
+  currentPage.querySelectorAll('.warning-msg').forEach(msg => msg.remove());
+  currentPage.querySelectorAll('.error-border').forEach(el => el.classList.remove('error-border'));
 
-      if (authRes.ok) {
-        await redirectBasedOnProfile();
-      }
-    } catch (err) {
-      console.error(err);
+  inputsToValidate.forEach(input => {
+    if (!input.value.trim()) {
+      isValid = false;
+      showError(input, 'This field is required.');
     }
-  })();
+  });
 
-  //login logic
+  // Specific password matching validation on Page 4
+  if (pageIndex === 3) {
+    const pass = document.getElementById('new-password');
+    const confirmPass = document.getElementById('confirm-password');
+    
+    if (pass?.value && confirmPass?.value && pass.value !== confirmPass.value) {
+      isValid = false;
+      showError(confirmPass, 'Passwords do not match.');
+    }
+  }
+
+  return isValid;
+}
+
+function showError(element, message) {
+  // Prevent duplicate warning messages from stacking
+  if (element.parentNode.querySelector('.warning-msg')) return;
+
+  element.classList.add('error-border');
+
+  const warning = document.createElement('div');
+  warning.className = 'warning-msg';
+  warning.style.color = '#d93025';
+  warning.style.fontSize = '12px';
+  warning.style.marginTop = '4px';
+  warning.innerText = message;
+  
+  element.parentNode.appendChild(warning);
+}
+
+function clearWarning(e) {
+  const target = e.target;
+  if (target.tagName === 'INPUT' || target.tagName === 'SELECT') {
+    target.classList.remove('error-border');
+    target.style.border = ''; // fallback clear
+    const warning = target.parentNode.querySelector('.warning-msg');
+    if (warning) warning.remove();
+  }
+}
+
+// ==========================================
+// 5. Dynamic Calendar Logic
+// ==========================================
+function initCalendar() {
+  if (!monthSelect || !daySelect || !yearSelect) return;
+  populateYears();
+  updateDays();
+}
+
+function populateYears() {
+  const currentYear = new Date().getFullYear();
+  yearSelect.innerHTML = '<option value="" disabled selected>Year</option>';
+  for (let i = currentYear; i >= 1900; i--) {
+    yearSelect.innerHTML += `<option value="${i}">${i}</option>`;
+  }
+}
+
+function updateDays() {
+  const month = parseInt(monthSelect.value);
+  const year = parseInt(yearSelect.value);
+  let daysInMonth = 31; // Default
+
+  if (month) {
+    if (year) {
+      daysInMonth = new Date(year, month, 0).getDate(); 
+    } else {
+      daysInMonth = new Date(2024, month, 0).getDate(); // Leap year default
+    }
+  }
+
+  const currentSelectedDay = daySelect.value;
+  daySelect.innerHTML = '<option value="" disabled selected>Day</option>';
+  
+  for (let i = 1; i <= daysInMonth; i++) {
+    daySelect.innerHTML += `<option value="${i}">${i}</option>`;
+  }
+
+  if (currentSelectedDay && currentSelectedDay <= daysInMonth) {
+    daySelect.value = currentSelectedDay;
+  }
+}
+
+// ==========================================
+// 6. Event Listeners Setup
+// ==========================================
+function setupEventListeners() {
+  
+  // Real-time Validation: Clear warnings dynamically on type/select
+  document.addEventListener('input', clearWarning);
+  document.addEventListener('change', (e) => {
+    if (e.target.tagName === 'SELECT') clearWarning(e);
+  });
+
+  // Real-time Validation: Show error when user leaves a required field empty
+  document.addEventListener('focusout', (e) => {
+    const target = e.target;
+    if ((target.tagName === 'INPUT' || target.tagName === 'SELECT') && target.hasAttribute('required')) {
+      if (!target.value.trim()) {
+        showError(target, 'This field is required.');
+      }
+    }
+  });
+
+  // Calendar listeners
+  if (monthSelect) monthSelect.addEventListener('change', updateDays);
+  if (yearSelect) yearSelect.addEventListener('change', updateDays);
+
+  // Global Enter Key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      const activePage = pages[currentPageIndex];
+      if (activePage) {
+        const nextButton = activePage.querySelector('.btn-primary');
+        if (nextButton) nextButton.click();
+      }
+    }
+  });
+
+  // Page 1: Login
   const loginBtn = document.getElementById("btn-login-submit");
   const goToRegisterBtn = document.getElementById("btn-go-to-register");
 
-  if (goToRegisterBtn) {
-    goToRegisterBtn.addEventListener("click", () => navigate('page1', 'page2'));
-  }
+  if (goToRegisterBtn) goToRegisterBtn.addEventListener("click", () => navigate('page1', 'page2'));
 
   if (loginBtn) {
     loginBtn.addEventListener("click", async () => {
+      
+      // NEW: Run the validation check for the login page!
+      if (!validateCurrentPage(0)) return; 
+
       const inputs = document.querySelectorAll("#page1 input");
       const email = inputs[0].value;
       const password = inputs[1].value;
@@ -101,7 +285,6 @@ document.addEventListener("DOMContentLoaded", () => {
           credentials: "include",
           body: JSON.stringify({ email, password })
         });
-
         const data = await res.json();
 
         if (!res.ok) {
@@ -121,20 +304,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  //registration logic (name/email)
+  // Page 2: Registration Step 1
   const page2Next = document.getElementById("btn-register-step1-next");
   const backToLogin = document.getElementById("btn-back-to-login");
 
-  if (backToLogin) {
-    backToLogin.addEventListener("click", () => navigate('page2', 'page1'));
-  }
+  if (backToLogin) backToLogin.addEventListener("click", () => navigate('page2', 'page1'));
 
   if (page2Next) {
     page2Next.addEventListener("click", () => {
-      if (!validateCurrentPage(1)) {
-        return;
-      }
-
+      if (!validateCurrentPage(1)) return;
       const inputs = document.querySelectorAll("#page2 input");
       registerData.name = inputs[0].value;
       registerData.email = inputs[1].value;
@@ -142,21 +320,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // registration logic (DOB/Gender)
+  // Page 3: Registration Step 2
   const page3Next = document.getElementById("btn-register-step2-next");
   const backToRegister1 = document.getElementById("btn-back-to-register-step1");
 
-  if (backToRegister1) {
-    backToRegister1.addEventListener("click", () => navigate('page3', 'page2'));
-  }
+  if (backToRegister1) backToRegister1.addEventListener("click", () => navigate('page3', 'page2'));
 
   if (page3Next) {
     page3Next.addEventListener("click", (event) => {
       event.preventDefault();
-
-      if (!validateCurrentPage(2)) {
-        return;
-      }
+      if (!validateCurrentPage(2)) return;
 
       const month = monthSelect?.value ?? "";
       const day = daySelect?.value ?? "";
@@ -169,43 +342,35 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // registration logic (password)
+  // Page 4: Registration Step 3
   const page4Submit = document.getElementById("btn-register-final-submit");
   const backToRegister2 = document.getElementById("btn-back-to-register-step2");
-  const toggleCheckbox = document.getElementById("toggle-password-checkbox");
 
-  if (backToRegister2) {
-    backToRegister2.addEventListener("click", () => navigate('page4', 'page3'));
-  }
+  if (backToRegister2) backToRegister2.addEventListener("click", () => navigate('page4', 'page3'));
 
-  // Password visibility toggle logic
-  if (toggleCheckbox) {
-    toggleCheckbox.addEventListener("change", (e) => {
-      const passInput = document.getElementById('new-password');
-      const confirmInput = document.getElementById('confirm-password');
+  // Password Visibility Toggles
+  const toggleCheckboxes = document.querySelectorAll("#toggle-password-checkbox");
+  toggleCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", (e) => {
       const type = e.target.checked ? 'text' : 'password';
-      if (passInput) passInput.type = type;
-      if (confirmInput) confirmInput.type = type;
+      const parentPage = e.target.closest('.step');
+      
+      if (parentPage) {
+        const passInputs = parentPage.querySelectorAll('input[placeholder*="Password"], input[type="password"]');
+        passInputs.forEach(input => input.type = type);
+      }
     });
-  }
+  });
 
   if (page4Submit) {
     page4Submit.addEventListener("click", async (event) => {
       event.preventDefault();
+      if (!validateCurrentPage(3)) return;
 
-      if (!validateCurrentPage(3)) {
-        return;
-      }
+      registerData.password = document.getElementById("new-password").value;
 
-      const password = document.getElementById("new-password").value;
-      const confirmPassword = document.getElementById("confirm-password").value;
-
-      if (password !== confirmPassword) {
-        alert("Passwords do not match");
-        return;
-      }
-
-      registerData.password = password;
+      page4Submit.disabled = true;
+      page4Submit.textContent = "Creating...";
 
       try {
         const res = await fetch(`${BASE_URL}/register`, {
@@ -213,7 +378,6 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(registerData)
         });
-
         const data = await res.json();
 
         if (!res.ok) {
@@ -222,195 +386,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         alert("Registered successfully 🎉");
-        console.log(data);
+        registerData = {}; 
+        
+        document.querySelectorAll('input').forEach(input => {
+          if (input.type !== 'checkbox') input.value = '';
+        });
+        
         showPage(0);
       } catch (err) {
         console.error(err);
         alert("Something went wrong");
+      } finally {
+        page4Submit.disabled = false;
+        page4Submit.textContent = "Next";
       }
     });
   }
-});
-// ==========================================
-// 1. Page Navigation & State Management
-// ==========================================
-const pages = [
-  document.getElementById('page1'),
-  document.getElementById('page2'),
-  document.getElementById('page3'),
-  document.getElementById('page4')
-];
-
-let currentPageIndex = 0;
-
-function showPage(index) {
-  pages.forEach((page, i) => {
-    if (page) {
-      // Toggle the active class based on the current index
-      if (i === index) {
-        page.classList.add('active');
-        page.style.display = 'block'; // Ensure visibility
-      } else {
-        page.classList.remove('active');
-        page.style.display = 'none'; // Hide other pages
-      }
-    }
-  });
-  currentPageIndex = index;
 }
-
-// Initialize pages (hide all but the first)
-showPage(0);
-
-// ==========================================
-// 2. Validation System (Warning on empty inputs)
-// ==========================================
-function validateCurrentPage(pageIndex) {
-  const currentPage = pages[pageIndex];
-  const inputs = currentPage.querySelectorAll('input[required], select');
-  let isValid = true;
-
-  // Clear previous warnings
-  currentPage.querySelectorAll('.warning-msg').forEach(msg => msg.remove());
-  currentPage.querySelectorAll('.error-border').forEach(el => el.classList.remove('error-border'));
-
-  inputs.forEach(input => {
-    // Check if input is empty or a select is unselected
-    if (!input.value.trim()) {
-      isValid = false;
-      
-      // Apply visual red border (you can define .error-border in your CSS)
-      input.style.border = '1px solid red';
-      input.classList.add('error-border');
-
-      // Create and inject warning text
-      const warning = document.createElement('div');
-      warning.className = 'warning-msg';
-      warning.style.color = '#d93025'; // Google-style red
-      warning.style.fontSize = '12px';
-      warning.style.marginTop = '4px';
-      warning.innerText = 'This field is required.';
-      
-      // Append right after the input
-      input.parentNode.appendChild(warning);
-    } else {
-      input.style.border = ''; // Reset border if valid
-    }
-  });
-
-  // Password matching validation on Page 4
-  if (pageIndex === 3) {
-    const pass = document.getElementById('new-password');
-    const confirmPass = document.getElementById('confirm-password');
-    
-    if (pass.value && confirmPass.value && pass.value !== confirmPass.value) {
-      isValid = false;
-      confirmPass.style.border = '1px solid red';
-      const warning = document.createElement('div');
-      warning.className = 'warning-msg';
-      warning.style.color = '#d93025';
-      warning.style.fontSize = '12px';
-      warning.style.marginTop = '4px';
-      warning.innerText = 'Passwords do not match.';
-      confirmPass.parentNode.appendChild(warning);
-    }
-  }
-
-  return isValid;
-}
-
-// Clear warnings when user starts typing/selecting
-document.addEventListener('input', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
-    e.target.style.border = '';
-    e.target.classList.remove('error-border');
-    const warning = e.target.parentNode.querySelector('.warning-msg');
-    if (warning) warning.remove();
-  }
-});
-
-document.addEventListener('change', (e) => {
-  if (e.target.tagName === 'SELECT') {
-    e.target.style.border = '';
-    e.target.classList.remove('error-border');
-    const warning = e.target.parentNode.querySelector('.warning-msg');
-    if (warning) warning.remove();
-  }
-});
-
-// ==========================================
-// 3. Dynamic Calendar Logic (Leap Year Support)
-// ==========================================
-const monthSelect = document.querySelector('select[aria-label="Month"]');
-const daySelect = document.querySelector('select[aria-label="Day"]');
-const yearSelect = document.querySelector('select[aria-label="Year"]');
-const genderSelect = document.querySelector('select[aria-label="Gender"]');
-
-// Populate Year Dropdown (e.g., from current year down to 1900)
-function populateYears() {
-  const currentYear = new Date().getFullYear();
-  yearSelect.innerHTML = '<option value="" disabled selected>Year</option>';
-  for (let i = currentYear; i >= 1900; i--) {
-    yearSelect.innerHTML += `<option value="${i}">${i}</option>`;
-  }
-}
-
-// Update Days based on Month and Year
-function updateDays() {
-  const month = parseInt(monthSelect.value);
-  const year = parseInt(yearSelect.value);
-  let daysInMonth = 31; // Default to 31
-
-  if (month) {
-    // If year is selected, calculate exact days (handles leap years perfectly).
-    // Note: passing 0 as the day returns the last day of the PREVIOUS month.
-    // Because HTML values are 1-12, passing month as the month parameter perfectly aligns with the requested month's last day.
-    if (year) {
-      daysInMonth = new Date(year, month, 0).getDate(); 
-    } 
-    // If only month is selected, default to a leap year (2024) so Feb has 29 days available just in case.
-    else {
-      daysInMonth = new Date(2024, month, 0).getDate();
-    }
-  }
-
-  // Save the currently selected day so we don't clear it unnecessarily
-  const currentSelectedDay = daySelect.value;
-
-  // Re-populate days
-  daySelect.innerHTML = '<option value="" disabled selected>Day</option>';
-  for (let i = 1; i <= daysInMonth; i++) {
-    daySelect.innerHTML += `<option value="${i}">${i}</option>`;
-  }
-
-  // Restore the selected day if it still exists in the new month (e.g., switching from Jan 31 to Feb, it will clear because Feb doesn't have 31)
-  if (currentSelectedDay && currentSelectedDay <= daysInMonth) {
-    daySelect.value = currentSelectedDay;
-  }
-}
-
-if (monthSelect && daySelect && yearSelect) {
-  populateYears();
-  monthSelect.addEventListener('change', updateDays);
-  yearSelect.addEventListener('change', updateDays);
-  updateDays(); // Run once on load
-}
-
-// ==========================================
-// 4. Enter Key Integration
-// ==========================================
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault(); // Prevent default form submission behaviors
-    
-    // Find the active page and click its primary "Next" button
-    const activePage = pages[currentPageIndex];
-    if (activePage) {
-      const nextButton = activePage.querySelector('.btn-primary');
-      if (nextButton) {
-        nextButton.click();
-      }
-    }
-  }
-});
-
