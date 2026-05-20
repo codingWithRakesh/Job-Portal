@@ -246,16 +246,19 @@ const updateQualifications = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All qualification fields are required");
     }
 
+    const newQualification = {
+        _id: new mongoose.Types.ObjectId(),
+        degree,
+        department,
+        institution,
+        year: yearOfPassing
+    };
+
     const updatedUser = await User.findByIdAndUpdate(
         userId,
         {
             $push: {
-                qualifications: {
-                    degree,
-                    department,
-                    institution,
-                    year: yearOfPassing
-                }
+                qualifications: newQualification
             }
         },
         { returnDocument: 'after', runValidators: true }
@@ -284,16 +287,19 @@ const updateExperience = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All experience fields are required");
     }
 
+    const newExperience = {
+        _id: new mongoose.Types.ObjectId(),
+        company,
+        position,
+        startDate,
+        endDate
+    };
+
     const updatedUser = await User.findByIdAndUpdate(
         userId,
         {
             $push: {
-                experiences: {
-                    company,
-                    position,
-                    startDate,
-                    endDate
-                }
+                experiences: newExperience
             }
         },
         { returnDocument: 'after', runValidators: true }
@@ -350,16 +356,19 @@ const updateProjects = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Title and description are required for projects");
     }
 
+    const newProject = {
+        _id: new mongoose.Types.ObjectId(),
+        title,
+        description,
+        technologies,
+        link
+    };
+
     const updatedUser = await User.findByIdAndUpdate(
         userId,
         {
             $push: {
-                projects: {
-                    title,
-                    description,
-                    technologies,
-                    link
-                }
+                projects: newProject
             }
         },
         { returnDocument: 'after', runValidators: true }
@@ -641,6 +650,51 @@ const isprofileCompleteInPercentage = asyncHandler(async (req, res) => {
         )
 })
 
+const deleteSubDocument = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+
+    if (!userId) throw new ApiError(401, "Unauthorized");
+
+    const typeMap = {
+        project: "projects",
+        experience: "experiences",
+        education: "qualifications",
+    };
+
+    const { type, id } = req.body;
+
+    const field = typeMap[type];
+    if (!field) {
+        throw new ApiError(400, `Invalid type. Must be one of: ${Object.keys(typeMap).join(", ")}`);
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new ApiError(400, "Invalid ID format");
+    }
+
+    const user = await User.findById(userId);
+    if (!user) throw new ApiError(404, "User not found");
+
+    const subDocExists = user[field].find(
+        (doc) => doc._id && doc._id.toString() === id
+    );
+    if (!subDocExists) {
+        throw new ApiError(404, `${type} not found`);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $pull: { [field]: { _id: new mongoose.Types.ObjectId(id) } } },
+        { returnDocument: "after", runValidators: true }
+    ).select("-password -refreshToken");
+
+    if (!updatedUser) throw new ApiError(500, `Failed to delete ${type}`);
+
+    return res.status(200).json(
+        new ApiResponse(200, updatedUser, `${type} deleted successfully`)
+    );
+});
+
 export {
     registerUser,
     loginUser,
@@ -656,5 +710,6 @@ export {
     deleteProfilePicture,
     uploadAndUpdateResume,
     deleteResume,
-    isprofileCompleteInPercentage
+    isprofileCompleteInPercentage,
+    deleteSubDocument
 }

@@ -207,17 +207,16 @@ function renderUI() {
 
     document.getElementById("summaryText").textContent = userData.summary || "-";
 
-    renderList("qualificationsList", userData.qualifications, (q, index) => `
+    renderList("qualificationsList", userData.qualifications, (q) => `
         <article class="record-item record-item--detail">
             <div class="record-item-head">
                 <div>
                     <p class="record-title">${q.degree} - ${q.department}</p>
                     <p class="record-meta">${q.institution}</p>
                 </div>
-                <button type="button" class="item-delete-button" data-action="delete-qualification" data-index="${index}" aria-label="Delete education entry">
+                <button type="button" class="item-delete-button" data-action="delete-qualification" data-id="${q._id}" aria-label="Delete education entry">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 7h16"></path>
-                        <path d="M10 11v6"></path>
+                        <path d="M4 7h16"></path><path d="M10 11v6"></path>
                         <path d="M14 11v6"></path>
                         <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
                         <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
@@ -228,17 +227,16 @@ function renderUI() {
         </article>
     `, "No education added yet");
 
-    renderList("experienceList", userData.experiences, (e, index) => `
+    renderList("experienceList", userData.experiences, (e) => `
         <article class="record-item record-item--detail">
             <div class="record-item-head">
                 <div>
                     <p class="record-title">${e.position}</p>
                     <p class="record-meta">${e.company}</p>
                 </div>
-                <button type="button" class="delete-btn experience-delete" data-action="delete-experience" data-index="${index}" aria-label="Delete experience">
+                <button type="button" class="delete-btn experience-delete" data-action="delete-experience" data-id="${e._id}" aria-label="Delete experience">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 7h16"></path>
-                        <path d="M10 11v6"></path>
+                        <path d="M4 7h16"></path><path d="M10 11v6"></path>
                         <path d="M14 11v6"></path>
                         <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
                         <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
@@ -249,17 +247,16 @@ function renderUI() {
         </article>
     `, "No experience added yet");
 
-    renderList("projectsList", userData.projects, (p, index) => `
+    renderList("projectsList", userData.projects, (p) => `
         <article class="record-item record-item--detail">
             <div class="record-item-head">
                 <div>
                     <p class="record-title">${p.title}</p>
                     <p class="record-meta">${p.technologies.join(", ")}</p>
                 </div>
-                <button type="button" class="delete-btn project-delete" data-action="delete-project" data-index="${index}" aria-label="Delete project">
+                <button type="button" class="delete-btn project-delete" data-action="delete-project" data-id="${p._id}" aria-label="Delete project">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 7h16"></path>
-                        <path d="M10 11v6"></path>
+                        <path d="M4 7h16"></path><path d="M10 11v6"></path>
                         <path d="M14 11v6"></path>
                         <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
                         <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
@@ -459,49 +456,73 @@ function persistUserData() {
     localStorage.setItem("userData", JSON.stringify(userData));
 }
 
+async function deleteSubDocument(type, id) {
+    const res = await fetch(`${API_BASE_URL}/delete-subdocument`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type, id })
+    });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.message || `Failed to delete ${type}`);
+    return json.data;
+}
+
 function handleQualificationDelete(event) {
-    const deleteButton = event.target.closest('[data-action="delete-qualification"]');
-    if (!deleteButton) return;
+    const btn = event.target.closest('[data-action="delete-qualification"]');
+    if (!btn) return;
 
-    const qualificationIndex = Number(deleteButton.dataset.index);
-    if (!Number.isInteger(qualificationIndex) || !Array.isArray(userData.qualifications)) return;
+    const id = btn.dataset.id;
+    if (!id) return;
 
-    const shouldDelete = window.confirm("Are you sure you want to delete this education entry?");
-    if (!shouldDelete) return;
+    if (!window.confirm("Are you sure you want to delete this education entry?")) return;
 
-    userData.qualifications = userData.qualifications.filter((_, index) => index !== qualificationIndex);
-    persistUserData();
-    renderUI();
+    deleteSubDocument("education", id)
+        .then(updatedUser => {
+            userData = updatedUser;
+            localStorage.setItem("userData", JSON.stringify(userData));
+            renderUI();
+            fetchProfileCompletion();
+        })
+        .catch(err => alert(err.message));
 }
 
 function handleExperienceDelete(event) {
-    const deleteButton = event.target.closest('[data-action="delete-experience"]');
-    if (!deleteButton) return;
+    const btn = event.target.closest('[data-action="delete-experience"]');
+    if (!btn) return;
 
-    const experienceIndex = Number(deleteButton.dataset.index);
-    if (!Number.isInteger(experienceIndex) || !Array.isArray(userData.experiences)) return;
+    const id = btn.dataset.id;
+    if (!id) return;
 
-    const shouldDelete = window.confirm("Are you sure you want to delete this experience?");
-    if (!shouldDelete) return;
+    if (!window.confirm("Are you sure you want to delete this experience?")) return;
 
-    userData.experiences = userData.experiences.filter((_, index) => index !== experienceIndex);
-    persistUserData();
-    renderUI();
+    deleteSubDocument("experience", id)
+        .then(updatedUser => {
+            userData = updatedUser;
+            localStorage.setItem("userData", JSON.stringify(userData));
+            renderUI();
+            fetchProfileCompletion();
+        })
+        .catch(err => alert(err.message));
 }
 
 function handleProjectDelete(event) {
-    const deleteButton = event.target.closest('[data-action="delete-project"]');
-    if (!deleteButton) return;
+    const btn = event.target.closest('[data-action="delete-project"]');
+    if (!btn) return;
 
-    const projectIndex = Number(deleteButton.dataset.index);
-    if (!Number.isInteger(projectIndex) || !Array.isArray(userData.projects)) return;
+    const id = btn.dataset.id;
+    if (!id) return;
 
-    const shouldDelete = window.confirm("Delete this project?");
-    if (!shouldDelete) return;
+    if (!window.confirm("Delete this project?")) return;
 
-    userData.projects = userData.projects.filter((_, index) => index !== projectIndex);
-    persistUserData();
-    renderUI();
+    deleteSubDocument("project", id)
+        .then(updatedUser => {
+            userData = updatedUser;
+            localStorage.setItem("userData", JSON.stringify(userData));
+            renderUI();
+            fetchProfileCompletion();
+        })
+        .catch(err => alert(err.message));
 }
 
 //form submissions
