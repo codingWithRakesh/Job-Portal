@@ -1072,7 +1072,7 @@ select {
      }
 
      .company-logo-panel {
-         justify-content: flex-start;
+         justify-content: center;
      }
 
      .company-logo-trigger {
@@ -1099,18 +1099,41 @@ select {
      }
 
      .navbar {
-         height: auto;
-         padding-top: 18px;
-         padding-bottom: 18px;
-         flex-direction: column;
-         align-items: flex-start;
-         gap: 14px;
+         min-height: 68px;
+         padding: 0.75rem 3%;
+         flex-direction: row;
+         align-items: center;
+         gap: 18px;
+         overflow-x: auto;
+     }
+
+     .navbar-brand {
+         flex: 0 0 auto;
+         font-size: 1rem;
+     }
+
+     .navbar-brand img {
+         width: 32px !important;
+         height: 32px !important;
+     }
+
+     .navbar-links {
+         flex: 1 1 auto;
+         min-width: max-content;
+         gap: 24px;
+         font-size: 0.95rem;
      }
 
      .navbar-user {
-         width: 100%;
-         flex-direction: column;
-         align-items: stretch;
+         width: auto;
+         flex: 0 0 auto;
+         flex-direction: row;
+         align-items: center;
+         gap: 12px;
+     }
+
+     .company-logo-panel {
+         justify-content: center;
      }
 
      .company-summary,
@@ -1148,6 +1171,6 @@ select {
      }
 
      .profile-menu {
-         align-self: flex-end;
+         align-self: center;
      }
  }
